@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@root {}
-
 @font-face {
   font-family: 'Pretendard Variable';
   src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
@@ -11,8 +9,36 @@
 }
 
  @theme {
-  --font-pretendard: "Pretendard Variable"; /* 기본 폰트로 사용 */
+  /* Typography */
+  --font-pretendard: "Pretendard Variable"; 
+  --font-title-50: 600 50px/100% var(--font-pretendard); /* 이름은 임시, 순서대로 weight, size, lineheight, font-family */
+  --font-title-30: 600 30px/100% var(--font-pretendard);
+
+  /* Colors */
   --color-*: initial; /* 커스텀 컬러로 사용 */
-  --color-main: #9747ff; /* 임시 메인 컬러 */
-  --color-sub: #63D661; /* 임시 서브 컬러 */
+
+  /* Primary */
+  --color-purple-500: #7B47FF; 
+
+  /* Secondary */
+  --color-green-500: #63D661;
+  
+  --color-red-100: #D73B3B;
+  --color-orange-100: #FB9536;
+
+  --color-black: #2A282D;
+  --color-white: #FFFFFF;
+}
+
+@layer utilities {
+  /* Typography */
+  .font-title-50 { font: var(--font-title-50); }
+  .font-title-30 { font: var(--font-title-30); }
+    
+    
+  /* Gradient */
+  .text-gradient-to-r {
+      @apply bg-gradient-to-r text-transparent bg-clip-text;
+    }
+
 }
