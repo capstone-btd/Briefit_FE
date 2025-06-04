@@ -4,11 +4,13 @@ import Searchbar from "./Searchbar";
 
 export default function Header() {
   return (
-    <header className="flex justify-between mt-7 md:mx-[50px] lg:mx-[100px]">
+    <header className="flex justify-between mt-7 mx-4 xl:mx-[100px] 2xl:mx-[150px]">
       <Navigationbar />
-      <div className="flex items-center gap-auto md:gap-6 lg:gap-12 mt-[-18px]">
+      <div className="flex items-center mt-[-18px] gap-4 xl:gap-[25px] 2xl:gap-[35px]">
         <Searchbar />
-        <button className="font-basic-16 text-purple-500 border border-purple-500 rounded-full p-[10px]">로그인</button>
+        <button className="font-basic-16 text-purple-500 border border-purple-500 rounded-full p-[10px] w-[6vw] aspect-[80/20] max-w-[80px]">
+          로그인
+        </button>
       </div>
     </header>
   );

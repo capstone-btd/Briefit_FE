@@ -34,13 +34,13 @@ export default function Navigationbar() {
 
   return (
     <nav className="relative">
-      <div className="flex items-baseline justify-between md:gap-[50px] lg:gap-[100px]">
+      <div className="flex items-baseline justify-between gap-6 xl:gap-[50px] 2xl:gap-[100px]">
         <Link href="/today-news">
           <Logo />
         </Link>
         <div
           ref={containerRef}
-          className="relative flex items-center space-x-6 md:space-x-8 lg:space-x-12 pb-[3px]"
+          className="relative flex items-center gap-6 xl:gap-8 2xl:gap-12 pb-[3px]"
         >
           {navItems.map(({ label, path }, index) => (
             <Link
