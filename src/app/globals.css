@@ -18,11 +18,45 @@
   --color-*: initial; /* 커스텀 컬러로 사용 */
 
   /* Primary */
+  --color-purple-50: #F5F2FF;
+  --color-purple-100: #EBE8FF;
+  --color-purple-200: #DAD4FF;
+  --color-purple-300: #C0B1FF;
+  --color-purple-400: #A185FF;
   --color-purple-500: #7B47FF; 
+  --color-purple-600: #7530F7;
+  --color-purple-700: #671EE3;
+  --color-purple-800: #5518BF;
+  --color-purple-900: #47169C;
+  --color-purple-950: #2B0B6A; 
 
   /* Secondary */
   --color-green-500: #63D661;
   
+  /* Gray */
+  --color-gray-50: #F6F6F6;
+  --color-gray-100: #E7E7E7;
+  --color-gray-200: #D1D1D1;
+  --color-gray-300: #B0B0B0;
+  --color-gray-400: #888888;
+  --color-gray-500: #6D6D6D;
+  --color-gray-600: #5D5D5D;
+  --color-gray-700: #4F4F4F;
+  --color-gray-800: #454545;
+  --color-gray-900: #3D3D3D;
+  --color-gray-950: #282828;
+
+  /* Theme(커스터마이징 테마색) */
+
+  /* Profile */
+  --color-yellow-profile: #FACE34;
+  --color-beige-profile: #EFDCAC;
+  --color-blue-profile: #70A2DB;
+  --color-pink-profile: #FFB4CB;
+  --color-green-profile: #C6D657;
+  --color-brown-profile: #A79B97;
+
+  /* ETC.. */
   --color-red-100: #D73B3B;
   --color-orange-100: #FB9536;
 
