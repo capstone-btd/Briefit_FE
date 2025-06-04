@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  color: var(--color-gray-950); /* 색을 지정하지 않으면 기본 gray-950 */
+}
+
 @font-face {
   font-family: 'Pretendard Variable';
   src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
@@ -13,6 +17,9 @@
   --font-pretendard: "Pretendard Variable"; 
   --font-title-50: 600 50px/100% var(--font-pretendard); /* 이름은 임시, 순서대로 weight, size, lineheight, font-family */
   --font-title-30: 600 30px/100% var(--font-pretendard);
+  --font-title-20: 600 20px/100% var(--font-pretendard);
+
+  --font-basic-16: 400 16px/100% var(--font-pretendard);
 
   /* Colors */
   --color-*: initial; /* 커스텀 컬러로 사용 */
@@ -68,11 +75,20 @@
   /* Typography */
   .font-title-50 { font: var(--font-title-50); }
   .font-title-30 { font: var(--font-title-30); }
+  .font-title-20 { font: var(--font-title-20);}
+
+  .font-basic-16 { font: var(--font-basic-16); }
     
     
   /* Gradient */
   .text-gradient-to-r {
       @apply bg-gradient-to-r text-transparent bg-clip-text;
     }
+  .input-gradient-border {
+      @apply p-[2px] rounded-full bg-gradient-to-r;
+   }
+  .input-inner {
+       @apply rounded-full w-full h-full bg-white text-gray-950 px-4 py-3 outline-none;
+   }
 
 }

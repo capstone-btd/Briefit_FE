@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-pretendard"> { /* 전역에서 커스텀 폰트 사용 */ }
+      <body className="font-pretendard"> {/* 전역에서 커스텀 폰트 사용 */}
+        <Header />
+        <div className="border-b-1 border-gray-100"></div>
         {children}
       </body>
     </html>
