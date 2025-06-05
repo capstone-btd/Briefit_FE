@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
+import { useNavigationStore } from "@/stores/useNavigationStore";
 
 export const navItems = [
   { label: "오늘의 뉴스", path: "/today-news" },
@@ -13,14 +14,21 @@ export const navItems = [
 
 export default function Navigationbar() {
   const pathName = usePathname();
+  const { currentPath, setCurrentPath } = useNavigationStore();
+
   const [underlineStyle, setUnderlineStyle] = useState({ width: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
-    const activeIndex = navItems.findIndex((item) => item.path === pathName);
+    setCurrentPath(pathName);
+  }, [pathName]);
+
+  useEffect(() => {
+    const activeIndex = navItems.findIndex((item) => item.path === currentPath);
     const activeLink = linkRefs.current[activeIndex];
     const container = containerRef.current;
+
     if (activeLink && container) {
       const containerRect = container.getBoundingClientRect();
       const linkRect = activeLink.getBoundingClientRect();
@@ -30,7 +38,7 @@ export default function Navigationbar() {
         left: linkRect.left - containerRect.left,
       });
     }
-  }, [pathName]);
+  }, [currentPath]);
 
   return (
     <nav className="relative">
@@ -50,7 +58,7 @@ export default function Navigationbar() {
               }}
               href={path}
               className={`font-title-20 block pb-20 transition-colors duration-300 ${
-                pathName === path
+                currentPath === path
                   ? "text-purple-500"
                   : "text-gray-400 hover:text-purple-300"
               }`}
