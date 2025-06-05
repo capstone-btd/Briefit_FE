@@ -1,5 +1,9 @@
-import TodayNewsPage from "./today-news/page";
+import TodayNewsPage from "./today-news/[[...category]]/page";
 
 export default function Home() {
-  return <div><TodayNewsPage/></div>;
+  return (
+    <div>
+      <TodayNewsPage />
+    </div>
+  );
 }
