@@ -9,19 +9,18 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       // StateCreator 콜백
       isLoggedIn: false,
-      user: null,
-      token: null,
-      setUser: (user) => set({ user }),
-      setToken: (token) => set({ token }),
-      login: (user, token) => set({ user, token, isLoggedIn: true }),
-      logout: () => set({ user: null, token: null, isLoggedIn: false }),
+      isNew: true,
+      accessToken: null,
+      setAccessToken: (accessToken) => set({ accessToken }),
+      login: (accessToken, isNew) => set({ accessToken, isLoggedIn: true, isNew: isNew }),
+      logout: () => set({ accessToken: null, isLoggedIn: false }),
     }),
     {
       name: "auth-store", // localStorage key
       partialize: (state) => ({
-        // partialize로 토큰을 제외하고 저장
-        user: state.user,
+        accessToken: state.accessToken,
         isLoggedIn: state.isLoggedIn,
+        isNew: state.isNew
       }),
     }
   )
