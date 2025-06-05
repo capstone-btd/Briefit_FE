@@ -34,13 +34,13 @@ export default function Navigationbar() {
 
   return (
     <nav className="relative">
-      <div className="flex items-baseline justify-between gap-6 xl:gap-[50px] 2xl:gap-[100px]">
+      <div className="flex items-baseline justify-between gap-24 xl:gap-50 2xl:gap-100">
         <Link href="/today-news">
           <Logo />
         </Link>
         <div
           ref={containerRef}
-          className="relative flex items-center gap-6 xl:gap-8 2xl:gap-12 pb-[3px]"
+          className="relative flex items-center gap-24 pb-3 xl:gap-32 2xl:gap-48"
         >
           {navItems.map(({ label, path }, index) => (
             <Link
@@ -49,7 +49,7 @@ export default function Navigationbar() {
                 linkRefs.current[index] = el;
               }}
               href={path}
-              className={`block pb-[20px] font-title-20 transition-colors duration-300 ${
+              className={`font-title-20 block pb-20 transition-colors duration-300 ${
                 pathName === path
                   ? "text-purple-500"
                   : "text-gray-400 hover:text-purple-300"
@@ -61,7 +61,7 @@ export default function Navigationbar() {
 
           {/* underline */}
           <div
-            className="absolute bottom-[-1.5px] h-[3px] bg-purple-500 rounded-full transition-all duration-200 ease-out"
+            className="absolute bottom-[-1.5px] h-3 rounded-full bg-purple-500 transition-all duration-200 ease-out"
             style={{
               width: `${underlineStyle.width}px`,
               transform: `translateX(${underlineStyle.left}px)`,

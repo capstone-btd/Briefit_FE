@@ -17,7 +17,7 @@ export default function RootLayout({
       <body className="font-pretendard"> {/* 전역에서 커스텀 폰트 사용 */}
         <Header />
         <div className="border-b border-gray-100"></div>
-        <div className="mx-4 my-5 xl:mx-[160px] xl:my-[50px] 2xl:mx-[240px] 2xl:my-[70px]">
+        <div className="mx-16 my-20 xl:mx-160 xl:my-50 2xl:mx-240 2xl:my-70">
           {children}
         </div>
       </body>

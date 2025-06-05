@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 body {
   color: var(--color-gray-950); /* 색을 지정하지 않으면 기본 gray-950 */
@@ -85,10 +86,10 @@ body {
       @apply bg-gradient-to-r text-transparent bg-clip-text;
     }
   .input-gradient-border {
-      @apply p-[2px] rounded-full bg-gradient-to-r;
+      @apply p-2 rounded-full bg-gradient-to-r;
    }
   .input-inner {
-       @apply rounded-full w-full h-full bg-white text-gray-950 px-4 py-3 outline-none;
+       @apply rounded-full w-full h-full bg-white text-gray-950 px-16 py-12 outline-none;
    }
 
 }
