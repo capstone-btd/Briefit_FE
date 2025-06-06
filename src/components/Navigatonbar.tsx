@@ -19,8 +19,9 @@ export default function Navigationbar() {
 
   useEffect(() => {
     const activeIndex = navItems.findIndex((item) =>
-      item.path.startsWith(pathName),
+      pathName.startsWith(item.path),
     );
+
     const activeLink = linkRefs.current[activeIndex];
     const container = containerRef.current;
     if (activeLink && container) {

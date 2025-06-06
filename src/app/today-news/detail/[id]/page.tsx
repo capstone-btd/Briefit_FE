@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Divider from "@/features/common/Divider";
 import ResponsiveImage from "@/features/common/ResponsiveImage";
@@ -5,21 +7,27 @@ import NewsContent from "@/features/detail/components/NewsContent";
 import NewsPageHeader from "@/features/detail/components/NewsPageHeader";
 import NewsSourceCardList from "@/features/detail/components/NewsSourceCardList";
 import NewsTitle from "@/features/detail/components/NewsTitle";
+import { useRouter } from "next/navigation";
+import { use } from "react";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: number;
-  };
+  }>;
 };
 
-export default async function NewsDetailPage({ params }: Props) {
-  const param = await params;
-  const newsId = decodeURIComponent(param.id.toString());
-
+export default function NewsDetailPage(props: Props) {
+  const router = useRouter();
+  const { id } = use(props.params); 
+  
   return (
     <div className="flex space-x-20">
-      <Button variant="ghost" className="aspect-square w-46">
-        <img src={"/assets/back-arrow.png"} />
+      <Button
+        onClick={() => router.back()}
+        variant="ghost"
+        className="aspect-square w-46 hover:bg-transparent"
+      >
+        <img src={"/assets/back-arrow.png"} alt="뒤로가기" />
       </Button>
       <div className="w-full">
         <NewsPageHeader />
@@ -32,7 +40,7 @@ export default async function NewsDetailPage({ params }: Props) {
         />
         <NewsContent />
         <Divider />
-        <NewsSourceCardList/>
+        <NewsSourceCardList />
       </div>
     </div>
   );
