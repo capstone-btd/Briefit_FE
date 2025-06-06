@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/card";
 import { DetailPageType } from "@/constants/detailPageType";
 import Link from "next/link";
+import ResponsiveImage from "./ResponsiveImage";
 
 function NewsCardCategoryTag({ label }: { label: string }) {
   return (
@@ -43,9 +44,11 @@ export function NewsCard({ type, categoryLabel, newsId }: { type: DetailPageType
             내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용
             기사 내용 기사 내용 기사 내용
           </div>
-          <div className="mx-auto mt-30 flex h-180 w-300 items-center justify-center bg-gray-300">
-            기사 이미지
-          </div>
+          <ResponsiveImage
+            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+            alt="뉴스 기사 이미지"
+            className="mx-auto mt-30 h-180 w-300"
+          />
         </CardContent>
       </Card>
     </Link>
