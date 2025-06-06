@@ -3,6 +3,7 @@ import Divider from "@/features/common/Divider";
 import ResponsiveImage from "@/features/common/ResponsiveImage";
 import NewsContent from "@/features/detail/components/NewsContent";
 import NewsPageHeader from "@/features/detail/components/NewsPageHeader";
+import NewsSourceCardList from "@/features/detail/components/NewsSourceCardList";
 import NewsTitle from "@/features/detail/components/NewsTitle";
 
 type Props = {
@@ -31,6 +32,7 @@ export default async function NewsDetailPage({ params }: Props) {
         />
         <NewsContent />
         <Divider />
+        <NewsSourceCardList/>
       </div>
     </div>
   );

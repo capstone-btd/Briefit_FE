@@ -19,7 +19,7 @@ function NewsCardCategoryTag({ label }: { label: string }) {
 export function NewsCard({ type, categoryLabel, newsId }: { type: DetailPageType, categoryLabel: string, newsId: number; }) {
   return (
     <Link href={`${type}/detail/${newsId}`}>
-      <Card className="group rounded-20 relative w-full p-20">
+      <Card className="group rounded-20 relative w-full h-full p-20">
         <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-50">
           <div className="rounded-12 h-full w-full bg-[linear-gradient(180deg,#FFFFFF00_20.67%,#00000080)]"></div>
         </div>
