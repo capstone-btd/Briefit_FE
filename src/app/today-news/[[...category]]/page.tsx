@@ -1,14 +1,15 @@
 import { newsCategories } from "@/constants/newsCategries";
 import TodayAINews from "@/features/today-news/components/TodayAINews";
 
-interface Props {
+type Props = {
   params: {
       category?: string;
   };
 }
 
-export default function TodayNewsPage({ params }: Props) {
-    const category = params.category;
+export default async function TodayNewsPage({ params }: Props) {
+    const param = await params;
+    const category = decodeURIComponent(param.category || "전체");
     const categoryLabel = newsCategories.find((e) => e.name == category)?.label ?? '전체';
   return (
     <div>

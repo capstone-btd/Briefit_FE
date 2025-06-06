@@ -1,8 +1,14 @@
 import { NewsCard } from "@/features/common/NewsCard";
 import NewsCategorybar from "@/features/common/NewsCategorybar";
+import { DetailPageType } from "@/constants/detailPageType";
 
-export default function TodayAINews({ categoryLabel }: { categoryLabel: string }) {
+export default function TodayAINews({
+  categoryLabel,
+}: {
+  categoryLabel: string;
+}) {
   const dummyNews = Array.from({ length: 9 }); // 예시용 뉴스 카드
+  
   return (
     <div className="space-y-30">
       {/* 헤더 */}
@@ -14,7 +20,7 @@ export default function TodayAINews({ categoryLabel }: { categoryLabel: string }
       {/* 뉴스 카드 그리드*/}
       <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3">
         {dummyNews.map((_, index) => (
-          <NewsCard key={index} categoryLabel={categoryLabel} />
+          <NewsCard key={index} newsId={index} categoryLabel={categoryLabel} type={DetailPageType.TODAY} />
         ))}
       </div>
     </div>

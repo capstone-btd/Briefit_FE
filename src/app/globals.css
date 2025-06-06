@@ -21,9 +21,12 @@ body {
   --font-pretendard: "Pretendard Variable"; 
   --font-title-50: 600 50px/100% var(--font-pretendard); /* 이름은 임시, 순서대로 weight, size, lineheight, font-family */
   --font-title-30: 600 30px/100% var(--font-pretendard);
-  --font-title-20: 600 20px/100% var(--font-pretendard);
+  --font-title-30-m: 500 30px/100% var(--font-pretendard);
   --font-title-24: 600 24px/100% var(--font-pretendard);
-
+  --font-title-20: 600 20px/100% var(--font-pretendard);
+ 
+  --font-basic-24-m: 500 24px/28px var(--font-pretendard);
+  --font-basic-20: 400 20px/100% var(--font-pretendard);
   --font-basic-16: 400 16px/100% var(--font-pretendard);
 
   --font-light-16: 300 16px/20px var(--font-pretendard);
@@ -82,9 +85,14 @@ body {
   /* Typography */
   .font-title-50 { font: var(--font-title-50); }
   .font-title-30 { font: var(--font-title-30); }
+  .font-title-30-m { font: var(--font-title-30-m); }
   .font-title-20 { font: var(--font-title-20);}
   .font-title-24 { font: var(--font-title-24);}
+  .font-title-24-m { font: var(--font-title-24-m);}
 
+  
+  .font-basic-24-m { font: var(--font-basic-24-m); }
+  .font-basic-20 { font: var(--font-basic-20); }
   .font-basic-16 { font: var(--font-basic-16); }
 
   .font-light-16 { font: var(--font-light-16); }

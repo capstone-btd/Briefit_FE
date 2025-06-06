@@ -18,7 +18,9 @@ export default function Navigationbar() {
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
-    const activeIndex = navItems.findIndex((item) => item.path === pathName);
+    const activeIndex = navItems.findIndex((item) =>
+      item.path.startsWith(pathName),
+    );
     const activeLink = linkRefs.current[activeIndex];
     const container = containerRef.current;
     if (activeLink && container) {
@@ -35,7 +37,7 @@ export default function Navigationbar() {
   return (
     <nav className="relative">
       <div className="flex items-baseline justify-between gap-24 xl:gap-50 2xl:gap-100">
-        <Link href="/today-news">
+        <Link href={navItems[0].path}>
           <Logo />
         </Link>
         <div
@@ -50,7 +52,7 @@ export default function Navigationbar() {
               }}
               href={path}
               className={`font-title-20 block pb-20 transition-colors duration-300 ${
-                pathName === path
+                pathName .startsWith(path)
                   ? "text-purple-500"
                   : "text-gray-400 hover:text-purple-300"
               }`}
