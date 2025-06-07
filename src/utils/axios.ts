@@ -56,10 +56,14 @@ api.interceptors.response.use(
   (error) => {
     if (error.response) {
       const { status, config, data } = error.response;
+      const url = config?.url || "";
 
       if (status >= 400 && status < 500) {
-        // 클라이언트 에러 -> 예외 처리 가능
         console.error(`[❌ Error] ${status} ${config.url}`, data);
+        const customMessage = data?.message || "";
+        return Promise.reject(
+          new ApiException(customMessage, status, data, url),
+        );
       } else if (status >= 500) {
         // 서버 에러
         console.error(`[❌ Server Error] ${status} ${config.url}`, data);

@@ -24,5 +24,6 @@
         "titleBar.border": "#333258",
         "titleBar.inactiveBackground": "#33325899",
         "titleBar.inactiveForeground": "#ffffff99"
-    }
+    },
+    
 }

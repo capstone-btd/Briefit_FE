@@ -1,12 +1,6 @@
-import NaverLoginButton from "@/features/login/components/NaverLoginButton";
+// app/page.tsx
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <>
-      <h1 className="text-4xl font-bold mb-16">메인 페이지</h1>
-      <div>
-        <NaverLoginButton />
-      </div>
-    </>
-  );
+  redirect("/today-news");
 }

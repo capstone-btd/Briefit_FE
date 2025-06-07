@@ -9,6 +9,7 @@ const pxValues = (max: number): Record<string, string> => { // 0 ~ maxValueê¹Œì§
 const px0_10 = pxValues(10);
 const px0_100 = pxValues(100);
 const px0_300 = pxValues(300);
+const px0_800 = pxValues(800);
 
 const config: Config = {
   content: [
@@ -22,7 +23,7 @@ const config: Config = {
       lineHeight: px0_100,
       minWidth: px0_300,
       minHeight: px0_300,
-      spacing: px0_300,
+      spacing: px0_800,
     },
   },
 };
