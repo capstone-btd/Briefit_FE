@@ -7,6 +7,7 @@ import {
 import { DetailPageType } from "@/constants/detailPageType";
 import Link from "next/link";
 import ResponsiveImage from "./ResponsiveImage";
+import { NewsSummary } from "@/types/news/newsSummary";
 
 function NewsCardCategoryTag({ label }: { label: string }) {
   return (
@@ -16,10 +17,18 @@ function NewsCardCategoryTag({ label }: { label: string }) {
   );
 }
 
-export function NewsCard({ type, categoryLabel, newsId }: { type: DetailPageType, categoryLabel: string, newsId: number; }) {
+export function NewsCard({
+  type,
+  categoryLabel,
+  newsSummary,
+}: {
+  type: DetailPageType;
+  categoryLabel: string;
+  newsSummary: NewsSummary;
+}) {
   return (
-    <Link href={`${type}/detail/${newsId}`}>
-      <Card className="group rounded-20 relative w-full h-full p-20">
+    <Link href={`${type}/detail/${newsSummary.articleId}`}>
+      <Card className="group rounded-20 relative h-full w-full p-20">
         <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-50">
           <div className="rounded-12 h-full w-full bg-[linear-gradient(180deg,#FFFFFF00_20.67%,#00000080)]"></div>
         </div>
@@ -27,25 +36,17 @@ export function NewsCard({ type, categoryLabel, newsId }: { type: DetailPageType
           <div className="flex items-center gap-16">
             <NewsCardCategoryTag label={categoryLabel} />
             <div className="font-light-16 text-gray-400">
-              한겨레, 중앙일보, 경향신문
+              {newsSummary.pressCompanies.join(", ")} 
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="font-title-24 mb-12">
-            헌재, 평결 끝냈다... 4일 탄핵심판 선고
-          </div>
+          <div className="font-title-24 mb-12">{newsSummary.title}</div>
           <div className="font-light-16 h-80 overflow-hidden text-justify">
-            기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사
-            내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용
-            기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사
-            내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용
-            기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사
-            내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용 기사 내용
-            기사 내용 기사 내용 기사 내용
+            {newsSummary.body}
           </div>
           <ResponsiveImage
-            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+            src={newsSummary.imageUrl}
             alt="뉴스 기사 이미지"
             className="mx-auto mt-30 h-180 w-300"
           />
