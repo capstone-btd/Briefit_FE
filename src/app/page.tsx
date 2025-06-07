@@ -1,9 +1,6 @@
-import TodayNewsPage from "./today-news/[[...category]]/page";
+// app/page.tsx
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div>
-      <TodayNewsPage />
-    </div>
-  );
+  redirect("/today-news");
 }
