@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/auth/useAuthStore";
+import IconButton from "@/features/common/IconButton";
 
 const ActiveButton = {
   SCRAP: "scrap",
   SHARE: "share",
-  EDIT: "edit",
+  CUSTOM: "custom",
 } as const;
 
 type ActiveButtonType = (typeof ActiveButton)[keyof typeof ActiveButton];
@@ -18,48 +19,47 @@ export default function NewsPageHeader() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const isNew = useAuthStore((state) => state.isNew);
   const isUser = isLoggedIn && !isNew;
-  console.log(isUser);
+
+  const scrapHandler = () => {
+    setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
+  };
+  const shareHandler = async () => {
+    setActive(active === ActiveButton.SHARE ? null : ActiveButton.SHARE);
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      alert("링크가 복사되었습니다!");
+      setActive(null);
+    } catch (err) {
+      console.error("링크 복사 실패:", err);
+    }
+  };
+  const customHandler = () => {
+    setActive(active === ActiveButton.CUSTOM ? null : ActiveButton.CUSTOM);
+  };
+
   return (
     <div className="flex items-center gap-15">
       {isUser && (
-        <Button
-          variant="ghost"
-          className="aspect-square w-46 hover:bg-transparent"
-          onClick={() =>
-            setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP)
-          }
-        >
-          <img
-            src={`/assets/scrap-${isActive(ActiveButton.SCRAP) ? "active" : "inactive"}.png`}
-            alt="스크랩"
-          />
-        </Button>
+        <IconButton
+          iconName={"scrap"}
+          onClick={scrapHandler}
+          isActive={isActive(ActiveButton.SCRAP)}
+          alt="스크랩"
+        ></IconButton>
       )}
-      <Button
-        variant="ghost"
-        className="aspect-square w-46 hover:bg-transparent"
-        onClick={() =>
-          setActive(active === ActiveButton.SHARE ? null : ActiveButton.SHARE)
-        }
-      >
-        <img
-          src={`/assets/share-${isActive(ActiveButton.SHARE) ? "active" : "inactive"}.png`}
-          alt="공유"
-        />
-      </Button>
+      <IconButton
+        iconName={"share"}
+        onClick={shareHandler}
+        isActive={isActive(ActiveButton.SHARE)}
+        alt="공유"
+      ></IconButton>
       {isUser && (
-        <Button
-          variant="ghost"
-          className="aspect-square w-46 hover:bg-transparent"
-          onClick={() =>
-            setActive(active === ActiveButton.EDIT ? null : ActiveButton.EDIT)
-          }
-        >
-          <img
-            src={`/assets/pencil-${isActive(ActiveButton.EDIT) ? "active" : "inactive"}.png`}
-            alt="편집"
-          />
-        </Button>
+        <IconButton
+          iconName={"pencil"}
+          onClick={customHandler}
+          isActive={isActive(ActiveButton.CUSTOM)}
+          alt="커스텀"
+        ></IconButton>
       )}
     </div>
   );
