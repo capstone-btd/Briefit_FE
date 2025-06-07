@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/auth/useAuthStore";
 
 const ActiveButton = {
   SCRAP: "scrap",
@@ -14,22 +15,26 @@ type ActiveButtonType = (typeof ActiveButton)[keyof typeof ActiveButton];
 export default function NewsPageHeader() {
   const [active, setActive] = useState<ActiveButtonType | null>(null);
   const isActive = (key: ActiveButtonType) => active === key;
-
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const isNew = useAuthStore((state) => state.isNew);
+  const isUser = isLoggedIn && !isNew;
+  console.log(isUser);
   return (
     <div className="flex items-center gap-15">
-      <Button
-        variant="ghost"
-        className="aspect-square w-46 hover:bg-transparent"
-        onClick={() =>
-          setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP)
-        }
-      >
-        <img
-          src={`/assets/scrap-${isActive(ActiveButton.SCRAP) ? "active" : "inactive"}.png`}
-          alt="스크랩"
-        />
-      </Button>
-
+      {isUser && (
+        <Button
+          variant="ghost"
+          className="aspect-square w-46 hover:bg-transparent"
+          onClick={() =>
+            setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP)
+          }
+        >
+          <img
+            src={`/assets/scrap-${isActive(ActiveButton.SCRAP) ? "active" : "inactive"}.png`}
+            alt="스크랩"
+          />
+        </Button>
+      )}
       <Button
         variant="ghost"
         className="aspect-square w-46 hover:bg-transparent"
@@ -42,19 +47,20 @@ export default function NewsPageHeader() {
           alt="공유"
         />
       </Button>
-
-      <Button
-        variant="ghost"
-        className="aspect-square w-46 hover:bg-transparent"
-        onClick={() =>
-          setActive(active === ActiveButton.EDIT ? null : ActiveButton.EDIT)
-        }
-      >
-        <img
-          src={`/assets/pencil-${isActive(ActiveButton.EDIT) ? "active" : "inactive"}.png`}
-          alt="편집"
-        />
-      </Button>
+      {isUser && (
+        <Button
+          variant="ghost"
+          className="aspect-square w-46 hover:bg-transparent"
+          onClick={() =>
+            setActive(active === ActiveButton.EDIT ? null : ActiveButton.EDIT)
+          }
+        >
+          <img
+            src={`/assets/pencil-${isActive(ActiveButton.EDIT) ? "active" : "inactive"}.png`}
+            alt="편집"
+          />
+        </Button>
+      )}
     </div>
   );
 }

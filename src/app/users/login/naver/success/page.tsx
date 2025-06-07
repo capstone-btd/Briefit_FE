@@ -7,7 +7,7 @@ import { useAuthStore } from "@/stores/auth/useAuthStore";
 export default function NaverLoginCallbackPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const login = useAuthStore((state) => state.login);
+  const login = useAuthStore((state: { login: any; }) => state.login);
 
   useEffect(() => {
     const accessToken = searchParams.get("accessToken");
@@ -23,7 +23,7 @@ export default function NaverLoginCallbackPage() {
     if (isNewUser) {
       // 회원가입 로직 필요
     }
-    router.replace("/");
+    router.replace("/"); 
   }, [searchParams, router, login]);
 
   return <div></div>;
