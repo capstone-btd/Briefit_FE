@@ -9,16 +9,16 @@ body {
 }
 
 @font-face {
-  font-family: 'Pretendard Variable';
-  src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+  font-family: "Pretendard Variable";
+  src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
   font-weight: 45 920; /* 가변 폰트일 경우 범위 */
   font-style: normal;
   font-display: swap;
 }
 
- @theme {
+@theme {
   /* Typography */
-  --font-pretendard: "Pretendard Variable"; 
+  --font-pretendard: "Pretendard Variable";
   --font-title-50: 600 50px/100% var(--font-pretendard); /* 이름은 임시, 순서대로 weight, size, lineheight, font-family */
   --font-title-40: 600 40px/100% var(--font-pretendard);
   --font-title-30: 600 30px/100% var(--font-pretendard);
@@ -26,7 +26,7 @@ body {
   --font-title-24: 600 24px/100% var(--font-pretendard);
   --font-title-24-m: 500 24px/100% var(--font-pretendard);
   --font-title-20: 600 20px/100% var(--font-pretendard);
- 
+
   --font-basic-24-m: 500 24px/28px var(--font-pretendard);
   --font-basic-20-m: 500 20px/28px var(--font-pretendard);
   --font-basic-20: 400 20px/100% var(--font-pretendard);
@@ -38,80 +38,108 @@ body {
   --color-*: initial; /* 커스텀 컬러로 사용 */
 
   /* Primary */
-  --color-purple-50: #F5F2FF;
-  --color-purple-100: #EBE8FF;
-  --color-purple-200: #DAD4FF;
-  --color-purple-300: #C0B1FF;
-  --color-purple-400: #A185FF;
-  --color-purple-500: #7B47FF; 
-  --color-purple-600: #7530F7;
-  --color-purple-700: #671EE3;
-  --color-purple-800: #5518BF;
-  --color-purple-900: #47169C;
-  --color-purple-950: #2B0B6A; 
+  --color-purple-50: #f5f2ff;
+  --color-purple-100: #ebe8ff;
+  --color-purple-200: #dad4ff;
+  --color-purple-300: #c0b1ff;
+  --color-purple-400: #a185ff;
+  --color-purple-500: #7b47ff;
+  --color-purple-600: #7530f7;
+  --color-purple-700: #671ee3;
+  --color-purple-800: #5518bf;
+  --color-purple-900: #47169c;
+  --color-purple-950: #2b0b6a;
 
   /* Secondary */
-  --color-green-500: #63D661;
+  --color-green-500: #63d661;
 
   /* Gray */
-  --color-gray-50: #F6F6F6;
-  --color-gray-100: #E7E7E7;
-  --color-gray-200: #D1D1D1;
-  --color-gray-300: #B0B0B0;
+  --color-gray-50: #f6f6f6;
+  --color-gray-100: #e7e7e7;
+  --color-gray-200: #d1d1d1;
+  --color-gray-300: #b0b0b0;
   --color-gray-400: #888888;
-  --color-gray-500: #6D6D6D;
-  --color-gray-600: #5D5D5D;
-  --color-gray-700: #4F4F4F;
+  --color-gray-500: #6d6d6d;
+  --color-gray-600: #5d5d5d;
+  --color-gray-700: #4f4f4f;
   --color-gray-800: #454545;
-  --color-gray-900: #3D3D3D;
+  --color-gray-900: #3d3d3d;
   --color-gray-950: #282828;
 
   /* Theme(커스터마이징 테마색) */
 
   /* Profile */
-  --color-yellow-profile: #FACE34;
-  --color-beige-profile: #EFDCAC;
-  --color-blue-profile: #70A2DB;
-  --color-pink-profile: #FFB4CB;
-  --color-green-profile: #C6D657;
-  --color-brown-profile: #A79B97;
+  --color-yellow-profile: #face34;
+  --color-beige-profile: #efdcac;
+  --color-blue-profile: #70a2db;
+  --color-pink-profile: #ffb4cb;
+  --color-green-profile: #c6d657;
+  --color-brown-profile: #a79b97;
 
   /* ETC.. */
-  --color-red-100: #D73B3B;
-  --color-orange-100: #FB9536;
+  --color-red-100: #d73b3b;
+  --color-orange-100: #fb9536;
 
-  --color-black: #2A282D;
-  --color-white: #FFFFFF;
+  --color-black: #2a282d;
+  --color-white: #ffffff;
 }
 
 @layer utilities {
   /* Typography */
-  .font-title-50 { font: var(--font-title-50); }
-  .font-title-40 { font: var(--font-title-40); }
-  .font-title-30 { font: var(--font-title-30); }
-  .font-title-30-m { font: var(--font-title-30-m); }
-  .font-title-24 { font: var(--font-title-24);}
-  .font-title-24-m { font: var(--font-title-24-m);}
-  .font-title-20 { font: var(--font-title-20);}
-  
-  .font-basic-24-m { font: var(--font-basic-24-m); }
-  .font-basic-20-m { font: var(--font-basic-20-m); }
-  .font-basic-20 { font: var(--font-basic-20); }
-  .font-basic-16 { font: var(--font-basic-16); }
+  .font-title-50 {
+    font: var(--font-title-50);
+  }
+  .font-title-40 {
+    font: var(--font-title-40);
+  }
+  .font-title-30 {
+    font: var(--font-title-30);
+  }
+  .font-title-30-m {
+    font: var(--font-title-30-m);
+  }
+  .font-title-24 {
+    font: var(--font-title-24);
+  }
+  .font-title-24-m {
+    font: var(--font-title-24-m);
+  }
+  .font-title-20 {
+    font: var(--font-title-20);
+  }
 
-  .font-light-16 { font: var(--font-light-16); }
+  .font-basic-24-m {
+    font: var(--font-basic-24-m);
+  }
+  .font-basic-20-m {
+    font: var(--font-basic-20-m);
+  }
+  .font-basic-20 {
+    font: var(--font-basic-20);
+  }
+  .font-basic-16 {
+    font: var(--font-basic-16);
+  }
+
+  .font-light-16 {
+    font: var(--font-light-16);
+  }
 
   /* Gradient */
   .text-gradient-to-r {
-      @apply bg-gradient-to-r text-transparent bg-clip-text;
-    }
+    @apply bg-gradient-to-r bg-clip-text text-transparent;
+  }
   .input-gradient-border {
-      @apply p-2 rounded-full bg-gradient-to-r;
-   }
+    @apply rounded-full bg-gradient-to-r p-2;
+  }
   .input-inner {
-       @apply rounded-full w-full h-full bg-white text-gray-950 px-16 py-12 outline-none;
-   }
+    @apply h-full w-full rounded-full bg-white px-16 py-12 text-gray-950 outline-none;
+  }
 
+  /* Card Hover Effect */
+  .card-hover-effect {
+    @apply transition duration-200 hover:shadow-[0_0_3px_#7B47FF];
+  }
 }
 
 @theme inline {

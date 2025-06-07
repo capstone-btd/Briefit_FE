@@ -28,15 +28,15 @@ export function NewsCard({
 }) {
   return (
     <Link href={`${type}/detail/${newsSummary.articleId}`}>
-      <Card className="group rounded-20 relative h-full w-full p-20">
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-50">
-          <div className="rounded-12 h-full w-full bg-[linear-gradient(180deg,#FFFFFF00_20.67%,#00000080)]"></div>
-        </div>
+      <Card className="card-hover-effect group rounded-20 relative h-full w-full p-20">
+        {/* <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-50">
+          <div className="rounded-12 h-full w-full bg-[linear-gradient(180deg,#FFFFFF00_20.67%,#00000080)]"></div> */}
+        {/* </div> */}
         <CardHeader>
           <div className="flex items-center gap-16">
             <NewsCardCategoryTag label={categoryLabel} />
             <div className="font-light-16 text-gray-400">
-              {newsSummary.pressCompanies.join(", ")} 
+              {newsSummary.pressCompanies.join(", ")}
             </div>
           </div>
         </CardHeader>

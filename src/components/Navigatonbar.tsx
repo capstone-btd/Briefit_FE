@@ -55,7 +55,7 @@ export default function Navigationbar() {
               className={`font-title-20 block pb-20 transition-colors duration-300 ${
                 pathName .startsWith(path)
                   ? "text-purple-500"
-                  : "text-gray-400 hover:text-purple-300"
+                  : "text-gray-400 hover:text-gray-600"
               }`}
             >
               {label}

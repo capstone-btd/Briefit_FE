@@ -8,7 +8,7 @@ function NewsSourceCard({
   title: string;
 }) {
   return (
-    <Card className="rounded-10 h-150 w-280 cursor-pointer border p-20 transition-colors duration-200 hover:border-purple-300">
+    <Card className="card-hover-effect rounded-10 h-150 w-280 cursor-pointer border p-20 transition-colors duration-200">
       <div className="font-title-20 space-y-15">{company}</div>
       <div className="font-basic-20">{title}</div>
     </Card>
@@ -22,18 +22,18 @@ const newsSourceList = [
 ];
 
 export default function NewsSourceCardList() {
-    return (
-        <div className="mt-55">
-            <div className="font-title-24">이런 기사들을 모았어요</div>
-        <div className="flex gap-20 mt-15">
-          {newsSourceList.map((item, index) => (
-            <NewsSourceCard
-              key={index}
-              company={item.company}
-              title={item.title}
-            />
-          ))}
-        </div>
+  return (
+    <div className="mt-55">
+      <div className="font-title-24">이런 기사들을 모았어요</div>
+      <div className="mt-15 flex gap-20">
+        {newsSourceList.map((item, index) => (
+          <NewsSourceCard
+            key={index}
+            company={item.company}
+            title={item.title}
+          />
+        ))}
       </div>
-    );
+    </div>
+  );
 }
