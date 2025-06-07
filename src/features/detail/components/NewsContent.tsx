@@ -1,6 +1,6 @@
 export default function NewsContet () {
   return (
-      <div className="font-basic-24-m mb-55">
+      <div className="font-basic-20-m mb-55">
         라인야후는 최근 일본 총무성(MIC)에 제출한 보고서에서 네이버 및
         네이버클라우드와 공유하던 시스템 및 네트워크 대부분의 분리를 완료했다고
         밝혔다. 보안관리도 더 이상 네이버클라우드에 의존하지 않겠다는 뜻을

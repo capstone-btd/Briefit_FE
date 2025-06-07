@@ -24,7 +24,7 @@ const newsSourceList = [
 export default function NewsSourceCardList() {
     return (
         <div className="mt-55">
-            <div className="font-title-30">이런 기사들을 모았어요</div>
+            <div className="font-title-24">이런 기사들을 모았어요</div>
         <div className="flex gap-20 mt-15">
           {newsSourceList.map((item, index) => (
             <NewsSourceCard

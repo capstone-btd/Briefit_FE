@@ -46,7 +46,7 @@ export default function WordCloudServer({ wordList }: { wordList: string[] }) {
 
   for (let i = 0; i < wordList.length; i++) {
     const word = wordList[i];
-    const fontSize = Math.floor(Math.random() * 40) + 14;
+    const fontSize = Math.floor(Math.random() * 46) + 14;
     const width = word.length * (fontSize * 0.6);
     const height = fontSize * 1.2;
     const color = getRandomColor();
