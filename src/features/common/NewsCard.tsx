@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
 } from "@/components/ui/card";
 import { DetailPageType } from "@/constants/detailPageType";
@@ -23,7 +22,7 @@ export function NewsCard({
   newsSummary,
 }: {
   type: DetailPageType;
-  categoryLabel: string;
+  categoryLabel: string | null;
   newsSummary: NewsSummary;
 }) {
   return (
@@ -34,7 +33,7 @@ export function NewsCard({
         {/* </div> */}
         <CardHeader>
           <div className="flex items-center gap-16">
-            <NewsCardCategoryTag label={categoryLabel} />
+            <NewsCardCategoryTag label={categoryLabel ?? newsSummary.categories[0]} />
             <div className="font-light-16 text-gray-400">
               {newsSummary.pressCompanies.join(", ")}
             </div>
@@ -48,7 +47,8 @@ export function NewsCard({
           <ResponsiveImage
             src={newsSummary.imageUrl}
             alt="뉴스 기사 이미지"
-            className="mx-auto mt-30 h-180 w-300"
+            ratio={300 / 226}
+            className="mx-auto mt-25 w-[15vw]"
           />
         </CardContent>
       </Card>
