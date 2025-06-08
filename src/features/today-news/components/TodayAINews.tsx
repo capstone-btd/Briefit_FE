@@ -1,15 +1,22 @@
+"use client";
+
+import { useState } from "react";
 import { NewsCard } from "@/features/common/NewsCard";
 import NewsCategorybar from "@/features/common/NewsCategorybar";
 import { DetailPageType } from "@/constants/detailPageType";
 import { NewsSummary } from "@/types/news/newsSummary";
+import NewsPagination from "@/features/common/NewsPagination";
+
+const ITEMS_PER_PAGE = 9;
 
 export default function TodayAINews({
   categoryLabel,
 }: {
-  categoryLabel: string;
-  }) {
-  
-  const dummyNews: NewsSummary[] = Array.from({ length: 9 }, (_, i) => ({
+  categoryLabel: string | null;
+}) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const dummyNews: NewsSummary[] = Array.from({ length: 50 }, (_, i) => ({
     articleId: i + 1,
     categories: ["정치", "경제"],
     title: `AI 기술로 변화하는 글로벌 뉴스 산업 (${i + 1})`,
@@ -19,6 +26,11 @@ export default function TodayAINews({
     pressCompanies: ["한국일보", "중앙일보", "국민일보"],
   }));
 
+  const totalCount = dummyNews.length;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedNews = dummyNews.slice(startIndex, endIndex);
+
   return (
     <div className="space-y-30">
       <div className="flex items-center space-x-50">
@@ -26,17 +38,23 @@ export default function TodayAINews({
         <NewsCategorybar />
       </div>
 
-      {/* 뉴스 카드 그리드*/}
+      {/* 뉴스 카드 3x3 그리드 */}
       <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3">
-        {dummyNews.map((_, index) => (
+        {paginatedNews.map((news, index) => (
           <NewsCard
             key={index}
             type={DetailPageType.TODAY}
             categoryLabel={categoryLabel}
-            newsSummary={_}
+            newsSummary={news}
           />
         ))}
       </div>
+
+      {/* 페이지네이션 */}
+      <NewsPagination
+        totalCount={totalCount}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 }
