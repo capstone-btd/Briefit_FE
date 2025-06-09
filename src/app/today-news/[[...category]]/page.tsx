@@ -12,7 +12,7 @@ type Props = {
 export default function TodayNewsPage(props: Props) {
   const { category } = use(props.params);
   const categoryLabel =
-    newsCategories.find((e) => e.name == category)?.label;
+    newsCategories.find((e) => e.name == category)?.label ?? null;
   return (
     <div>
       <TodayAINews categoryLabel={categoryLabel} />
