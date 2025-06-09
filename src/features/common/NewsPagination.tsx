@@ -20,26 +20,19 @@ export default function NewsPagination({
   onPageChange,
 }: NewsPaginationProps) {
   const ITEMS_PER_PAGE = 9;
+  const PAGES_PER_STEP = 9;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
-
+  const totalSteps = Math.ceil(totalPages / PAGES_PER_STEP);
   const [currentPage, setCurrentPage] = useState(1);
+  const currentStep = Math.floor((currentPage - 1) / PAGES_PER_STEP);
 
-  // 보여줄 페이지 범위 계산 (예: 현재 4페이지면 2~6 등)
+  // 보여줄 페이지 범위 계산
   const getPageNumbers = () => {
-    const range = 5; // 현재 페이지 기준 앞뒤로 2개씩
-    let start = Math.max(currentPage - range, 1);
-    let end = Math.min(currentPage + range, totalPages);
-
-    // 항상 5개를 유지하고 싶을 때 (선택)
-    const visibleCount = 5;
-    if (end - start + 1 < visibleCount) {
-      if (start === 1) {
-        end = Math.min(start + visibleCount - 1, totalPages);
-      } else if (end === totalPages) {
-        start = Math.max(end - visibleCount + 1, 1);
-      }
-    }
-
+    let start = Math.max(currentStep * (PAGES_PER_STEP + 1), 1);
+    let end = Math.min(
+      currentStep * (PAGES_PER_STEP + 1) + PAGES_PER_STEP,
+      totalPages,
+    );
     const pages = [];
     for (let i = start; i <= end; i++) {
       pages.push(i);
@@ -55,12 +48,13 @@ export default function NewsPagination({
   return (
     <Pagination>
       <PaginationContent>
-        {currentPage > 1 && (
+        {currentStep > 0 && (
           <PaginationItem className="w-28">
-                      <PaginationPrevious
-                          
+            <PaginationPrevious
               href="#" // 페이지 상단으로 이동
-              onClick={() => handlePageChange(currentPage - 1)}
+              onClick={() =>
+                handlePageChange((currentStep - 1) * (PAGES_PER_STEP + 1) + 1)
+              }
             />
           </PaginationItem>
         )}
@@ -73,9 +67,7 @@ export default function NewsPagination({
               isActive={currentPage === page}
               onClick={() => handlePageChange(page)}
               className={`font-basic-20 ${
-                currentPage === page
-                  ? "text-purple-500"
-                  : "text-gray-400"
+                currentPage === page ? "text-purple-500" : "text-gray-400"
               }`}
             >
               {page}
@@ -84,11 +76,13 @@ export default function NewsPagination({
         ))}
 
         {/* 다음 페이지 화살표 */}
-        {currentPage < totalPages && (
+        {currentStep < totalSteps - 1 && (
           <PaginationItem>
             <PaginationNext
               href="#"
-              onClick={() => handlePageChange(currentPage + 1)}
+              onClick={() =>
+                handlePageChange((currentStep + 1) * (PAGES_PER_STEP + 1))
+              }
             />
           </PaginationItem>
         )}
