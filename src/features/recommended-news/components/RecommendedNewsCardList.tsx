@@ -3,14 +3,16 @@
 import React from "react";
 import { DetailPageType } from "@/constants/detailPageType";
 import { NewsCard } from "@/features/common/NewsCard";
-import { dummyNews } from "@/mock/dummyNews";
 import { MoreCardButton } from "@/features/common/MoreCardButton";
 import { newsCategories } from "@/constants/newsCategries";
+import { NewsSummary } from "@/types/news/newsSummary";
 
 export default function RecommendedNewsCardList({
   category,
+  newsList
 }: {
-  category: string;
+    category: string;
+    newsList: NewsSummary[];
 }) {
   const categoryLabel =
     newsCategories.find((cat) => cat.label === category)?.name ?? "";
@@ -25,7 +27,7 @@ export default function RecommendedNewsCardList({
         //   msOverflowStyle: "none",
         }}
       >
-        {dummyNews.map((news, index) => (
+        {newsList.map((news, index) => (
           <NewsCard
             key={index}
             type={DetailPageType.RECOMMENDED}
@@ -35,7 +37,7 @@ export default function RecommendedNewsCardList({
           />
         ))}
 
-        {dummyNews.length > 15 && (
+        {newsList.length >= 14 && (
           <MoreCardButton
             type={DetailPageType.RECOMMENDED}
             categoryLabel={categoryLabel}

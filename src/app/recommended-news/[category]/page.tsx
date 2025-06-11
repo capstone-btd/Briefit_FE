@@ -12,7 +12,7 @@ type Props = {
 export default function RecommendedNewsByCategory(props: Props) {
   const { category } = use(props.params);
   const categoryLabel =
-    newsCategories.find((e) => e.name == category)?.label ?? null;
+    newsCategories.find((e) => e.name == category)?.label;
   return (
     <div className="space-y-45">
       <div className="flex items-center gap-10">
@@ -24,7 +24,7 @@ export default function RecommendedNewsByCategory(props: Props) {
         </div>
         <div className="font-title-24">{categoryLabel}</div>
       </div>
-      <RecommendedNewsCardGrid categoryLabel={null}/>
+      <RecommendedNewsCardGrid categoryLabel={categoryLabel ?? ""}/>
     </div>
   );
 }
