@@ -1,20 +1,20 @@
-import { ApiException } from "@/exception/apiException";
-import axios from "axios";
+import ApiException from "@/exception/apiException";
+import api from "@/utils/axios";
 
-async function fetchNewsCardList({
-  selectedCategory,
+export default async function fetchNewsCardList({
+  selectedCategory
 }: {
   selectedCategory: string;
 }) {
-  const params = { category: selectedCategory };
+  const params = { category: encodeURIComponent(selectedCategory) };
   try {
-    const response = await axios.get("/articles", {
+    const response = await api.get("/articles", {
       params,
       headers: {
         "x-auth-not-required": "true", // 인증 헤더 제외
       },
     });
-    return response.data;
+     return response.data;
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리

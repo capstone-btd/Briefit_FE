@@ -1,4 +1,4 @@
-import { ApiException } from "@/exception/apiException";
+import ApiException from "@/exception/apiException";
 import axios from "axios";
 
 async function fetchNewsDetail({ id }: { id: number }) { // 수정 필요

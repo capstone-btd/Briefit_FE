@@ -1,12 +1,11 @@
-import { ApiException } from "@/exception/apiException";
-import { useAuthStore } from "@/stores/auth/useAuthStore";
+import ApiException from "@/exception/apiException";
 import api from "@/utils/axios";
 
 export default async function registerUser(name: string, categories: string[]) {
   try {
     const response = await api.post(
       `/users/registration?nickname=${encodeURIComponent(name)}`,
-      categories
+      categories,
     );
     return response.data;
   } catch (error) {

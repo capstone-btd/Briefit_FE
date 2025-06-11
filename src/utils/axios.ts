@@ -1,5 +1,4 @@
-import { ApiException } from "@/exception/apiException";
-import { useAuthStore } from "@/stores/auth/useAuthStore";
+import ApiException from "@/exception/apiException";
 import axios from "axios";
 
 // 요청/응답 인터셉트 및 로깅

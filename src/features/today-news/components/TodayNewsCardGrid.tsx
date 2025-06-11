@@ -1,20 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { NewsCard } from "@/features/common/NewsCard";
-import { DetailPageType } from "@/constants/detailPageType";
-import { NewsSummary } from "@/types/news/newsSummary";
-import NewsPagination from "@/features/common/NewsPagination";
 import { useAuthStore } from "@/stores/auth/useAuthStore";
 import SignUpModal from "@/features/signup/components/SignUpModal";
+import { DetailPageType } from "@/constants/detailPageType";
+import PaginatedNewsCardGrid from "@/features/common/PaginatedNewsCardGrid";
+import { NewsSummary } from "@/types/news/newsSummary";
 
 const ITEMS_PER_PAGE = 9;
 
 export default function TodayNewsCardGrid({
   categoryLabel,
+  newsSummaryList,
   className,
 }: {
   categoryLabel: string | null;
+  newsSummaryList: NewsSummary[];
   className?: string;
 }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,10 +35,6 @@ export default function TodayNewsCardGrid({
     pressCompanies: ["한국일보", "중앙일보", "국민일보"],
   }));
 
-  const totalCount = dummyNews.length;
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const paginatedNews = dummyNews.slice(startIndex, endIndex);
 
   // 회원가입 모달창 띄우기
   useEffect(() => {
@@ -48,22 +45,15 @@ export default function TodayNewsCardGrid({
 
   return (
     <div>
-      <div
-        className={`${className} grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3`}
-      >
-        {paginatedNews.map((news, index) => (
-          <NewsCard
-            key={index}
-            type={DetailPageType.TODAY}
-            categoryLabel={categoryLabel}
-            newsSummary={news}
-          />
-        ))}
+      <div className="mt-45">
+        <PaginatedNewsCardGrid
+          newsList={newsSummaryList}
+          itemsPerPage={ITEMS_PER_PAGE}
+          categoryLabel={categoryLabel}
+          type={DetailPageType.TODAY}
+          className={className}
+        />
       </div>
-      <NewsPagination
-        totalCount={totalCount}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
       {open && <SignUpModal open={open} onClose={() => setOpen(false)} />}
     </div>
   );
