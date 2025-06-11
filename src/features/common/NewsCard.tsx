@@ -43,7 +43,10 @@ export function NewsCard({
             {newsSummary.body}
           </div>
           <ResponsiveImage
-            src={newsSummary.imageUrl}
+            src={
+              newsSummary.imageUrl ??
+              "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+            }
             alt="뉴스 기사 이미지"
             ratio={300 / 226}
             className="mx-auto mt-25 w-[15vw] max-w-300"

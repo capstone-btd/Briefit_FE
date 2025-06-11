@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { NewsSource } from "@/types/news/newsData";
 
 function NewsSourceCard({
   company,
@@ -15,13 +16,9 @@ function NewsSourceCard({
   );
 }
 
-// 뉴스 소스 카드 리스트 컴포넌트
-const newsSourceList = [
-  { company: "한국경제", title: "삼성전자, 2분기 실적 발표" },
-  { company: "중앙일보", title: "정부, 부동산 정책 발표" },
-];
 
-export default function NewsSourceCardList() {
+export default function NewsSourceCardList({ newsSourceList }: { newsSourceList: NewsSource[]; }) {
+  // 클릭 시 url 로 이동하도록 수정
   return (
     <div className="mt-55">
       <div className="font-title-24">이런 기사들을 모았어요</div>
@@ -29,8 +26,8 @@ export default function NewsSourceCardList() {
         {newsSourceList.map((item, index) => (
           <NewsSourceCard
             key={index}
-            company={item.company}
-            title={item.title}
+            company={item.pressCompany}
+            title={item.sourceTitle}
           />
         ))}
       </div>

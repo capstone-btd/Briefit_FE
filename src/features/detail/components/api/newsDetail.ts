@@ -1,10 +1,20 @@
 import ApiException from "@/exception/apiException";
-import axios from "axios";
+import api from "@/utils/axios";
 
-async function fetchNewsDetail({ id }: { id: number }) { // 수정 필요
+export default async function fetchNewsDetail({
+  id,
+  containsAuthHeader,
+}: {
+  id: number;
+  containsAuthHeader: boolean;
+}) {
   const params = { "article-id": id };
+  const headers = containsAuthHeader ? {} : { "x-auth-not-required": "true" }; // 오늘의 뉴스일 경우 헤더 불필요
   try {
-    const response = await axios.get("/articles", { params });
+    const response = await api.get("/article", {
+      params,
+      headers,
+    });
     return response.data;
   } catch (error) {
     if (error instanceof ApiException) {
