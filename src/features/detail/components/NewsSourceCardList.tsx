@@ -18,17 +18,19 @@ function NewsSourceCard({
 
 
 export default function NewsSourceCardList({ newsSourceList }: { newsSourceList: NewsSource[]; }) {
-  // 클릭 시 url 로 이동하도록 수정
+
   return (
     <div className="mt-55">
       <div className="font-title-24">이런 기사들을 모았어요</div>
       <div className="mt-15 flex gap-20">
         {newsSourceList.map((item, index) => (
-          <NewsSourceCard
-            key={index}
-            company={item.pressCompany}
-            title={item.sourceTitle}
-          />
+          <a href={item.url} target="_blank">
+            <NewsSourceCard
+              key={index}
+              company={item.pressCompany}
+              title={item.sourceTitle}
+            />
+          </a>
         ))}
       </div>
     </div>

@@ -36,7 +36,7 @@ export default function RecommendedNewsDetail({ id }: Props) {
       <Button
         onClick={() => router.back()}
         variant="ghost"
-        className="aspect-square w-46 hover:bg-transparent"
+        className="aspect-square w-46 cursor-pointer hover:bg-transparent"
       >
         <img src="/assets/back-arrow.png" alt="뒤로가기" />
       </Button>
