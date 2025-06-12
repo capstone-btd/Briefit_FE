@@ -9,11 +9,11 @@ export default async function RecommendedNewsCardGrid({
   categoryLabel,
   className,
 }: {
-  categoryLabel: string;
+  categoryLabel: string | null;
   className?: string;
 }) {
   const newsList = await fetchRecommendedNewsCardList({
-    selectedCategory: categoryLabel,
+    selectedCategory: categoryLabel ?? "전체",
   });
   return (
     <div className="mt-45">

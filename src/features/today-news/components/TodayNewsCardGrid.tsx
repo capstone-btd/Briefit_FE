@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
-import { useAuthStore } from "@/stores/auth/useAuthStore";
-import SignUpModal from "@/features/signup/components/SignUpModal";
 import { DetailPageType } from "@/constants/detailPageType";
 import PaginatedNewsCardGrid from "@/features/common/PaginatedNewsCardGrid";
-import { NewsSummary } from "@/types/news/newsSummary";
 import fetchNewsCardList from "../api/news";
-import { dummyNews } from "@/mock/dummyNews";
 import NoContent from "@/features/common/NoContent";
 import SignUpModalWrapper from "@/features/signup/components/SignUpModalWrapper";
 
