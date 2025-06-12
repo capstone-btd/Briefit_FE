@@ -24,6 +24,10 @@ const config: Config = {
       minWidth: px0_300,
       minHeight: px0_300,
       spacing: px0_800,
+      colors: {
+        primary: 'var(--color-purple-500)',
+        secondary: 'var(--color-green-500)',
+      },
     },
   },
 };

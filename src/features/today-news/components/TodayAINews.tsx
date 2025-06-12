@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NewsCard } from "@/features/common/NewsCard";
 import NewsCategorybar from "@/features/common/NewsCategorybar";
 import { DetailPageType } from "@/constants/detailPageType";
 import { NewsSummary } from "@/types/news/newsSummary";
 import NewsPagination from "@/features/common/NewsPagination";
+import { useAuthStore } from "@/stores/auth/useAuthStore";
+import SignUpModal from "@/features/signup/components/SignUpModal";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -15,6 +17,11 @@ export default function TodayAINews({
   categoryLabel: string | null;
 }) {
   const [currentPage, setCurrentPage] = useState(1);
+
+  // 회원가입 모달창 상태관리 변수
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const isNew = useAuthStore((state) => state.isNew);
+  const [open, setOpen] = useState(false);
 
   const dummyNews: NewsSummary[] = Array.from({ length: 50 }, (_, i) => ({
     articleId: i + 1,
@@ -31,30 +38,40 @@ export default function TodayAINews({
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedNews = dummyNews.slice(startIndex, endIndex);
 
+  // 회원가입 모달창 띄우기
+  useEffect(() => {
+    if (isLoggedIn && isNew) {
+      setOpen(true);
+    }
+  }, [isLoggedIn, isNew]);
+
   return (
-    <div className="space-y-30">
-      <div className="flex items-center space-x-50">
-        <div className="font-title-24">오늘의 AI 뉴스</div>
-        <NewsCategorybar />
-      </div>
+    <>
+      <div className="space-y-30">
+        <div className="flex items-center space-x-50">
+          <div className="font-title-24">오늘의 AI 뉴스</div>
+          <NewsCategorybar />
+        </div>
 
-      {/* 뉴스 카드 3x3 그리드 */}
-      <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3">
-        {paginatedNews.map((news, index) => (
-          <NewsCard
-            key={index}
-            type={DetailPageType.TODAY}
-            categoryLabel={categoryLabel}
-            newsSummary={news}
-          />
-        ))}
-      </div>
+        {/* 뉴스 카드 3x3 그리드 */}
+        <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3">
+          {paginatedNews.map((news, index) => (
+            <NewsCard
+              key={index}
+              type={DetailPageType.TODAY}
+              categoryLabel={categoryLabel}
+              newsSummary={news}
+            />
+          ))}
+        </div>
 
-      {/* 페이지네이션 */}
-      <NewsPagination
-        totalCount={totalCount}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
-    </div>
+        {/* 페이지네이션 */}
+        <NewsPagination
+          totalCount={totalCount}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      </div>
+      {open && <SignUpModal open={open} onClose={() => setOpen(false)} />}
+    </>
   );
 }
