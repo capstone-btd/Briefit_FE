@@ -1,5 +1,5 @@
 import ApiException from "@/exception/apiException";
-import api from "@/utils/axios";
+import apiServer from "@/utils/apiServer";
 
 export default async function fetchRecommendedNewsCardList({
   selectedCategory,
@@ -8,7 +8,7 @@ export default async function fetchRecommendedNewsCardList({
 }) {
   const params = { category: encodeURIComponent(selectedCategory) };
   try {
-    const response = await api.get("/articles/recommend", {
+    const response = await apiServer.get("/articles/recommend", {
       params
     });
     return response.data;

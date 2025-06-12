@@ -2,6 +2,7 @@ import { NewsSummary } from "@/types/news/newsSummary";
 import fetchRecommendedNewsCardList from "../api/news";
 import { dummyNews } from "@/mock/dummyNews";
 import RecommendedNewsCardList from "./RecommendedNewsCardList";
+import NoContent from "@/features/common/NoContent";
 
 export default async function RecommendedNews() {
     const newsList = (await fetchRecommendedNewsCardList({
@@ -21,19 +22,23 @@ export default async function RecommendedNews() {
   }
 
   // 카테고리 정렬 (가나다순)
-  const sortdCategories = Object.keys(newsByCategory).sort((a, b) =>
+  const sortedCategories = Object.keys(newsByCategory).sort((a, b) =>
     a.localeCompare(b, "ko"),
   );
     
   return (
     <div>
-      {sortdCategories.map((category, index) => (
-        <RecommendedNewsCardList
-          key={index}
-          category={category}
-          newsList={newsByCategory[category]}
-        />
-      ))}
+      {newsList.length === 0 ? (
+        <NoContent message={"불러올 뉴스가 없어요."} />
+      ) : (
+        sortedCategories.map((category) => (
+          <RecommendedNewsCardList
+            key={category}
+            category={category}
+            newsList={newsByCategory[category] ?? []}
+          />
+        ))
+      )}
     </div>
   );
 }

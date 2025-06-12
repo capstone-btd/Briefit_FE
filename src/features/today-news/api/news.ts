@@ -1,5 +1,5 @@
 import ApiException from "@/exception/apiException";
-import api from "@/utils/axios";
+import apiServer from "@/utils/apiServer";
 
 export default async function fetchNewsCardList({
   selectedCategory
@@ -8,7 +8,7 @@ export default async function fetchNewsCardList({
 }) {
   const params = { category: encodeURIComponent(selectedCategory) };
   try {
-    const response = await api.get("/articles", {
+    const response = await apiServer.get("/articles", {
       params,
       headers: {
         "x-auth-not-required": "true", // 인증 헤더 제외
