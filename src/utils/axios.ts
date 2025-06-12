@@ -1,4 +1,4 @@
-import { ApiException } from "@/exception/apiException";
+import ApiException from "@/exception/apiException";
 import { useAuthStore } from "@/stores/auth/useAuthStore";
 import axios from "axios";
 

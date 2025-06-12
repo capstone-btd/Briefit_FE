@@ -1,21 +1,31 @@
 import { newsCategories } from "@/constants/newsCategries";
-import TodayAINews from "@/features/today-news/components/TodayAINews";
+import NewsCategorybar from "@/features/common/NewsCategorybar";
 import TodayIssue from "@/features/today-news/components/TodayIssue";
-import { use } from "react";
+import TodayNewsCardGrid from "@/features/today-news/components/TodayNewsCardGrid";
 
 type Props = {
-  params: Promise<{
+  params: {
     category: string;
-  }>;
+  };
 };
 
-export default function TodayNewsPage(props: Props) {
-  const { category } = use(props.params);
+export default async function TodayNewsPage({ params }: Props) {
+  const { category } = await params;
   const categoryLabel =
-    newsCategories.find((e) => e.name == category)?.label ?? null;
+    newsCategories.find((e) => e.name == category)?.label ?? null; // '전체'는 null 값으로 전달
+  
   return (
     <div>
-      <TodayAINews categoryLabel={categoryLabel} />
+      <div className="flex items-center space-x-50">
+        <div className="font-title-24">오늘의 AI 뉴스</div>
+        <NewsCategorybar />
+      </div>
+      <div>
+        <TodayNewsCardGrid
+          categoryLabel={categoryLabel}
+          className="mt-30"
+        />
+      </div>
       <div className="mt-70">
         <TodayIssue />
       </div>
