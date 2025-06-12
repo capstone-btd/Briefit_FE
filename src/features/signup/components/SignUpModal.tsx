@@ -6,7 +6,9 @@ import SignUpStepComplete from "./SignUpStepComplete";
 import SignUpStepsIcons from "./SignUpStepsIcons";
 import { X } from "lucide-react";
 import { useSignUpStore } from "@/stores/signUp/useSignUpStore";
-import { registerUser } from "../api/signup";
+import registerUser from "../api/signup";
+import { useAuthStore } from "@/stores/auth/useAuthStore";
+
 
 interface SignUpModalProps {
   open: boolean;
@@ -21,9 +23,9 @@ export default function SignUpModal({ open, onClose }: SignUpModalProps) {
   const handleRegister = async () => {
     try {
       await registerUser(name, categories);
+      useAuthStore.setState({ isNew: false }); // 로컬 스토리지 상태 업데이트
       setStep(2); // 완료 단계로 이동
     } catch (e) {
-      console.log(e);
       alert("회원가입에 실패했습니다.");
     }
   };

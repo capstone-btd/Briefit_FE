@@ -1,3 +1,4 @@
+import { ApiException } from "@/exception/apiException";
 import axios from "axios";
 
 async function fetchNewsCardList({

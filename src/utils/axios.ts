@@ -1,3 +1,5 @@
+import { ApiException } from "@/exception/apiException";
+import { useAuthStore } from "@/stores/auth/useAuthStore";
 import axios from "axios";
 
 // 요청/응답 인터셉트 및 로깅
@@ -13,26 +15,27 @@ const api = axios.create({
 
 axios.defaults.withCredentials = true;
 
+
 // 요청 인터셉터
 api.interceptors.request.use(
-    (config) => {
-    const auth_header = config.headers["x-auth-not-required"];
-        if (auth_header) return config;
-        
-    const token =
-      typeof window !== "undefined"
-        ? localStorage.getItem("accessToken")
-        : null;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+  (config) => {
+    const { accessToken } = useAuthStore.getState();
+
+    const skipAuth = config.headers?.["x-auth-not-required"]; // 인증 헤더가 필요 없는 경우 포함
+
+    console.log(`🚀 [Request] ${config.method?.toUpperCase()} ${config.url}`, { // 요청 로그
+      config
+    });
+
+    if (skipAuth) {
+      return config;
     }
 
-    // 요청 로그
-    console.log(
-      `🚀 [Request] ${config.method?.toUpperCase()} ${config.url}`,
-      config,
-    );
-
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    } else {
+      console.warn("🔐 [Auth Warning] accessToken이 없습니다.");
+    }
     return config;
   },
   (error) => {
@@ -41,10 +44,12 @@ api.interceptors.request.use(
   },
 );
 
+
 api.interceptors.response.use(
   (response) => {
+    console.log(response);
     const { status, config, data } = response;
-
+    console.log(status, config, data)
     if (status >= 200 && status < 300) {
       // 성공 응답
       console.log(`💡 [Response] ${status} ${config.url}`, data);
@@ -68,11 +73,7 @@ api.interceptors.response.use(
         // 서버 에러
         console.error(`[❌ Server Error] ${status} ${config.url}`, data);
       }
-    } else if (error.request) {
-      console.error("[❌ No Response]", error.request);
-    } else {
-      console.error("[❌ Axios Config Error]", error.message);
-    }
+    } 
     return Promise.reject(error); // 이후 catch문에서 처리
   },
 );

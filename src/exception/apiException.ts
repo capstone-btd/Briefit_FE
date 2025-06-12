@@ -1,4 +1,4 @@
-class ApiException extends Error {
+export class ApiException extends Error {
   status: number;
   data: any;
   url: string;

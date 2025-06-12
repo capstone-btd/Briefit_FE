@@ -19,10 +19,7 @@ export default function NaverLoginCallbackPage() {
     }
 
     login(accessToken, isNewUser);
-
-    if (isNewUser) {
-      // 회원가입 로직 필요
-    }
+    
     router.replace("/"); 
   }, [searchParams, router, login]);
 

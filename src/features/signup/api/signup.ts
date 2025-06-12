@@ -1,25 +1,20 @@
+import { ApiException } from "@/exception/apiException";
 import { useAuthStore } from "@/stores/auth/useAuthStore";
+import api from "@/utils/axios";
 
-export async function registerUser(name: string, categories: string[]) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_SERVER_URL;
-  const accessToken = useAuthStore.getState().accessToken;
-
-  const response = await fetch(
-    `${baseUrl}/users/registration?nickname=${encodeURIComponent(name)}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken}`
-      },
-      body: JSON.stringify(categories),
+export default async function registerUser(name: string, categories: string[]) {
+  try {
+    const response = await api.post(
+      `/users/registration?nickname=${encodeURIComponent(name)}`,
+      categories
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof ApiException) {
+      // 예외 처리
+    } else {
+      console.error(error);
     }
-  );
-
-  if (!response.ok) {
-    // 서버에서 에러 메시지 반환 시
-    const error = await response.text();
-    throw new Error(error || "회원가입 요청 실패");
+    return;
   }
-  return await response.json();
 }
