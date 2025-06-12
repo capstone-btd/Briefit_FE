@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/stores/auth/useAuthStore";
 import SignUpModal from "@/features/signup/components/SignUpModal";
@@ -8,47 +6,37 @@ import PaginatedNewsCardGrid from "@/features/common/PaginatedNewsCardGrid";
 import { NewsSummary } from "@/types/news/newsSummary";
 import fetchNewsCardList from "../api/news";
 import { dummyNews } from "@/mock/dummyNews";
+import NoContent from "@/features/common/NoContent";
+import SignUpModalWrapper from "@/features/signup/components/SignUpModalWrapper";
 
 const ITEMS_PER_PAGE = 9;
 
-export default function TodayNewsCardGrid({
+export default async function TodayNewsCardGrid({
   categoryLabel,
   className,
 }: {
   categoryLabel: string | null;
   className?: string;
   }) {
-  
 
-
-  // 회원가입 모달창 상태관리 변수
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const isNew = useAuthStore((state) => state.isNew);
-  const [open, setOpen] = useState(false);
-
-  // 회원가입 모달창 띄우기
-  useEffect(() => {
-    if (isLoggedIn && isNew) {
-      setOpen(true);
-    }
-  }, [isLoggedIn, isNew]);
-
-  // const newsList = await fetchNewsCardList({
-  //   selectedCategory: categoryLabel ?? "전체",
-  // });
+  const newsList = await fetchNewsCardList({
+    selectedCategory: categoryLabel ?? "전체",
+  });
 
   return (
-    <div>
-      <div className="mt-45">
+    <div className="mt-45">
+      {newsList.length === 0 ? (
+        <NoContent message="불러올 뉴스가 없어요." />
+      ) : (
         <PaginatedNewsCardGrid
-          newsList={dummyNews}
+          newsList={newsList}
           itemsPerPage={ITEMS_PER_PAGE}
           categoryLabel={categoryLabel}
           type={DetailPageType.TODAY}
           className={className}
         />
-      </div>
-      {open && <SignUpModal open={open} onClose={() => setOpen(false)} />}
+      )}
+      <SignUpModalWrapper />
     </div>
   );
 }
