@@ -1,11 +1,10 @@
 import ApiException from "@/exception/apiException";
-import { useAuthStore } from "@/stores/auth/useAuthStore";
 import axios from "axios";
 
-// 요청/응답 인터셉트 및 로깅
+// '서버 컴포넌트용' 요청/응답 인터셉트 및 로깅
 
 // Axios 인스턴스 생성
-const api = axios.create({
+const apiServer = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_SERVER_URL,
   timeout: 10000,
   headers: {
@@ -15,16 +14,17 @@ const api = axios.create({
 
 axios.defaults.withCredentials = true;
 
-
 // 요청 인터셉터
-api.interceptors.request.use(
-  (config) => {
-    const { accessToken } = useAuthStore.getState();
+apiServer.interceptors.request.use(
+  async (config) => {
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
 
     const skipAuth = config.headers?.["x-auth-not-required"]; // 인증 헤더가 필요 없는 경우 포함
 
     console.log(`🚀 [Request] ${config.method?.toUpperCase()} ${config.url}`, { // 요청 로그
-      config
+      config,
     });
 
     if (skipAuth) {
@@ -44,12 +44,11 @@ api.interceptors.request.use(
   },
 );
 
-
-api.interceptors.response.use(
+apiServer.interceptors.response.use(
   (response) => {
     console.log(response);
     const { status, config, data } = response;
-    console.log(status, config, data)
+    console.log(status, config, data);
     if (status >= 200 && status < 300) {
       // 성공 응답
       console.log(`💡 [Response] ${status} ${config.url}`, data);
@@ -73,9 +72,9 @@ api.interceptors.response.use(
         // 서버 에러
         console.error(`[❌ Server Error] ${status} ${config.url}`, data);
       }
-    } 
+    }
     return Promise.reject(error); // 이후 catch문에서 처리
   },
 );
 
-export default api;
+export default apiServer;

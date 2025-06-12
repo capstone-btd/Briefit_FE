@@ -13,7 +13,7 @@ export default async function RecommendedNewsCardGrid({
   className?: string;
 }) {
   const newsList = await fetchRecommendedNewsCardList({
-    selectedCategory: categoryLabel ?? "전체",
+    selectedCategory: categoryLabel ?? "",
   });
   return (
     <div className="mt-45">

@@ -1,5 +1,5 @@
 import ApiException from "@/exception/apiException";
-import api from "@/utils/axios";
+import apiClient from "@/utils/apiClient";
 
 export default async function fetchNewsDetail({
   id,
@@ -11,7 +11,7 @@ export default async function fetchNewsDetail({
   const params = { "article-id": id };
   const headers = containsAuthHeader ? {} : { "x-auth-not-required": "true" }; // 오늘의 뉴스일 경우 헤더 불필요
   try {
-    const response = await api.get("/article", {
+    const response = await apiClient.get("/article", {
       params,
       headers,
     });

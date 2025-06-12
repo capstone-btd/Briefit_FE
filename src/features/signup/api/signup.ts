@@ -1,9 +1,9 @@
 import ApiException from "@/exception/apiException";
-import api from "@/utils/axios";
+import apiClient from "@/utils/apiClient";
 
 export default async function registerUser(name: string, categories: string[]) {
   try {
-    const response = await api.post(
+    const response = await apiClient.post(
       `/users/registration?nickname=${encodeURIComponent(name)}`,
       categories,
     );
