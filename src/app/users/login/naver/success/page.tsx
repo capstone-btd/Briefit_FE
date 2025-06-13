@@ -1,32 +1,15 @@
-"use client";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
-import { useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useAuthStore } from "@/stores/auth/useAuthStore";
-import { setCookie } from "cookies-next";
+// Client Component를 CSR로 불러오기
+const NaverLoginCallbackPage = dynamic(
+  () => import("@/features/login/components/NaverLoginCallBack"),
+);
 
-export default function NaverLoginCallbackPage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const login = useAuthStore((state: { login: any }) => state.login);
-
-  useEffect(() => {
-    const accessToken = searchParams.get("accessToken");
-    const isNewUser = searchParams.get("registration") === "no";
-
-    if (!accessToken) {
-      console.log("ERROR: 토큰 없음");
-      return;
-    }
-
-    login(accessToken, isNewUser);
-    setCookie("accessToken", accessToken, {
-      maxAge: 60 * 60 * 24,
-      secure: false,
-    });
-
-    router.replace("/");
-  }, [searchParams, router, login]);
-
-  return <div></div>;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>로그인 처리 중입니다...</div>}>
+      <NaverLoginCallbackPage />
+    </Suspense>
+  );
 }

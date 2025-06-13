@@ -1,6 +1,6 @@
-import config from "./.prettierrc.json" with { type: "json" };
-
+/* eslint-disable import/no-anonymous-default-export */
+// prettier.config.ts
 export default {
-  ...config,
+  plugins: ["prettier-plugin-tailwindcss"],
   tailwindStylesheet: "./src/app/globals.css",
 };

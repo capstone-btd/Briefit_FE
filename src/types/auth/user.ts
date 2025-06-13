@@ -7,5 +7,5 @@ export type User = {
   profileImage?: string;
   preferredCategories: string[]; // 타입 수정 필요  
   preferredTags: string[]; // 타입 수정 필요
-  scrapedInfo: any[] // 타입 수정 필요
+  scrapedInfo: unknown[] // 타입 수정 필요
 };

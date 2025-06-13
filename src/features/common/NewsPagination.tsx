@@ -30,8 +30,8 @@ export default function NewsPagination({
 
   // 보여줄 페이지 범위 계산
   const getPageNumbers = () => {
-    let start = Math.max(currentStep * (PAGES_PER_STEP + 1), 1);
-    let end = Math.min(
+    const start = Math.max(currentStep * (PAGES_PER_STEP + 1), 1);
+    const end = Math.min(
       currentStep * (PAGES_PER_STEP + 1) + PAGES_PER_STEP,
       totalPages,
     );

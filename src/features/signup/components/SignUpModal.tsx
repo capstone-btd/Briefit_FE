@@ -26,6 +26,7 @@ export default function SignUpModal({ open, onClose }: SignUpModalProps) {
       useAuthStore.setState({ isNew: false }); // 로컬 스토리지 상태 업데이트
       setStep(2); // 완료 단계로 이동
     } catch (e) {
+      console.log(e);
       alert("회원가입에 실패했습니다.");
     }
   };
