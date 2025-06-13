@@ -25,7 +25,7 @@ export function NewsCard({
   }) {
 
   return (
-    <Link href={`${type}/detail/${newsSummary.articleId}`}>
+    <Link prefetch={true} href={`${type}/detail/${newsSummary.articleId}`}>
       <Card className={`${className ?? ""} card-hover-effect rounded-20 p-20`}>
         <CardHeader>
           <div className="flex items-center gap-16">

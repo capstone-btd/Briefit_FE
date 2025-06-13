@@ -12,7 +12,7 @@ export function MoreCardButton({
   className?: string;
 }) {
   return (
-    <Link href={`${type}/${categoryLabel}`}>
+    <Link prefetch={true} href={`${type}/${categoryLabel}`}>
       <Card
         className={`${className ?? ""} rounded-20 h-full bg-gray-50 p-20 shadow-[0_0_3px_#D9D9D9]`}
       >

@@ -13,7 +13,7 @@ export default function SignUpStepComplete() {
       />
       <p className="mt-20 font-semibold">회원가입이</p>
       <p className="mb-45 font-semibold">완료되었습니다.</p>
-      <Link href="/recommended-news">
+      <Link prefetch={true} href="/recommended-news">
         <Button className="flex justify-center rounded-full bg-purple-500 px-27 py-22 text-white">
           나의 추천뉴스 보러가기 →
         </Button>

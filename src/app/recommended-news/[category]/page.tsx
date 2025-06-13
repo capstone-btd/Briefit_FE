@@ -16,11 +16,11 @@ export default function RecommendedNewsByCategory(props: Props) {
   return (
     <div className="space-y-45">
       <div className="flex items-center gap-10">
-        <Link href={"/recommended-news"}>
+        <Link prefetch={true} href={"/recommended-news"}>
           <div className="font-title-24">나의 추천 뉴스</div>
         </Link>
         <div className="aspect-square w-20">
-          <img src={"/assets/right-arrow.png"} />
+          <img src={"/assets/right-arrow.png"} alt="분류" />
         </div>
         <div className="font-title-24">{categoryLabel}</div>
       </div>

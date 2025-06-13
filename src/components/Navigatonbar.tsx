@@ -38,7 +38,7 @@ export default function Navigationbar() {
   return (
     <nav className="relative">
       <div className="flex items-baseline justify-between gap-24 xl:gap-50 2xl:gap-100">
-        <Link href={navItems[0].path}>
+        <Link prefetch={true} href={navItems[0].path}>
           <Logo />
         </Link>
         <div
@@ -47,6 +47,7 @@ export default function Navigationbar() {
         >
           {navItems.map(({ label, path }, index) => (
             <Link
+              prefetch={true}
               key={path}
               ref={(el) => {
                 linkRefs.current[index] = el;
