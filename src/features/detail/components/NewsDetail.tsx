@@ -14,15 +14,16 @@ import { NewsData, NewsSource } from "@/types/news/newsData";
 
 type Props = {
   id: number;
+  containsAuthHeader: boolean; // 데이터 페칭 시 인증 토큰 필요 여부
 };
 
-export default function RecommendedNewsDetail({ id }: Props) {
+export default function NewsDetail({ id, containsAuthHeader }: Props) {
   const router = useRouter();
   const [newsData, setNewsData] = useState<NewsData | null>(null);
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const data = await fetchNewsDetail({ id, containsAuthHeader: true });
+      const data = await fetchNewsDetail({ id, containsAuthHeader: containsAuthHeader });
       setNewsData(data);
     };
     fetchDetail();
