@@ -67,6 +67,43 @@ body {
   --color-gray-950: #282828;
 
   /* Theme(커스터마이징 테마색) */
+  --color-yellow-highlight: #FFF839;
+  --color-green-highlight: #B6FF39;
+  --color-pink-highlight: #FFB5DE;
+  --color-blue-highlight: #97E1FF;
+  --color-orange-highlight: #FFB339;
+  --color-purple-highlight: #BC95FF;
+
+  --color-pink-theme-bg: #FEF1F7;
+  --color-blue-theme-bg: #E6F4FF;
+  --color-beige-theme-bg: #FFF8E2;
+  --color-purple-theme-bg: #F0E9FC;
+  --color-green-theme-bg: #F0FBE1;
+
+  --color-pink-theme-light: #FFF6FA;
+  --color-blue-theme-light: #F1F9FF;
+  --color-beige-theme-light: #FFFBEC;
+  --color-purple-theme-light: #F6F3FD;
+  --color-green-theme-light: #F5FCEB;
+
+  --color-pink-theme-dark: #F1D9E7;
+  --color-blue-theme-dark: #D4EBFD;
+  --color-beige-theme-dark: #E5DEC6;
+  --color-purple-theme-dark: #E6DFF3;
+  --color-green-theme-dark: #C9DBC3;
+
+  --color-pink-theme-text1: #6B5544;
+  --color-blue-theme-text1: #444C69;
+  --color-beige-theme-text1: #4A6343;
+  --color-purple-theme-text1: #6541A5;
+  --color-green-theme-text1: #3F6E6A;
+
+  --color-pink-theme-text2: #B4A39D;
+  --color-blue-theme-text2: #95A0B3;
+  --color-beige-theme-text2: #A4AD93;
+  --color-purple-theme-text2: #AB95D0;
+  --color-green-theme-text2: #94B3A7;
+
 
   /* Profile */
   --color-yellow-profile: #face34;

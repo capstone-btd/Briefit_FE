@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuthStore, isLoggedInUser } from "@/stores/auth/useAuthStore";
 import IconButton from "@/features/common/IconButton";
+import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
 
 const ActiveButton = {
   SCRAP: "scrap",
@@ -16,6 +17,8 @@ export default function NewsPageHeader() {
   const [active, setActive] = useState<ActiveButtonType | null>(null);
   const isActive = (key: ActiveButtonType) => active === key;
   const isUser = useAuthStore(isLoggedInUser);
+
+  const { toggleCustomBar } = useNewsCustomStore();
 
   const scrapHandler = () => {
     setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
@@ -32,10 +35,11 @@ export default function NewsPageHeader() {
   };
   const customHandler = () => {
     setActive(active === ActiveButton.CUSTOM ? null : ActiveButton.CUSTOM);
+    toggleCustomBar();
   };
 
   return (
-    <div className="flex items-center gap-15">
+    <div className="flex items-center gap-10 mt-10">
       {isUser && (
         <IconButton
           iconName={"scrap"}

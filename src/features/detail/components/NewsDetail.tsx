@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import Divider from "@/features/common/Divider";
 import ResponsiveImage from "@/features/common/ResponsiveImage";
 import fetchNewsDetail from "@/features/detail/components/api/newsDetail";
@@ -11,6 +11,8 @@ import NewsPageHeader from "@/features/detail/components/NewsPageHeader";
 import NewsSourceCardList from "@/features/detail/components/NewsSourceCardList";
 import NewsTitle from "@/features/detail/components/NewsTitle";
 import { NewsData, NewsSource } from "@/types/news/newsData";
+import NewsCustomBar from "./NewsCustomBar";
+import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
 
 type Props = {
   id: number;
@@ -20,6 +22,7 @@ type Props = {
 export default function NewsDetail({ id, containsAuthHeader }: Props) {
   const router = useRouter();
   const [newsData, setNewsData] = useState<NewsData | null>(null);
+  const { activeThemeColor, activeHighlightColor, highlights } = useNewsCustomStore();
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -33,14 +36,9 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
     newsData?.sources.map((source: NewsSource) => source.pressCompany) ?? [];
 
   return (
-    <div className="flex space-x-20">
-      <Button
-        onClick={() => router.back()}
-        variant="ghost"
-        className="aspect-square w-46 cursor-pointer hover:bg-transparent"
-      >
-        <img src="/assets/back-arrow.png" alt="뒤로가기" />
-      </Button>
+    <div className={`flex space-x-20 ${activeThemeColor}`}>
+      <NewsCustomBar />
+      <ArrowLeft strokeWidth={1.5} size={30} color="#888888" onClick={() => router.back()} className="mr-15 aspect-square cursor-pointer hover:bg-transparent"/>
       <div className="w-full">
         <NewsPageHeader />
         {newsData ? (
@@ -57,7 +55,7 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
               alt="뉴스 기사 이미지"
               className="mx-auto my-60 h-470 w-710"
             />
-            <NewsContent body={newsData.body} />
+            <NewsContent body={newsData.body} highlights={highlights} />
             <Divider />
             <NewsSourceCardList newsSourceList={newsData.sources} />
           </>
