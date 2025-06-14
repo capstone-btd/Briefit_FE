@@ -1,3 +1,4 @@
+import { mockWordCloudData } from "@/mock/wordList";
 import WordCloudServer from "./WordCloudServer";
 
 export default function TodayIssue() {
@@ -10,27 +11,7 @@ export default function TodayIssue() {
         </div>
       </div>
       <WordCloudServer
-        wordList={[
-          "AI",
-          "뉴스",
-          "기술",
-          "세계",
-          "경제",
-          "한국",
-          "데이터",
-          "정책",
-          "환경",
-          "AI",
-          "뉴스",
-          "기술",
-          "세계",
-          "경제",
-          "한국",
-          "데이터",
-          "정책",
-          "환경",
-          
-        ]}
+        wordCloudData={mockWordCloudData}
       />
     </div>
   );
