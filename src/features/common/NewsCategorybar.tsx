@@ -36,8 +36,7 @@ export default function NewsCategoryBar() {
       : decodeURIComponent(lastSegment);
 
   const onCategorySelected = (name: string) => {
-    const encodedName = encodeURIComponent(name);
-    router.push(`/today-news/${encodedName}`);
+    router.push(`/today-news/${name}`);
   };
 
   return (

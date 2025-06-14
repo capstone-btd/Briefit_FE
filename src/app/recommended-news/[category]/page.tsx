@@ -11,8 +11,8 @@ type Props = {
 
 export default function RecommendedNewsByCategory(props: Props) {
   const { category } = use(props.params);
-  const categoryLabel =
-    newsCategories.find((e) => e.name == category)?.label ?? null;
+  const categoryLabel = category ?
+    newsCategories.find((e) => e.name == category[0])?.label ?? null : null;
   return (
     <div className="space-y-45">
       <div className="flex items-center gap-10">

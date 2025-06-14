@@ -6,7 +6,7 @@ export default async function fetchNewsCardList({
 }: {
   selectedCategory: string;
 }) {
-  const params = { category: encodeURIComponent(selectedCategory) };
+  const params = { category: selectedCategory };
   try {
     const response = await apiServer.get("/articles", {
       params,
