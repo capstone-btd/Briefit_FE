@@ -26,6 +26,7 @@ body {
   --font-title-24: 600 24px/100% var(--font-pretendard);
   --font-title-24-m: 500 24px/100% var(--font-pretendard);
   --font-title-20: 600 20px/100% var(--font-pretendard);
+  --font-title-16: 600 16px/100% var(--font-pretendard);
 
   --font-basic-24-m: 500 24px/28px var(--font-pretendard);
   --font-basic-20-m: 500 20px/28px var(--font-pretendard);
@@ -106,6 +107,9 @@ body {
   }
   .font-title-20 {
     font: var(--font-title-20);
+  }
+  .font-title-16 {
+    font: var(--font-title-16);
   }
 
   .font-basic-24-m {
