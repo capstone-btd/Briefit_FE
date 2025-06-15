@@ -28,7 +28,7 @@ export default function ResponsiveImage({
     rounded === "none" ? "rounded-none" : `rounded-${rounded}`;
 
   return (
-    <div className={`relative mx-auto ${className}`} style={aspectRatioStyle}>
+    <div className={`relative ${className}`} style={aspectRatioStyle}>
       <Image
         src={src}
         alt={alt}

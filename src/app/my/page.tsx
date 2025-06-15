@@ -1,7 +1,5 @@
-export default function MyPage () {
-    return (
-        <div>
-            마이페이지
-        </div>
-    );
+import { redirect } from "next/navigation";
+
+export default function MyPage() {
+  redirect("/my/scrap");
 }
