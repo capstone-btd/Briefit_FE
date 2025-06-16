@@ -1,9 +1,22 @@
+import { MyNewsType } from "@/constants/myNewsType";
+import { newsCategories } from "@/constants/newsCategries";
 import MyNews from "@/features/my/components/MyNews";
 
-export default function MyScrapPage() {
+type Props = {
+  params: {
+    category: string;
+  };
+};
+
+export default function MyScrapPage({ params }: Props) {
+    const { category } = params;
+    const categoryLabel = category
+      ? (newsCategories.find((e) => e.name === category[0])?.label ?? null)
+      : null;
+
   return (
     <div>
-          <MyNews title="스크랩한 기사" basePath="my/scrap" />
+      <MyNews myNewsType={MyNewsType.SCRAP} categoryLabel={categoryLabel}/>
     </div>
   );
 }
