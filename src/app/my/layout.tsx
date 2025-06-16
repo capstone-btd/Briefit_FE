@@ -11,8 +11,10 @@ export default function Layout({ children }: { children: ReactNode }) {
         <Divider />
       </div>
       <div className="flex gap-40">
-        <MyMenubar />
-        {children}
+        <div className="sticky top-30 h-fit self-start">
+          <MyMenubar />
+        </div>
+        <div className="flex-1">{children}</div>
       </div>
     </div>
   );
