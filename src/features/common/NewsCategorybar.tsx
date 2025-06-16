@@ -3,6 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { newsCategories } from "@/constants/newsCategries";
 import { NewsCategory } from "@/types/news/newsCategory";
+import { useNavStore } from "@/stores/navigation/useNavStrore";
 
 function NewsCategoryItem({
   category,
@@ -28,9 +29,10 @@ function NewsCategoryItem({
 export default function NewsCategoryBar({ basePath }: { basePath: string }) {
   const router = useRouter();
   const pathname = usePathname();
+  const setSelectedPath = useNavStore((state) => state.setSelectedPath);
 
   const baseSegments = basePath.split("/");
-  const pathSegments = pathname.split("/").filter(Boolean); 
+  const pathSegments = pathname.split("/").filter(Boolean);
   const categorySegment = pathSegments[baseSegments.length]; // 카테고리는 basePath 다음 segment
 
   const currentCategory =
@@ -41,6 +43,7 @@ export default function NewsCategoryBar({ basePath }: { basePath: string }) {
 
   const onCategorySelected = (name: string) => {
     router.push(`/${basePath}/${name}`);
+    setSelectedPath(`/${pathSegments[0]}`);
   };
 
   return (

@@ -4,11 +4,13 @@ import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/auth/useAuthStore";
 import { setCookie } from "cookies-next";
+import { useNavStore } from "@/stores/navigation/useNavStrore";
 
 export default function NaverLoginCallbackPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const login = useAuthStore((state) => state.login);
+  const setSelectedPath = useNavStore((state) => state.setSelectedPath);
 
   useEffect(() => {
     const accessToken = searchParams.get("accessToken");
@@ -26,6 +28,7 @@ export default function NaverLoginCallbackPage() {
     });
 
     router.replace("/");
+    setSelectedPath("/today-news");
   }, [searchParams, router, login]);
 
   return <div>로그인 중입니다...</div>;
