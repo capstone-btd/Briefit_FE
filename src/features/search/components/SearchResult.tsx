@@ -19,7 +19,7 @@ export default async function SearchResult({ keyword }: SearchProps) {
         className="mx-auto h-48 w-[35vw]"
         searchIconSize={35}
       />
-      <div className="mb-35 font-title-24">
+      <div className="my-35 font-title-24">
         &quot;{keyword}&quot;에 대한 검색 결과
       </div>
       <Divider />

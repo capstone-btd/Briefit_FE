@@ -21,7 +21,7 @@ export default function NewsTitle({
       </div>
       <div className="font-title-40 mb-50">{title}</div>
       <div className="font-basic-16 mb-17 flex justify-end text-gray-600">
-        생성일자: {formatKoreanDateTime(createdAt)}
+        생성일자: {formatKoreanDateTime({isoString:createdAt})}
       </div>
     </div>
   );
