@@ -5,7 +5,7 @@ import { newsCategories } from "@/constants/newsCategries";
 import { NewsCategory } from "@/types/news/newsCategory";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
 
-function NewsCategoryItem({
+export function NewsCategoryItem({
   category,
   isSelected,
   onClick,

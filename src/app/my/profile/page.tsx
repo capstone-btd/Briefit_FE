@@ -1,7 +1,5 @@
-export default function MyProfilePage () {
-    return (
-        <div>
-            나의 프로필
-        </div>
-    );
+import MyProfile from "@/features/my/components/MyProfile";
+
+export default function MyProfilePage() {
+  return <MyProfile />;
 }

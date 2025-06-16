@@ -35,6 +35,8 @@ body {
 
   --font-light-16: 300 16px/20px var(--font-pretendard);
 
+  --font-small-14: 500 14px/100% var(--font-pretendard);
+
   /* Colors */
   --color-*: initial; /* 커스텀 컬러로 사용 */
 
@@ -127,6 +129,10 @@ body {
 
   .font-light-16 {
     font: var(--font-light-16);
+  }
+
+  .font-small-14 {
+    font: var(--font-small-14);
   }
 
   /* Gradient */
