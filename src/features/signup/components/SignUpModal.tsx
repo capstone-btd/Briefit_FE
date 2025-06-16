@@ -7,8 +7,8 @@ import SignUpStepsIcons from "./SignUpStepsIcons";
 import { X } from "lucide-react";
 import { useSignUpStore } from "@/stores/signUp/useSignUpStore";
 import registerUser from "../api/signup";
-import { useAuthStore } from "@/stores/auth/useAuthStore";
-
+import { fetchUserInfo } from "@/features/my/api/user";
+import convertAssetToFile from "@/utils/convertAssetToFile";
 
 interface SignUpModalProps {
   open: boolean;
@@ -19,16 +19,17 @@ export default function SignUpModal({ open, onClose }: SignUpModalProps) {
   const [step, setStep] = useState(0);
   const name = useSignUpStore((state) => state.name);
   const categories = useSignUpStore((state) => state.categories);
-
+  const profileImageFile = useSignUpStore((state) => state.profileImageFile);
   const handleRegister = async () => {
-    try {
-      await registerUser(name, categories);
-      useAuthStore.setState({ isNew: false }); // 로컬 스토리지 상태 업데이트
-      setStep(2); // 완료 단계로 이동
-    } catch (e) {
-      console.log(e);
-      alert("회원가입에 실패했습니다.");
-    }
+    await registerUser(
+      name,
+      categories,
+      profileImageFile ?? (await convertAssetToFile({ path: "" })),
+    );
+    // useAuthStore.setState({ isNew: false }); // 로컬 스토리지 상태 업데이트
+    const userInfo = await fetchUserInfo();
+    console.log(userInfo);
+    setStep(2); // 완료 단계로 이동
   };
 
   if (!open) return null;
@@ -47,7 +48,7 @@ export default function SignUpModal({ open, onClose }: SignUpModalProps) {
           <SignUpStepComplete />
         ) : (
           <div className="flex flex-col items-center justify-center px-30">
-            <h2 className="text-19 my-30 font-semibold">회원 가입</h2>
+            <h2 className="my-30 text-19 font-semibold">회원 가입</h2>
 
             <SignUpStepsIcons currentStep={step} />
 

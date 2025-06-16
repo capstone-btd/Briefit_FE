@@ -20,7 +20,7 @@ export default async function TodayNewsCardGrid({
 
   return (
     <div className="mt-45">
-      {newsList.length === 0 ? (
+      {!Array.isArray(newsList) || newsList.length === 0 ? (
         <NoContent message="불러올 뉴스가 없어요." />
       ) : (
         <PaginatedNewsCardGrid
