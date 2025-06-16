@@ -84,7 +84,7 @@ export default function WordCloudServer({
     const fontSize = normalizeScoreToFontSize(
       score,
       14,
-      60,
+      55,
       minScore,
       maxScore,
     );
