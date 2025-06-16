@@ -15,9 +15,8 @@ export async function fetchScrapedNewsList({
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
-    } else {
-      console.error(error);
     }
+    alert("뉴스 목록 조회에 실패했습니다.");
     return;
   }
 }
@@ -29,16 +28,15 @@ export async function fetchCustomNewsList({
 }) {
   const params = { category: selectedCategory };
   try {
-      const response = await apiClient.get("/users/scrap/customize", {
+    const response = await apiClient.get("/users/scrap/customize", {
       params,
     });
     return response.data;
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
-    } else {
-      console.error(error);
     }
+    alert("뉴스 목록 조회에 실패했습니다.");
     return;
   }
 }
