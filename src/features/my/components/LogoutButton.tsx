@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/stores/auth/useAuthStore";
-import { useNavStore } from "@/stores/navigation/useNavStrore";
+import { useUserStore } from "@/stores/auth/useUserStore";
 
 export default function LogoutButton({
   isActive,
@@ -10,13 +10,13 @@ export default function LogoutButton({
   isActive: boolean;
   onClick: () => void;
 }) {
-    const logout = useAuthStore((state) => state.logout);
-    const setSelectedPath = useNavStore((state) => state.setSelectedPath);
-
+  const logout = useAuthStore((state) => state.logout);
+  const reset = useUserStore((state) => state.reset);
+  
   const handleLogout = () => {
-    logout(); // localStorage 값 날림
-      onClick();
-      setSelectedPath("/today-news")
+    logout(); // 인증 정보 날림
+    reset(); // 회원 정보 날림
+    onClick();
   };
 
   return (

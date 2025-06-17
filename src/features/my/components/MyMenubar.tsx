@@ -2,9 +2,10 @@
 
 import Divider from "@/features/common/Divider";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LogoutButton from "./LogoutButton";
 import { isLoggedInUser, useAuthStore } from "@/stores/auth/useAuthStore";
+import { useNavStore } from "@/stores/navigation/useNavStrore";
 
 function MyMenubarItem({
   iconPath,
@@ -58,11 +59,13 @@ const MyMenuItems = [
 export default function MyMenubar() {
   const pathname = usePathname();
   const isUser = useAuthStore(isLoggedInUser);
+  const router = useRouter();
+  const setSelectedPath = useNavStore((state) => state.setSelectedPath);
 
   return (
     <div className="justify-center">
       {MyMenuItems.map((item, index) => {
-        const isActive = pathname === item.path;
+        const isActive = pathname.startsWith(item.path);
         return (
           <Link href={item.path} key={index}>
             <MyMenubarItem
@@ -77,7 +80,7 @@ export default function MyMenubar() {
       <div className="mt-200 mb-20">
         <Divider />
       </div>
-      {isUser && <LogoutButton isActive={false} onClick={() => {}} />}
+      {isUser && <LogoutButton isActive={false} onClick={() => { router.replace("/");  setSelectedPath("/today-news")}} />}
     </div>
   );
 }
