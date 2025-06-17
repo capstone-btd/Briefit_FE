@@ -26,7 +26,7 @@ export function NewsCard({
 
   return (
     <Link prefetch={true} href={`${type}/detail/${newsSummary.articleId}`}>
-      <Card className={`${className ?? ""} card-hover-effect rounded-20 p-20`}>
+      <Card className={`${className ?? ""} h-full card-hover-effect rounded-20 p-20`}>
         <CardHeader>
           <div className="flex items-center gap-16">
             <NewsCardCategoryTag
@@ -38,7 +38,7 @@ export function NewsCard({
           </div>
         </CardHeader>
         <CardContent>
-          <div className="font-title-24 mb-12">{newsSummary.title}</div>
+          <div className="font-title-24 mb-12 h-48 overflow-hidden">{newsSummary.title}</div>
           <div className="font-light-16 h-80 overflow-hidden text-justify">
             {newsSummary.body}
           </div>

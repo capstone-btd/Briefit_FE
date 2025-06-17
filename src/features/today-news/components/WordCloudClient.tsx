@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 type PositionedWord = {
@@ -20,6 +21,7 @@ export default function WordCloudClient({
   height: number;
 }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const router = useRouter();
 
   return (
     <div
@@ -44,6 +46,7 @@ export default function WordCloudClient({
           }}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
+          onClick={() => {router.push(`/search?keyword=${word}`)}}
         >
           {word}
         </span>

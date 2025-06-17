@@ -12,8 +12,12 @@ type Props = {
 
 export default function TodayNewsPage(props: Props) {
   const { category } = use(props.params);
+
   const categoryLabel =
-    newsCategories.find((e) => e.name === category)?.label ?? null;
+  category
+    ? newsCategories.find((e) => e.name === category[0])?.label ?? null
+    : null;
+
 
   return (
     <div>

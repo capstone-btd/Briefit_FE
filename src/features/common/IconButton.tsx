@@ -7,7 +7,8 @@ type IconButtonProps = {
   isActive?: boolean; // optional, 없을 경우 기본 값 사용
   onClick: () => void;
   alt?: string;
-  sizeClass?: string;
+  className?: string;
+  style?: React.CSSProperties; // ✅ style props 추가
 };
 
 export default function IconButton({
@@ -15,7 +16,8 @@ export default function IconButton({
   isActive,
   onClick,
   alt = iconName,
-  sizeClass = "aspect-square w-46",
+  className = "aspect-square w-46",
+  style = {},
 }: IconButtonProps) {
   const imgSrc =
     isActive === undefined
@@ -25,8 +27,9 @@ export default function IconButton({
   return (
     <Button
       variant="ghost"
-      className={`${sizeClass} hover:bg-transparent`}
+      className={`${className} hover:bg-transparent`}
       onClick={onClick}
+      style={style}
     >
       <img src={imgSrc} alt={alt} />
     </Button>

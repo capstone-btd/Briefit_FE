@@ -1,44 +1,48 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import Logo from "./Logo";
-
-export const navItems = [
-  { label: "오늘의 뉴스", path: "/today-news" },
-  { label: "나의 추천 뉴스", path: "/recommended-news" },
-  { label: "마이페이지", path: "/my" },
-];
+import { useNavStore } from "@/stores/navigation/useNavStrore";
+import { navItems } from "@/constants/navItems";
 
 export default function Navigationbar() {
-  const pathName = usePathname();
+  const { selectedPath, setSelectedPath } = useNavStore();
   const [underlineStyle, setUnderlineStyle] = useState({ width: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  useEffect(() => {
-    const activeIndex = navItems.findIndex((item) =>
-      pathName.startsWith(item.path),
-    );
-
-    const activeLink = linkRefs.current[activeIndex];
+  const updateUnderline = (index: number) => {
     const container = containerRef.current;
-    if (activeLink && container) {
+    const link = linkRefs.current[index];
+    if (container && link) {
       const containerRect = container.getBoundingClientRect();
-      const linkRect = activeLink.getBoundingClientRect();
-
+      const linkRect = link.getBoundingClientRect();
       setUnderlineStyle({
         width: linkRect.width,
         left: linkRect.left - containerRect.left,
       });
     }
-  }, [pathName]);
+  };
+
+  const handleClick = (index: number, path: string) => {
+    setSelectedPath(path);
+    updateUnderline(index);
+  };
+
+  useEffect(() => {
+    if (selectedPath) {
+      const index = navItems.findIndex((item) => item.path === selectedPath);
+      if (index !== -1) {
+        setTimeout(() => updateUnderline(index), 0);
+      }
+    }
+  }, [selectedPath]);
 
   return (
     <nav className="relative">
       <div className="flex items-baseline justify-between gap-24 xl:gap-50 2xl:gap-100">
-        <Link prefetch={true} href={navItems[0].path}>
+        <Link prefetch href={navItems[0].path} onClick={() => handleClick(0, navItems[0].path)}>
           <Logo />
         </Link>
         <div
@@ -47,14 +51,15 @@ export default function Navigationbar() {
         >
           {navItems.map(({ label, path }, index) => (
             <Link
-              prefetch={true}
+              prefetch
               key={path}
               ref={(el) => {
                 linkRefs.current[index] = el;
               }}
               href={path}
-              className={`font-title-20 block pb-20 transition-colors duration-300 ${
-                pathName .startsWith(path)
+              onClick={() => handleClick(index, path)}
+              className={`block pb-20 font-title-20 transition-colors duration-300 ${
+                selectedPath === path
                   ? "text-purple-500"
                   : "text-gray-400 hover:text-gray-600"
               }`}
@@ -63,7 +68,6 @@ export default function Navigationbar() {
             </Link>
           ))}
 
-          {/* underline */}
           <div
             className="absolute bottom-[-1.5px] h-3 rounded-full bg-purple-500 transition-all duration-200 ease-out"
             style={{

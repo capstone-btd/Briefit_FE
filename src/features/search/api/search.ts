@@ -1,15 +1,18 @@
 import ApiException from "@/exception/apiException";
 import apiServer from "@/utils/apiServer";
 
-export default async function fetchRecommendedNewsCardList({
-  selectedCategory,
+export default async function fetchNewsCardListByKeyword({
+  keyword
 }: {
-  selectedCategory: string;
+  keyword: string;
 }) {
-  const params = { category: selectedCategory };
+  const params = { string: keyword };
   try {
-    const response = await apiServer.get("/articles/recommend", {
-      params
+    const response = await apiServer.get("/articles/search", {
+      params,
+      headers: {
+        "x-auth-not-required": "true", // 인증 헤더 제외
+      },
     });
     return response.data;
   } catch (error) {

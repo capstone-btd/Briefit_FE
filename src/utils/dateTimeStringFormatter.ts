@@ -1,4 +1,10 @@
-export function formatKoreanDateTime(isoString: string): string {
+export function formatKoreanDateTime({
+  isoString,
+  needUnitText = false,
+}: {
+  isoString: string;
+  needUnitText?: boolean;
+}): string {
   const date = new Date(isoString);
 
   const year = date.getFullYear();
@@ -14,5 +20,7 @@ export function formatKoreanDateTime(isoString: string): string {
   hour = hour % 12;
   if (hour === 0) hour = 12;
 
-  return `${year}.${month}.${day}. ${period} ${hour}:${minute}`;
+  return needUnitText
+    ? `${year}.${month}.${day}. ${period} ${hour}시 ${minute}분`
+    : `${year}.${month}.${day}. ${period} ${hour}:${minute}`;
 }
