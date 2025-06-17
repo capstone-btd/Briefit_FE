@@ -44,9 +44,7 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response) => {
-    console.log(response);
     const { status, config, data } = response;
-    console.log(status, config, data);
     if (status >= 200 && status < 300) {
       // 성공 응답
       console.log(`💡 [Response] ${status} ${config.url}`, data);

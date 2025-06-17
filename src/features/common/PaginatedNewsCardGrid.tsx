@@ -39,6 +39,7 @@ export default function PaginatedNewsCardGrid({
             type={type}
             categoryLabel={categoryLabel}
             newsSummary={news}
+            className="hover-card-purple"
           />
         ))}
       </div>

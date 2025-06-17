@@ -2,7 +2,7 @@ import ApiException from "@/exception/apiException";
 import apiServer from "@/utils/apiServer";
 
 export default async function fetchNewsCardListByKeyword({
-  keyword
+  keyword,
 }: {
   keyword: string;
 }) {
@@ -18,9 +18,7 @@ export default async function fetchNewsCardListByKeyword({
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
-    } else {
-      console.error(error);
     }
-    return;
+    throw error;
   }
 }

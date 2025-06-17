@@ -4,8 +4,8 @@ interface SignUpState {
   name: string;
   setName: (name: string) => void;
 
-  // profileColor: string;
-  // setProfileColor: (color: string) => void;
+  profileImageFile: File | null;
+  setProfileImageFile: (file: File) => void;
 
   categories: string[];
   setCategories: (categories: string[]) => void;
@@ -19,8 +19,8 @@ export const useSignUpStore = create<SignUpState>((set) => ({
   name: "",
   setName: (name) => set({ name }),
 
-  // profileColor: "",
-  // setProfileColor: (color) => set({ profileColor: color }),
+  profileImageFile: null,
+  setProfileImageFile: (file) => set({ profileImageFile: file }),
 
   categories: [],
   setCategories: (categories) => set({ categories }),
@@ -28,7 +28,7 @@ export const useSignUpStore = create<SignUpState>((set) => ({
     set((state) =>
       state.categories.includes(category)
         ? state
-        : { categories: [...state.categories, category] }
+        : { categories: [...state.categories, category] },
     ),
   removeCategory: (category) =>
     set((state) => ({
@@ -38,7 +38,7 @@ export const useSignUpStore = create<SignUpState>((set) => ({
   reset: () =>
     set({
       name: "",
-      // profileColor: "",
+      profileImageFile: null,
       categories: [],
     }),
 }));

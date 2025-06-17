@@ -23,7 +23,7 @@ export default function TodayNewsPage(props: Props) {
     <div>
       <div className="flex items-center space-x-50">
         <div className="font-title-24">오늘의 AI 뉴스</div>
-        <NewsCategorybar />
+        <NewsCategorybar basePath="today-news"/>
       </div>
       <div>
         <TodayNewsCardGrid categoryLabel={categoryLabel} className="mt-30" />

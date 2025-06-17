@@ -26,6 +26,7 @@ body {
   --font-title-24: 600 24px/100% var(--font-pretendard);
   --font-title-24-m: 500 24px/100% var(--font-pretendard);
   --font-title-20: 600 20px/100% var(--font-pretendard);
+  --font-title-16: 600 16px/100% var(--font-pretendard);
 
   --font-basic-24-m: 500 24px/28px var(--font-pretendard);
   --font-basic-20-m: 500 20px/28px var(--font-pretendard);
@@ -33,6 +34,8 @@ body {
   --font-basic-16: 400 16px/100% var(--font-pretendard);
 
   --font-light-16: 300 16px/20px var(--font-pretendard);
+
+  --font-small-14: 500 14px/100% var(--font-pretendard);
 
   /* Colors */
   --color-*: initial; /* 커스텀 컬러로 사용 */
@@ -143,6 +146,9 @@ body {
   .font-title-20 {
     font: var(--font-title-20);
   }
+  .font-title-16 {
+    font: var(--font-title-16);
+  }
 
   .font-basic-24-m {
     font: var(--font-basic-24-m);
@@ -161,6 +167,10 @@ body {
     font: var(--font-light-16);
   }
 
+  .font-small-14 {
+    font: var(--font-small-14);
+  }
+
   /* Gradient */
   .text-gradient-to-r {
     @apply bg-gradient-to-r bg-clip-text text-transparent;
@@ -173,8 +183,23 @@ body {
   }
 
   /* Card Hover Effect */
-  .card-hover-effect {
+  .hover-card-purple {
     @apply transition duration-300 ease-out hover:shadow-[0_0_3px_#7B47FF];
+  }
+
+  .hover-card-gradient {
+    @apply relative overflow-hidden;
+  }
+
+  .hover-card-gradient::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out;
+    background: linear-gradient(180deg, #ffffff00 40%, #00000070);
+    z-index: 10;
+  }
+
+  .hover-card-gradient:hover::before {
+    @apply opacity-100;
   }
 }
 
