@@ -147,8 +147,23 @@ body {
   }
 
   /* Card Hover Effect */
-  .card-hover-effect {
+  .hover-card-purple {
     @apply transition duration-300 ease-out hover:shadow-[0_0_3px_#7B47FF];
+  }
+
+  .hover-card-gradient {
+    @apply relative overflow-hidden;
+  }
+
+  .hover-card-gradient::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out;
+    background: linear-gradient(180deg, #ffffff00 40%, #00000070);
+    z-index: 10;
+  }
+
+  .hover-card-gradient:hover::before {
+    @apply opacity-100;
   }
 }
 

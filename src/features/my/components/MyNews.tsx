@@ -9,6 +9,7 @@ import { MyNewsType } from "@/constants/myNewsType";
 import { NewsSummary } from "@/types/news/newsSummary";
 import NoContent from "@/features/common/NoContent";
 import { isLoggedInUser, useAuthStore } from "@/stores/auth/useAuthStore";
+import { NewsCardActions } from "./NewsCardActions";
 
 export default function MyNews({
   myNewsType,
@@ -57,7 +58,6 @@ export default function MyNews({
     );
   }
 
-
   if (!newsList || newsList.length === 0) {
     return (
       <div className="space-y-30">
@@ -81,9 +81,19 @@ export default function MyNews({
           <NewsCard
             key={index}
             type={DetailPageType.MY}
-            categoryLabel={categoryLabel}
+            categoryLabel={categoryLabel ?? ""}
             newsSummary={news}
-          />
+            className="hover-card-gradient relative overflow-hidden"
+          >
+            <NewsCardActions
+              onScrapClick={() => {
+                // 기사 스크랩
+              }}
+              onEditClick={() => {
+                // 커스텀 페이지로 이동
+              }}
+            />
+          </NewsCard>
         ))}
       </div>
     </div>
