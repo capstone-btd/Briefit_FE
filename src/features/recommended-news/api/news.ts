@@ -16,7 +16,6 @@ export default async function fetchRecommendedNewsCardList({
     if (error instanceof ApiException) {
       // 예외 처리
     }
-    alert("추천 뉴스 목록 조회에 실패했습니다.");
-    return;
+    throw error;
   }
 }

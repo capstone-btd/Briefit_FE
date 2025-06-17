@@ -19,7 +19,6 @@ export default async function fetchNewsCardListByKeyword({
     if (error instanceof ApiException) {
       // 예외 처리
     }
-    alert("검색 결과 조회에 실패했습니다.");
-    return;
+    throw error;
   }
 }
