@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,14 +9,25 @@ import { NewsCategoryItem } from "@/features/common/NewsCategorybar";
 import EditableField from "./EditableField";
 import { isLoggedInUser, useAuthStore } from "@/stores/auth/useAuthStore";
 import NoContent from "@/features/common/NoContent";
+import { useUserStore } from "@/stores/auth/useUserStore";
 
 export default function MyProfile() {
   const isUser = useAuthStore(isLoggedInUser);
-  const [name, setName] = useState("김땡땡");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    "경제",
-    "문화",
-  ]);
+
+  const nickname = useUserStore((state) => state.nickname);
+  const categories = useUserStore((state) => state.categories);
+  const profileUrl = useUserStore((state) => state.profileUrl);
+
+  const [name, setName] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    setName(nickname);
+  }, [nickname]);
+
+  useEffect(() => {
+    setSelectedCategories(categories);
+  }, [categories]);
 
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev) =>
@@ -32,7 +43,7 @@ export default function MyProfile() {
       {isUser ? (
         <div className="grid place-items-center gap-20">
           <Image
-            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+            src={profileUrl}
             alt="프로필 사진"
             width={150}
             height={150}
@@ -42,7 +53,7 @@ export default function MyProfile() {
             title="이름"
             displayValue={name}
             isActive={name !== ""}
-            onSave={() => console.log("이름 저장됨")}
+            onSave={() => console.log("이름 수정")}
           >
             <Input
               value={name}
@@ -55,7 +66,7 @@ export default function MyProfile() {
             title="관심 분야"
             displayValue={selectedCategories.join(", ")}
             isActive={selectedCategories.length !== 0}
-            onSave={() => console.log("관심분야 저장됨")}
+            onSave={() => console.log("관심분야 수정")}
           >
             <div className="grid grid-cols-4 gap-8">
               {newsCategories.slice(1).map((cat) => (

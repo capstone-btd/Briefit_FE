@@ -7,8 +7,8 @@ import SignUpStepsIcons from "./SignUpStepsIcons";
 import { X } from "lucide-react";
 import { useSignUpStore } from "@/stores/signUp/useSignUpStore";
 import registerUser from "../api/signup";
-import { fetchUserInfo } from "@/features/my/api/user";
 import convertAssetToFile from "@/utils/convertAssetToFile";
+import { setUserInfoToStore } from "@/utils/user/setUserInfoToStore";
 
 interface SignUpModalProps {
   open: boolean;
@@ -17,18 +17,20 @@ interface SignUpModalProps {
 
 export default function SignUpModal({ open, onClose }: SignUpModalProps) {
   const [step, setStep] = useState(0);
+
   const name = useSignUpStore((state) => state.name);
   const categories = useSignUpStore((state) => state.categories);
   const profileImageFile = useSignUpStore((state) => state.profileImageFile);
+
   const handleRegister = async () => {
     await registerUser(
       name,
       categories,
       profileImageFile ?? (await convertAssetToFile({ path: "" })),
     );
-    // useAuthStore.setState({ isNew: false }); // 로컬 스토리지 상태 업데이트
-    const userInfo = await fetchUserInfo();
-    console.log(userInfo);
+
+    await setUserInfoToStore(); // 유저 정보 세팅
+
     setStep(2); // 완료 단계로 이동
   };
 
