@@ -3,5 +3,5 @@ export default function Divider({
 }: {
   widthClass?: string;
 }) {
-  return <div className={`h-1 bg-gray-100  ${widthClass}`} />;
+  return <div className={`border-theme h-1 ${widthClass}`} />;
 }

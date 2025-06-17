@@ -1,9 +1,18 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
-import { Highlight, useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
+import React, { useRef, useEffect } from "react";
+import {
+  Highlight,
+  useNewsCustomStore,
+} from "@/stores/detail/useNewsCustomStore";
 
-export default function NewsContent ({body, highlights}: {body: string; highlights: Highlight[]}) {
+export default function NewsContent({
+  body,
+  highlights,
+}: {
+  body: string;
+  highlights: Highlight[];
+}) {
   const contentRef = useRef<HTMLDivElement>(null);
   const { activeHighlightColor, addHighlight } = useNewsCustomStore();
 
@@ -30,12 +39,12 @@ export default function NewsContent ({body, highlights}: {body: string; highligh
 
     const contentElement = contentRef.current;
     if (contentElement) {
-      contentElement.addEventListener('mouseup', handleMouseUp);
+      contentElement.addEventListener("mouseup", handleMouseUp);
     }
 
     return () => {
       if (contentElement) {
-        contentElement.removeEventListener('mouseup', handleMouseUp);
+        contentElement.removeEventListener("mouseup", handleMouseUp);
       }
     };
   }, [activeHighlightColor, addHighlight]);
@@ -45,9 +54,11 @@ export default function NewsContent ({body, highlights}: {body: string; highligh
     let currentIndex = 0;
 
     // Sort highlights to handle them in order
-    const sortedHighlights = [...highlights].sort((a, b) => a.startIndex - b.startIndex);
+    const sortedHighlights = [...highlights].sort(
+      (a, b) => a.startIndex - b.startIndex,
+    );
 
-    sortedHighlights.forEach(highlight => {
+    sortedHighlights.forEach((highlight) => {
       // Add plain text before the current highlight
       if (highlight.startIndex > currentIndex) {
         elements.push(body.substring(currentIndex, highlight.startIndex));
@@ -59,7 +70,7 @@ export default function NewsContent ({body, highlights}: {body: string; highligh
           style={{ backgroundColor: `var(--${highlight.color})` }}
         >
           {body.substring(highlight.startIndex, highlight.endIndex)}
-        </span>
+        </span>,
       );
       currentIndex = highlight.endIndex;
     });
@@ -73,8 +84,8 @@ export default function NewsContent ({body, highlights}: {body: string; highligh
   };
 
   return (
-      <div ref={contentRef} className="font-basic-20-m mb-55">
-       {renderContent()}
-      </div>
-    );
+    <div ref={contentRef} className="mb-55 font-basic-20-m">
+      {renderContent()}
+    </div>
+  );
 }

@@ -22,11 +22,15 @@ type Props = {
 export default function NewsDetail({ id, containsAuthHeader }: Props) {
   const router = useRouter();
   const [newsData, setNewsData] = useState<NewsData | null>(null);
-  const { activeThemeColor, activeHighlightColor, highlights } = useNewsCustomStore();
+  const { activeThemeColor, activeHighlightColor, highlights } =
+    useNewsCustomStore();
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const data = await fetchNewsDetail({ id, containsAuthHeader: containsAuthHeader });
+      const data = await fetchNewsDetail({
+        id,
+        containsAuthHeader: containsAuthHeader,
+      });
       setNewsData(data);
     };
     fetchDetail();
@@ -36,13 +40,19 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
     newsData?.sources.map((source: NewsSource) => source.pressCompany) ?? [];
 
   return (
-    <div className={`flex space-x-20 ${activeThemeColor}`}>
+    <div className={`flex space-x-20 ${activeThemeColor} px-70`}>
       <NewsCustomBar />
-      <ArrowLeft strokeWidth={1.5} size={30} color="#888888" onClick={() => router.back()} className="mr-15 aspect-square cursor-pointer hover:bg-transparent"/>
+      <ArrowLeft
+        strokeWidth={1.5}
+        size={30}
+        color="#888888"
+        onClick={() => router.back()}
+        className="mr-15 aspect-square cursor-pointer hover:bg-transparent"
+      />
       <div className="w-full">
         <NewsPageHeader />
         {newsData ? (
-          <>
+          <div className="px-70">
             <NewsTitle
               categoryLabel={newsData.categories[0]}
               pressCompanies={pressCompanyNameList}
@@ -58,7 +68,7 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
             <NewsContent body={newsData.body} highlights={highlights} />
             <Divider />
             <NewsSourceCardList newsSourceList={newsData.sources} />
-          </>
+          </div>
         ) : (
           <div>Loading...</div>
         )}
