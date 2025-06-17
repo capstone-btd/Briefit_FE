@@ -9,15 +9,13 @@ export default async function fetchRecommendedNewsCardList({
   const params = { category: selectedCategory };
   try {
     const response = await apiServer.get("/articles/recommend", {
-      params
+      params,
     });
     return response.data;
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
-    } else {
-      console.error(error);
     }
-    return;
+    throw error;
   }
 }

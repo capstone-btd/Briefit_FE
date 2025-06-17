@@ -19,9 +19,8 @@ export default async function fetchNewsDetail({
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
-    } else {
-      console.error(error);
     }
+    alert("뉴스 정보 조회에 실패했습니다.");
     return;
   }
 }

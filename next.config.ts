@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["briefit.s3.ap-northeast-2.amazonaws.com", "images.unsplash.com"],
   },
 };
 

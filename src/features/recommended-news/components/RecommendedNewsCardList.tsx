@@ -51,7 +51,7 @@ export default function RecommendedNewsCardList({
 
   return (
     <div className="mb-30">
-      <div className="font-title-20 mb-30 text-gray-500">{category}</div>
+      <div className="mb-30 font-title-20 text-gray-500">{category}</div>
 
       <div
         className="relative"
@@ -73,7 +73,7 @@ export default function RecommendedNewsCardList({
               type={DetailPageType.RECOMMENDED}
               categoryLabel={category}
               newsSummary={news}
-              className="w-[25vw] shrink-0"
+              className="hover-card-purple w-[25vw] shrink-0"
             />
           ))}
 

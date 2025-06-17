@@ -2,53 +2,87 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSignUpStore } from "@/stores/signUp/useSignUpStore";
+import convertAssetToFile from "@/utils/convertAssetToFile";
 import { Check } from "lucide-react";
-import { useState } from "react";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 
-export default function SignUpStepInfo({ onNext }: { onNext: () => void}) {
-  const [profileImg, setProfileImg] = useState("bg-pink-profile");
+const profileImagePathPaths = [
+  "/assets/profile/pink.png",
+  "/assets/profile/beige.png",
+  "/assets/profile/yellow.png",
+  "/assets/profile/green.png",
+  "/assets/profile/blue.png",
+  "/assets/profile/brown.png",
+];
 
+export default function SignUpStepInfo({ onNext }: { onNext: () => void }) {
+  const [profileImagePath, setProfileImagePath] = useState(
+    "/assets/profile/pink.png",
+  );
+
+  // zustand에서 상태 가져오기
+  const setProfileImageFile = useSignUpStore(
+    (state) => state.setProfileImageFile,
+  );
   const name = useSignUpStore((state) => state.name);
   const setName = useSignUpStore((state) => state.setName);
 
-  const profileColors = [
-    "bg-pink-profile",
-    "bg-beige-profile",
-    "bg-yellow-profile",
-    "bg-green-profile",
-    "bg-blue-profile",
-    "bg-brown-profile",
-  ];
+  // profileImagePath가 바뀔 때마다 File 객체로 변환해서 store에 저장
+  useEffect(() => {
+    async function profileImageHandler() {
+      const file = await convertAssetToFile({
+        path: profileImagePath,
+      });
+      setProfileImageFile(file);
+    }
+    profileImageHandler();
+  }, [profileImagePath, setProfileImageFile]);
 
   return (
-    <div className="flex flex-col items-center mb-70">
-      <div
-        className={`size-100 rounded-full ${profileImg} transition-colors duration-700 mb-30`}
-      />
-      <div className="grid w-full items-center gap-3 mb-20">
-        <Label htmlFor="name" className="p-5 font-normal">이름</Label>
+    <div className="mb-70 flex flex-col items-center">
+      {/* 선택된 프로필 이미지 */}
+      <div className="relative mx-0 flex size-100 cursor-pointer items-center justify-center overflow-hidden rounded-full">
+        <Image
+          src={profileImagePath}
+          alt="선택된 프로필 이미지"
+          width={100}
+          height={100}
+        />
+      </div>
+
+      {/* 이름 입력 */}
+      <div className="mb-20 grid w-full items-center gap-3">
+        <Label htmlFor="name" className="p-5 font-normal">
+          이름
+        </Label>
         <Input
           type="text"
           placeholder="이름을 입력해주세요."
           className="rounded-sm border-none bg-gray-50 px-10 py-20"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
+
+      {/* 프로필 이미지 선택 */}
       <div className="w-full">
-        <p className="text-sm font-normal pl-2 my-10">프로필 사진</p>
+        <p className="my-10 pl-2 text-sm font-normal">프로필 사진</p>
         <div className="grid grid-cols-3 gap-10">
-          {profileColors.map((color) => {
-            const isSelected = profileImg === color;
+          {profileImagePathPaths.map((path) => {
+            const isSelected = profileImagePath === path;
             return (
               <div
-                key={color}
-                onClick={() => setProfileImg(color)}
-                className={`relative flex mx-0 size-50 cursor-pointer items-center justify-center overflow-hidden rounded-full`}
+                key={path}
+                onClick={() => setProfileImagePath(path)}
+                className="relative flex size-50 cursor-pointer items-center justify-center overflow-hidden rounded-full"
               >
-                {/* 선택 시 어두운 오버레이 + 체크 */}
+                <Image src={path} alt="프로필 이미지" width={50} height={50} />
+                {/* 오버레이 & 체크 아이콘 */}
                 <div
-                  className={`absolute inset-0 rounded-full transition-colors duration-200 ${isSelected ? "bg-black/10" : "bg-transparent"} `}
+                  className={`absolute inset-0 rounded-full transition-colors duration-200 ${
+                    isSelected ? "bg-black/20" : "bg-transparent"
+                  }`}
                 />
                 {isSelected && (
                   <Check
@@ -56,16 +90,24 @@ export default function SignUpStepInfo({ onNext }: { onNext: () => void}) {
                     size={24}
                   />
                 )}
-                {/* 실제 컬러 */}
-                <div className={`${color} h-full w-full rounded-full`} />
               </div>
             );
           })}
         </div>
       </div>
-      <Button className={`absolute bottom-30 right-30 px-10 py-14 hover:bg-inherited cursor-pointer rounded-md ${!name ? "cursor-not-allowed bg-gray-100 text-gray-800" : "bg-purple-500 text-white"}`}
+
+      {/* 다음 버튼 */}
+      <Button
+        className={`hover:bg-inherited absolute right-30 bottom-30 cursor-pointer rounded-md px-10 py-14 ${
+          !name
+            ? "cursor-not-allowed bg-gray-100 text-gray-800"
+            : "bg-purple-500 text-white"
+        }`}
         onClick={onNext}
-        disabled={!name}>다음</Button>
+        disabled={!name}
+      >
+        다음
+      </Button>
     </div>
   );
 }
