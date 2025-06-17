@@ -1,4 +1,5 @@
 import ApiException from "@/exception/apiException";
+import { WordCloudData } from "@/types/wordcloud/wordCloudData";
 import apiServer from "@/utils/apiServer";
 
 export default async function fetchNewsCardList({
@@ -32,13 +33,11 @@ export async function fetchWordList() {
         "x-auth-not-required": "true", // 인증 헤더 제외
       },
     });
-    return response.data;
+    return response.data as WordCloudData;
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
-    } else {
-      console.error(error);
-    }
-    return;
+    } 
+    throw error
   }
 }
