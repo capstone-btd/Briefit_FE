@@ -1,14 +1,25 @@
 "use client";
 
-import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
-import { Check, Eraser, Palette, Redo, Undo } from "lucide-react";
+import Image from "next/image";
+import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
+import { Check, Eraser, Palette } from "lucide-react";
 import HighlightIcon from "@/features/common/HighlightIcon";
+import Divider from "@/features/common/Divider";
 
-export default function NewsCustomBar() {
+interface NewsCustomBarProps {
+  pageId: string; // 페이지별 고유 ID
+}
+
+export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
   const {
     setHighlightColor,
     setThemeColor,
     setGlobalThemeColor,
+    setThemeTextColor1,
+    setThemeTextColor2,
+    setThemeDividerColor,
+    setThemeBorderColor,
+    setThemeCardColor,
     isCustomBarVisible,
     activeThemeColor,
     activeHighlightColor,
@@ -18,24 +29,24 @@ export default function NewsCustomBar() {
     toggleHighlightPalette,
     toggleThemePalette,
     setActiveIcon,
-  } = useNewsCustomStore();
+  } = usePageSpecificNewsCustom(pageId);
 
   const highlightColors = [
-    { name: "Yellow", variable: "yellow-highlight", bg: "bg-yellow-highlight" },
-    { name: "Green", variable: "green-highlight", bg: "bg-green-highlight" },
-    { name: "Pink", variable: "pink-highlight", bg: "bg-pink-highlight" },
-    { name: "Blue", variable: "blue-highlight", bg: "bg-blue-highlight" },
-    { name: "Orange", variable: "orange-highlight", bg: "bg-orange-highlight" },
-    { name: "Purple", variable: "purple-highlight", bg: "bg-purple-highlight" },
+    { variable: "yellow-highlight", bg: "bg-yellow-highlight" },
+    { variable: "green-highlight", bg: "bg-green-highlight" },
+    { variable: "pink-highlight", bg: "bg-pink-highlight" },
+    { variable: "blue-highlight", bg: "bg-blue-highlight" },
+    { variable: "orange-highlight", bg: "bg-orange-highlight" },
+    { variable: "purple-highlight", bg: "bg-purple-highlight" },
   ];
 
   const themeColors = [
-    { name: "White Theme", variable: "bg-white" },
-    { name: "Pink Theme", variable: "bg-pink-theme" },
-    { name: "Blue Theme", variable: "bg-blue-theme" },
-    { name: "Beige Theme", variable: "bg-beige-theme" },
-    { name: "Purple Theme", variable: "bg-purple-theme" },
-    { name: "Green Theme", variable: "bg-green-theme" },
+    { variable: "white-theme", bg: "bg-white" },
+    { variable: "pink-theme", bg: "bg-pink-theme" },
+    { variable: "blue-theme", bg: "bg-blue-theme" },
+    { variable: "beige-theme", bg: "bg-beige-theme" },
+    { variable: "purple-theme", bg: "bg-purple-theme" },
+    { variable: "green-theme", bg: "bg-green-theme" },
   ];
 
   const handleIconClick = (
@@ -52,6 +63,9 @@ export default function NewsCustomBar() {
       }
     } else if (iconType === "theme") {
       toggleThemePalette();
+      if (!activeThemeColor) {
+        setThemeColor("white-theme");
+      }
       if (showHighlightPalette) {
         toggleHighlightPalette();
       }
@@ -66,8 +80,22 @@ export default function NewsCustomBar() {
   };
 
   const handleThemeColorSelect = (color: string) => {
-    setThemeColor(color);
-    setGlobalThemeColor(color);
+    setThemeColor(`${color}`);
+
+    if (color === "white-theme") {
+      setGlobalThemeColor(null);
+      setThemeTextColor1(null);
+      setThemeTextColor2(null);
+      setThemeBorderColor(null);
+      setThemeCardColor(null);
+    } else {
+      setGlobalThemeColor(`bg-${color}`);
+      setThemeTextColor1(`text-${color}-text1`);
+      setThemeTextColor2(`text-${color}-text2`);
+      setThemeBorderColor(`border-${color}-dark`);
+      setThemeDividerColor(`bg-${color}-dark`);
+      setThemeCardColor(`bg-${color}-light`);
+    }
   };
 
   return (
@@ -87,9 +115,9 @@ export default function NewsCustomBar() {
                 <div className="grid grid-cols-2 justify-items-center gap-x-7 gap-y-15">
                   {highlightColors.map((color) => (
                     <div
-                      key={color.name}
+                      key={color.variable}
                       className={`h-27 w-27 cursor-pointer rounded-full transition ${color.bg} ${
-                        activeThemeColor === color.variable
+                        activeHighlightColor === color.variable
                           ? "ring-2 ring-purple-500"
                           : ""
                       }`}
@@ -103,15 +131,16 @@ export default function NewsCustomBar() {
 
           {/* eraser */}
           <Eraser
-            strokeWidth={1.7}
+            strokeWidth={2}
             size={30}
-            className="rounded-md p-3 text-gray-400 hover:bg-purple-100 hover:text-purple-500"
+            className={`cursor-pointer rounded-md p-3 text-gray-400 hover:bg-purple-100 hover:text-purple-500 ${activeIcon === "eraser" ? "text-purple-500" : "text-gray-400"}`}
+            onClick={() => handleIconClick("eraser")}
           />
 
           {/* theme */}
           <div className="relative">
             <Palette
-              strokeWidth={1.7}
+              strokeWidth={2}
               size={30}
               className={`cursor-pointer rounded-md p-3 hover:bg-purple-100 hover:text-purple-500 ${activeIcon === "theme" ? "text-purple-500" : "text-gray-400"}`}
               onClick={() => handleIconClick("theme")}
@@ -121,8 +150,8 @@ export default function NewsCustomBar() {
                 <div className="grid grid-cols-2 justify-items-center gap-x-7 gap-y-15">
                   {themeColors.map((color) => (
                     <div
-                      key={color.name}
-                      className={`h-27 w-27 cursor-pointer rounded-full transition ${color.variable} border ${
+                      key={color.variable}
+                      className={`h-27 w-27 cursor-pointer rounded-full transition ${color.bg} border ${
                         activeThemeColor === color.variable
                           ? "ring-2 ring-purple-500"
                           : ""
@@ -135,20 +164,24 @@ export default function NewsCustomBar() {
             )}
           </div>
 
+          <Divider className="bg-gray-200" />
+
           {/* undo & redo */}
-          <Undo
-            strokeWidth={1.7}
-            size={30}
-            color="gray"
-            className="cursor-pointer"
+          <Image
+            src="/assets/custom/undo.png"
+            alt="undo"
+            width={25}
+            height={25}
             onClick={() => handleIconClick("undo")}
+            className="cursor-pointer p-3"
           />
-          <Redo
-            strokeWidth={1.7}
-            size={30}
-            color="gray"
-            className="cursor-pointer"
+          <Image
+            src="/assets/custom/redo.png"
+            alt="redo"
+            width={25}
+            height={25}
             onClick={() => handleIconClick("redo")}
+            className="cursor-pointer p-3"
           />
 
           <Check

@@ -33,7 +33,7 @@ export default function HighlightIcon({
       width={27}
       height={27}
       onClick={onClick}
-      className="cursor-pointer rounded-md p-3 hover:bg-purple-100"
+      className="cursor-pointer rounded-md p-2 hover:bg-purple-100"
     />
   );
 }

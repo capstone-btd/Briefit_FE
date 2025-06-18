@@ -11,14 +11,19 @@ export default function ProfileHeader() {
 
   return (
     <div className="flex items-center gap-12">
-      {!imageUrl ? <div className="h-80 w-80 rounded-full bg-gray-100" /> :
+      {!imageUrl ? (
+        <div className="h-50 w-50 rounded-full bg-gray-100" />
+      ) : (
         <ResponsiveImage
           src={imageUrl}
           alt="프로필 이미지"
-          className="h-80 w-80"
+          className="h-50 w-50"
           rounded="full"
-        />}
-      <div className="font-title-24">{isUser ? nickname : "로그인 후 이용해주세요."} </div>
+        />
+      )}
+      <div className="font-title-24">
+        {isUser ? nickname : "로그인 후 이용해주세요."}{" "}
+      </div>
     </div>
   );
 }

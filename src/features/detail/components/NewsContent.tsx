@@ -1,91 +1,109 @@
-"use client";
-
-import React, { useRef, useEffect } from "react";
-import {
-  Highlight,
-  useNewsCustomStore,
-} from "@/stores/detail/useNewsCustomStore";
+import React, { useState } from "react";
 
 export default function NewsContent({
   body,
-  highlights,
+  highlightColor,
+  themeTextColor1,
+  activeIcon,
 }: {
   body: string;
-  highlights: Highlight[];
+  highlightColor?: string | null;
+  themeTextColor1?: string | null;
+  activeIcon?: string | null;
 }) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const { activeHighlightColor, addHighlight } = useNewsCustomStore();
+  const highlights = `bg-${highlightColor}`;
+  const [highlightRanges, setHighlightRanges] = useState<
+    { start: number; end: number }[]
+  >([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState<number | null>(null);
 
-  useEffect(() => {
-    const handleMouseUp = () => {
-      if (!contentRef.current) return;
+  // activeIcon이 'highlight'인 경우에만 형광펜 기능 활성화
+  const isHighlightMode = activeIcon === "highlighter";
+  const isEraserMode = activeIcon === "eraser";
 
-      const selection = window.getSelection();
-      if (!selection || selection.rangeCount === 0) return;
+  const handleMouseDown = (index: number) => {
+    if (!isHighlightMode && !isEraserMode) return;
 
-      const range = selection.getRangeAt(0);
-      const preCaretRange = range.cloneRange();
-      preCaretRange.selectNodeContents(contentRef.current);
-      preCaretRange.setEnd(range.startContainer, range.startOffset);
+    setIsDragging(true);
+    setDragStart(index);
+    // 클릭만해도 한글자씩 하이라이팅
+    // handleHighlight(index, index);
+  };
 
-      const startIndex = preCaretRange.toString().length;
-      const endIndex = startIndex + range.toString().length;
+  const handleMouseEnter = (index: number) => {
+    if (!isHighlightMode && !isEraserMode) return;
 
-      if (activeHighlightColor && startIndex < endIndex) {
-        addHighlight(startIndex, endIndex, activeHighlightColor);
-        selection.removeAllRanges(); // Clear selection after highlighting
-      }
-    };
-
-    const contentElement = contentRef.current;
-    if (contentElement) {
-      contentElement.addEventListener("mouseup", handleMouseUp);
+    if (isDragging && dragStart !== null) {
+      const start = Math.min(dragStart, index);
+      const end = Math.max(dragStart, index);
+      handleHighlight(start, end);
     }
+  };
 
-    return () => {
-      if (contentElement) {
-        contentElement.removeEventListener("mouseup", handleMouseUp);
-      }
-    };
-  }, [activeHighlightColor, addHighlight]);
+  const handleMouseUp = () => {
+    if (!isHighlightMode && !isEraserMode) return;
 
-  const renderContent = () => {
-    const elements: React.ReactNode[] = [];
-    let currentIndex = 0;
+    setIsDragging(false);
+    setDragStart(null);
+  };
 
-    // Sort highlights to handle them in order
-    const sortedHighlights = [...highlights].sort(
-      (a, b) => a.startIndex - b.startIndex,
-    );
-
-    sortedHighlights.forEach((highlight) => {
-      // Add plain text before the current highlight
-      if (highlight.startIndex > currentIndex) {
-        elements.push(body.substring(currentIndex, highlight.startIndex));
-      }
-      // Add highlighted text
-      elements.push(
-        <span
-          key={`${highlight.startIndex}-${highlight.endIndex}-${highlight.color}`}
-          style={{ backgroundColor: `var(--${highlight.color})` }}
-        >
-          {body.substring(highlight.startIndex, highlight.endIndex)}
-        </span>,
+  const handleHighlight = (start: number, end: number) => {
+    if (isEraserMode) {
+      // 지우개 모드: 해당 범위의 하이라이트 제거
+      const newRanges = highlightRanges.filter(
+        (range) =>
+          !(start <= range.end && end >= range.start) &&
+          !(range.start <= end && range.end >= start),
       );
-      currentIndex = highlight.endIndex;
-    });
+      setHighlightRanges(newRanges);
+    } else {
+      // 하이라이트 모드: 기존 로직 유지
+      const newRanges = [...highlightRanges];
+      const overlappingIndex = newRanges.findIndex(
+        (range) =>
+          (start <= range.end && end >= range.start) ||
+          (range.start <= end && range.end >= start),
+      );
 
-    // Add any remaining plain text after the last highlight
-    if (currentIndex < body.length) {
-      elements.push(body.substring(currentIndex));
+      if (overlappingIndex >= 0) {
+        // 겹치는 범위가 있으면 병합
+        const existing = newRanges[overlappingIndex];
+        newRanges[overlappingIndex] = {
+          start: Math.min(existing.start, start),
+          end: Math.max(existing.end, end),
+        };
+      } else {
+        // 새로운 범위 추가
+        newRanges.push({ start, end });
+      }
+
+      setHighlightRanges(newRanges);
     }
-
-    return elements;
   };
 
   return (
-    <div ref={contentRef} className="mb-55 font-basic-20-m">
-      {renderContent()}
+    <div
+      className={`mb-55 font-basic-20-m ${themeTextColor1 ?? ""}`}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    >
+      {body.split("").map((char, index) => {
+        const isHighlighted = highlightRanges.some(
+          (range) => index >= range.start && index <= range.end,
+        );
+        return (
+          <span
+            key={index}
+            className={`inline-block ${isHighlighted ? highlights : ""} whitespace-pre-line`}
+            onMouseDown={() => handleMouseDown(index)}
+            onMouseEnter={() => handleMouseEnter(index)}
+          >
+            {/* 공백, 줄바꿈 처리 */}
+            {char === " " ? "\u00A0" : char === "\n" ? <br /> : char}
+          </span>
+        );
+      })}
     </div>
   );
 }
