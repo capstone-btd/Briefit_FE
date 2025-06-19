@@ -9,7 +9,7 @@ interface HighlightIconProps {
     | "undo"
     | "redo"
     | "done"
-    | null;
+    | "";
   onClick: () => void;
 }
 

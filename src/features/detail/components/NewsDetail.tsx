@@ -18,8 +18,8 @@ import { pressCompanyNameMap } from "@/constants/pressCompanyNameMap";
 import { useCustomBar } from "@/hooks/useCustomBar";
 
 type NewsDetailProps = {
-  articleId: number; // 마이페이지 -> 커스텀/스크랩 뉴스 목록 조회에서 넘어올 경우 null
-  scrapId: number;
+  articleId: number | null; // 마이페이지 -> 커스텀/스크랩 뉴스 목록 조회에서 넘어올 경우 null
+  scrapId: number | null;
   isCustomize: boolean;
   containsAuthHeader: boolean; // 데이터 페칭 시 인증 토큰 필요 여부
 };
@@ -91,7 +91,7 @@ export default function NewsDetail({
   return (
     <div className={`min-h-screen pt-30 ${themeBgColor ?? "bg-white"}`}>
       <div className="flex space-x-20 px-70">
-        <NewsCustomBar customBar={customBar} scrapId={scrapId} />
+        {scrapId && <NewsCustomBar customBar={customBar} scrapId={scrapId} />}
         <ArrowLeft
           strokeWidth={1.5}
           size={30}
@@ -101,7 +101,7 @@ export default function NewsDetail({
         />
         <div className="w-full">
           <NewsPageHeader
-            articleId={articleId}
+            articleId={id}
             customBar={customBar}
             isScrapped={isScrapped}
           />
