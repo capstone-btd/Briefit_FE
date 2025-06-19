@@ -48,6 +48,24 @@ export default function NewsDetail({
               containsAuthHeader: containsAuthHeader,
             });
       setNewsData(data);
+
+      // 배경색 적용
+      if (data.backgroundColor) {
+        const themeColor = data.backgroundColor;
+        customBar.setActiveThemeColor(themeColor);
+        customBar.setThemeBgColor(`bg-${themeColor}`);
+        customBar.setThemeTextColor1(`text-${themeColor}-text1`);
+        customBar.setThemeTextColor2(`text-${themeColor}-text2`);
+        customBar.setThemeBorderColor(`border-${themeColor}-dark`);
+        customBar.setThemeDividerColor(`bg-${themeColor}-dark`);
+        customBar.setThemeCardColor(`bg-${themeColor}-light`);
+      }
+
+      // 하이라이트 적용
+      if (Array.isArray(data.customs)) {
+        // highlights setter를 직접 추가하거나, setHighlights를 커스텀바에서 export
+        customBar.setHighlights(data.customs);
+      }
     };
     fetchDetail();
   }, [id, containsAuthHeader]);
@@ -64,6 +82,7 @@ export default function NewsDetail({
     themeBorderColor,
     themeCardColor,
     activeIcon,
+    activeHighlightColor,
     highlights,
     addHighlight,
     removeHighlight,
@@ -112,7 +131,7 @@ export default function NewsDetail({
                 highlights={highlights}
                 addHighlight={addHighlight}
                 removeHighlight={removeHighlight}
-                articleId={id}
+                activeHighlightColor={activeHighlightColor}
               />
               <Divider className={themeDividerColor ?? ""} />
               <NewsSourceCardList

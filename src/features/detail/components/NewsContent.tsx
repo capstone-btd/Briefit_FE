@@ -1,23 +1,26 @@
-import React, { useState } from "react";
-import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
+import React from "react";
+import type { HighlightInfo } from "@/types/custom/highlightInfo";
 
 export default function NewsContent({
   body,
   themeTextColor1,
   activeIcon,
-  scrapId,
+  highlights,
+  addHighlight,
+  removeHighlight,
+  activeHighlightColor,
 }: {
   body: string;
   themeTextColor1?: string | null;
   activeIcon?: string | null;
-  scrapId: number;
+  highlights: HighlightInfo[];
+  addHighlight: (start: number, end: number, color: string) => void;
+  removeHighlight: (start: number, end: number) => void;
+  activeHighlightColor: string;
 }) {
-  const { highlights, activeHighlightColor, addHighlight, removeHighlight } =
-    usePageSpecificNewsCustom(scrapId);
-
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState<number | null>(null);
-  const [dragRange, setDragRange] = useState<{
+  const [isDragging, setIsDragging] = React.useState(false);
+  const [dragStart, setDragStart] = React.useState<number | null>(null);
+  const [dragRange, setDragRange] = React.useState<{
     start: number;
     end: number;
   } | null>(null);

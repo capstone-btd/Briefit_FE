@@ -26,6 +26,8 @@ export function useCustomBar() {
   const [activeIcon, setActiveIcon] = useState<"highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | null>(null);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
 
+  const [newScrapId, setNewScrapId] = useState<number>(null);
+
   // 커스텀바가 열릴 때 팔레트 상태를 초기화하는 함수
   const resetPalettes = useCallback(() => {
     setShowHighlightPalette(false);
@@ -58,6 +60,8 @@ export function useCustomBar() {
   }, []);
 
   return {
+    newScrapId,
+    setNewScrapId,
     isCustomBarVisible,
     setIsCustomBarVisible,
     activeThemeColor,
@@ -83,6 +87,7 @@ export function useCustomBar() {
     activeIcon,
     setActiveIcon,
     highlights,
+    setHighlights,
     addHighlight,
     removeHighlight,
     resetPalettes, // 커스텀바 열릴 때 호출 필요

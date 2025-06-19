@@ -30,11 +30,12 @@ export default function NewsPageHeader({
   const isUser = useAuthStore(isLoggedInUser);
   const [isScrappedNew, setIsScrappedNew] = useState(false);
 
-  const { setIsCustomBarVisible } = customBar;
+  const { setNewScrapId, setIsCustomBarVisible } = customBar;
 
   const scrapHandler = async () => {
     setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
-    await postScrap({ id: articleId });
+    const scrapId = await postScrap({ id: articleId });
+    setNewScrapId(scrapId);
     setIsScrappedNew(true);
   };
   const shareHandler = async () => {
