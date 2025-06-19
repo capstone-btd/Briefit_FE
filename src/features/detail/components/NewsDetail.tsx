@@ -73,10 +73,13 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
               />
               <Divider className={themeDividerColor ?? ""} />
               <ResponsiveImage
-                src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-                alt="뉴스 기사 이미지"
-                className="mx-auto my-60 h-470 w-710"
-              />
+              src={
+                newsData.imgUrls[0] ??
+                "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+              }
+              alt="뉴스 기사 이미지"
+              className="mx-auto my-60 h-470 w-710"
+            />
               <NewsContent
                 body={newsData.body}
                 themeTextColor1={themeTextColor1}

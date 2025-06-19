@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 type IconButtonProps = {
@@ -31,7 +32,7 @@ export default function IconButton({
       onClick={onClick}
       style={style}
     >
-      <img src={imgSrc} alt={alt} />
+      <Image src={imgSrc} alt={alt} width={46} height={46} />
     </Button>
   );
 }

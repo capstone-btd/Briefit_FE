@@ -35,6 +35,7 @@ export default function ResponsiveImage({
         fill
         className={`${roundedClass} block object-cover object-center`}
         priority={priority}
+        unoptimized // 추후 수정
       />
     </div>
   );

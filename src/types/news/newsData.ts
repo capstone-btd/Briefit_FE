@@ -9,5 +9,6 @@ export type NewsData = {
   body: string;
   categories: string[]; 
   sources: NewsSource[];
+  imgUrls: string[];
   createdAt: string;
 }
