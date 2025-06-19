@@ -1,4 +1,5 @@
 import { fetchUserInfo } from "@/features/my/api/user";
+import { useAuthStore } from "@/stores/auth/useAuthStore";
 import { useUserStore } from "@/stores/auth/useUserStore";
 
 // 서버에서 유저 정보 조회 후 userStore에 저장
@@ -6,11 +7,14 @@ import { useUserStore } from "@/stores/auth/useUserStore";
 export async function setUserInfoToStore() {
   try {
     const userInfo = await fetchUserInfo();
-
-    const { setNickname, setProfileUrl, setCategories } = useUserStore.getState();
-    setNickname(userInfo.nickname);
-    setProfileUrl(userInfo.profileUrl);
-    setCategories(userInfo.categories);
+    const { setNickname, setProfileUrl, setCategories } =
+      useUserStore.getState();
+    if (!userInfo) {
+      useAuthStore.setState({ isNew: false }); // 로컬 스토리지 상태 업데이트
+      setNickname(userInfo.nickname);
+      setProfileUrl(userInfo.profileUrl);
+      setCategories(userInfo.categories);
+    }
 
     return userInfo;
   } catch (error) {
