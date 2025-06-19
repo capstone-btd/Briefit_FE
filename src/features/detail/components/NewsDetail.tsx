@@ -64,6 +64,10 @@ export default function NewsDetail({
       // 배경색 적용
       if (data.backgroundColor) {
         const themeColor = data.backgroundColor;
+        setGlobalBgColor(`bg-${themeColor}`); // 전체 레이아웃에 적용
+        setGlobalDividerColor(`bg-${themeColor}-dark`);
+        console.log(`bg-${themeColor}-dark`);
+
         customBar.setActiveThemeColor(themeColor);
         customBar.setThemeBgColor(`bg-${themeColor}`);
         customBar.setThemeTextColor1(`text-${themeColor}-text1`);

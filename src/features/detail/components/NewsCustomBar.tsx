@@ -102,7 +102,7 @@ export default function NewsCustomBar({ customBar }: NewsCustomBarProps) {
 
     if (color === "white-theme") {
       setGlobalBgColor(null); // 글로벌하게 적용
-      setGlobalDividerColor(null);
+      setGlobalDividerColor("gray-100");
 
       setThemeBgColor("");
       setThemeTextColor1("");
