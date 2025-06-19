@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { useAuthStore, isLoggedInUser } from "@/stores/auth/useAuthStore";
 import IconButton from "@/features/common/IconButton";
-import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
+import {
+  useNewsCustomStore,
+  usePageSpecificNewsCustom,
+} from "@/stores/detail/useNewsCustomStore";
 import postScrap from "../api/newsDetailIcon";
 
 // 타입 정의로 변경
@@ -25,10 +28,14 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
   const isUser = useAuthStore(isLoggedInUser);
 
   const { toggleCustomBar } = useNewsCustomStore();
+  const { isScrapped, setIsScrapped } = usePageSpecificNewsCustom(pageId);
 
-  const scrapHandler = () => {
+  const scrapHandler = async () => {
     setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
-    postScrap({ id: pageId });
+    const result = await postScrap({ id: pageId });
+    if (result) {
+      setIsScrapped(true);
+    }
   };
   const shareHandler = async () => {
     setActive(active === ActiveButton.SHARE ? null : ActiveButton.SHARE);
@@ -42,7 +49,9 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
   };
   const customHandler = () => {
     setActive(active === ActiveButton.CUSTOM ? null : ActiveButton.CUSTOM);
-    toggleCustomBar();
+    if (isScrapped) {
+      toggleCustomBar();
+    }
   };
 
   return (
@@ -51,7 +60,7 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
         <IconButton
           iconName={"scrap"}
           onClick={scrapHandler}
-          isActive={isActive(ActiveButton.SCRAP)}
+          isActive={isScrapped || isActive(ActiveButton.SCRAP)}
           alt="스크랩"
         ></IconButton>
       )}
@@ -65,7 +74,7 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
         <IconButton
           iconName={"pencil"}
           onClick={customHandler}
-          isActive={isActive(ActiveButton.CUSTOM)}
+          isActive={isActive(ActiveButton.CUSTOM) && isScrapped}
           alt="커스텀"
         ></IconButton>
       )}
