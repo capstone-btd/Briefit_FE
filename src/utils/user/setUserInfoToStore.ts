@@ -9,7 +9,7 @@ export async function setUserInfoToStore() {
     const userInfo = await fetchUserInfo();
     const { setNickname, setProfileUrl, setCategories } =
       useUserStore.getState();
-    if (!userInfo) {
+    if (userInfo) {
       useAuthStore.setState({ isNew: false }); // 로컬 스토리지 상태 업데이트
       setNickname(userInfo.nickname);
       setProfileUrl(userInfo.profileUrl);
