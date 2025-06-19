@@ -5,23 +5,33 @@ export default function NewsTitle({
   pressCompanies,
   title,
   createdAt,
+  themeTextColor1,
+  themeTextColor2,
 }: {
   categoryLabel: string;
   pressCompanies: string[];
   title: string;
   createdAt: string;
+  themeTextColor1?: string | null;
+  themeTextColor2?: string | null;
 }) {
   return (
     <div className="mt-50 gap-20">
       <div className="mb-16 flex items-center gap-30">
-        <div className="font-title-24-m">{categoryLabel}</div>
-        <div className="font-basic-20 text-gray-400">
+        <div className={`font-title-24-m ${themeTextColor1 ?? ""}`}>
+          {categoryLabel}
+        </div>
+        <div className={`font-basic-20 ${themeTextColor2 ?? "text-gray-400"}`}>
           {pressCompanies.join(", ")}
         </div>
       </div>
-      <div className="font-title-40 mb-50">{title}</div>
-      <div className="font-basic-16 mb-17 flex justify-end text-gray-600">
-        생성일자: {formatKoreanDateTime({isoString:createdAt})}
+      <div className={`mb-50 font-title-40 ${themeTextColor1 ?? ""}`}>
+        {title}
+      </div>
+      <div
+        className={`mb-17 flex justify-end font-basic-16 ${themeTextColor2 ?? "text-gray-600"}`}
+      >
+        생성일자: {formatKoreanDateTime({ isoString: createdAt })}
       </div>
     </div>
   );

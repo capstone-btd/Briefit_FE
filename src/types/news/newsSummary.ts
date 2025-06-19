@@ -5,4 +5,6 @@ export type NewsSummary = {
     imageUrl: string,
     categories: string[],
     pressCompanies: string[]
+    scrapId: number,
+    isCustomized: boolean,
 }
