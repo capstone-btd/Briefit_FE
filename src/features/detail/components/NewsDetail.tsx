@@ -13,6 +13,7 @@ import NewsTitle from "@/features/detail/components/NewsTitle";
 import { NewsData, NewsSource } from "@/types/news/newsData";
 import NewsCustomBar from "./NewsCustomBar";
 import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
+import { pressCompanyNameMap } from "@/constants/pressCompanyNameMap";
 
 type Props = {
   id: number;
@@ -72,10 +73,13 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
               />
               <Divider className={themeDividerColor ?? ""} />
               <ResponsiveImage
-                src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-                alt="뉴스 기사 이미지"
-                className="mx-auto my-60 h-470 w-710"
-              />
+              src={
+                newsData.imgUrls[0] ??
+                "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+              }
+              alt="뉴스 기사 이미지"
+              className="mx-auto my-60 h-470 w-710"
+            />
               <NewsContent
                 body={newsData.body}
                 themeTextColor1={themeTextColor1}
@@ -85,7 +89,12 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
               />
               <Divider className={themeDividerColor ?? ""} />
               <NewsSourceCardList
-                newsSourceList={newsData.sources}
+                 newsSourceList={newsData.sources.map((source) => ({
+                ...source,
+                pressCompany:
+                  pressCompanyNameMap[source.pressCompany] ||
+                  source.pressCompany,
+              }))}
                 themeCardColor={themeCardColor}
                 themeTextColor1={themeTextColor1}
                 themeBorderColor={themeBorderColor}

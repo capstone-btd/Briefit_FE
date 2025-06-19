@@ -7,6 +7,7 @@ import { MoreCardButton } from "@/features/common/MoreCardButton";
 import { newsCategories } from "@/constants/newsCategries";
 import { NewsSummary } from "@/types/news/newsSummary";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function RecommendedNewsCardList({
   category,
@@ -93,7 +94,12 @@ export default function RecommendedNewsCardList({
             variant="ghost"
             className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer hover:bg-transparent"
           >
-            <img src="/assets/left-arrow.png" alt="이전" />
+            <Image
+              src="/assets/left-arrow.png"
+              alt="이전"
+              width={38}
+              height={38}
+            />
           </Button>
         )}
         {isScrollableRight && isHovered && (
@@ -102,7 +108,12 @@ export default function RecommendedNewsCardList({
             variant="ghost"
             className="absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer hover:bg-transparent"
           >
-            <img src="/assets/right-arrow.png" alt="다음" />
+            <Image
+              src="/assets/right-arrow.png"
+              alt="다음"
+              width={38}
+              height={38}
+            />
           </Button>
         )}
       </div>

@@ -1,5 +1,6 @@
 // components/LoginPopup.tsx
 import { useRef, useEffect } from "react";
+import Image from "next/image";
 import NaverLoginButton from "./NaverLoginButton";
 
 type Props = {
@@ -21,19 +22,18 @@ export default function LoginPopup({ onClose }: Props) {
   }, [onClose]);
 
  return (
-   <div
-     ref={popupRef}
-     className="absolute top-[150%] left-[-220%] z-10"
-   >
-     <img
+   <div ref={popupRef} className="absolute top-[150%] left-[-220%] z-10">
+     <Image
        src={"/assets/close.png"}
        alt="close"
        onClick={onClose}
-       className="relative left-[260px] h-28 w-28 cursor-pointer"
+       className="relative left-260 cursor-pointer"
+       width={28}
+       height={28}
      />
-     <div className="rounded-20 absolute bg-white p-20 whitespace-nowrap shadow-[0_0_3px_#D9D9D9]">
-       <div className="font-title-20 mb-9">간편 로그인</div>
-       <div className="font-basic-16 mb-20 text-gray-400">
+     <div className="absolute rounded-20 bg-white p-20 whitespace-nowrap shadow-[0_0_3px_#D9D9D9]">
+       <div className="mb-9 font-title-20">간편 로그인</div>
+       <div className="mb-20 font-basic-16 text-gray-400">
          회원가입 후 다양한 기능을 사용해보세요.
        </div>
        <div className="flex justify-center">

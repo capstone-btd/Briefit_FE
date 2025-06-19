@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import LogoutButton from "./LogoutButton";
 import { isLoggedInUser, useAuthStore } from "@/stores/auth/useAuthStore";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
+import Image from "next/image";
 
 function MyMenubarItem({
   iconPath,
@@ -20,10 +21,18 @@ function MyMenubarItem({
 }) {
   return (
     <div
-      className={`mb-20 flex h-55 w-194 items-center rounded-10 px-10 py-5 hover:shadow-[0_0_3px_#7B47FF] ${isActive ? "bg-purple-50" : "bg-white"
-        }`}
-      onClick={onClick}>
-      <img src={iconPath} className="mr-15 h-45 w-45" />
+      className={`mb-20 flex h-55 w-194 items-center rounded-10 px-10 py-5 hover:shadow-[0_0_3px_#7B47FF] ${
+        isActive ? "bg-purple-50" : "bg-white"
+      }`}
+      onClick={onClick}
+    >
+      <Image
+        src={iconPath}
+        className="mr-15"
+        alt={iconPath}
+        width={45}
+        height={45}
+      />
       <div
         className={`font-title-16 ${
           isActive ? "text-purple-500" : "text-gray-400"

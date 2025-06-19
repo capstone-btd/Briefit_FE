@@ -2,7 +2,7 @@ export type NewsSummary = {
     articleId: number,
     title: string,
     body: string, 
-    imageUrl: string,
+    imgUrls: string[],
     categories: string[],
     pressCompanies: string[]
     scrapId: number,

@@ -5,6 +5,7 @@ import Link from "next/link";
 import ResponsiveImage from "./ResponsiveImage";
 import { NewsSummary } from "@/types/news/newsSummary";
 import { cn } from "@/lib/utils";
+import { getPressCompanyNameString } from "@/utils/news/getPressCompanyNameString";
 
 function NewsCardCategoryTag({ label }: { label: string }) {
   return (
@@ -46,7 +47,7 @@ export function NewsCard({
               label={categoryLabel ?? newsSummary.categories[0]}
             />
             <div className="font-light-16 overflow-ellipsis whitespace-nowrap text-gray-400">
-              {newsSummary.pressCompanies.join(", ")}
+              {getPressCompanyNameString(newsSummary.pressCompanies)}
             </div>
           </div>
         </CardHeader>
@@ -60,7 +61,7 @@ export function NewsCard({
           </div>
           <ResponsiveImage
             src={
-              newsSummary.imageUrl ??
+              newsSummary.imgUrls[0] ??
               "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
             }
             alt="뉴스 기사 이미지"

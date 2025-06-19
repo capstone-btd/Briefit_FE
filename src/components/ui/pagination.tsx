@@ -5,6 +5,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
+import Image from "next/image";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -68,10 +69,16 @@ function PaginationPrevious({
   return (
     <PaginationLink
       aria-label="Go to previous page"
-      className={cn("aspect-square w-28 hover:bg-transparent", className)}
+      className={cn("hover:bg-transparent", className)}
       {...props}
     >
-      <img src="/assets/left-arrow.png" className="my-auto"></img>
+      <Image
+        src="/assets/left-arrow.png"
+        className="my-auto"
+        alt="이전"
+        width={28}
+        height={28}
+      />
     </PaginationLink>
   );
 }
@@ -83,10 +90,16 @@ function PaginationNext({
   return (
     <PaginationLink
       aria-label="Go to next page"
-      className={cn("aspect-square w-28 hover:bg-transparent", className)}
+      className={cn("hover:bg-transparent", className)}
       {...props}
     >
-      <img src="/assets/right-arrow.png" className="my-auto"></img>
+      <Image
+        src="/assets/right-arrow.png"
+        className="my-auto"
+        alt="다음"
+        width={28}
+        height={28}
+      />
     </PaginationLink>
   );
 }

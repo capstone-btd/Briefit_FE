@@ -2,6 +2,7 @@
 
 import { useAuthStore } from "@/stores/auth/useAuthStore";
 import { useUserStore } from "@/stores/auth/useUserStore";
+import Image from "next/image";
 
 export default function LogoutButton({
   isActive,
@@ -26,7 +27,13 @@ export default function LogoutButton({
       }`}
       onClick={handleLogout}
     >
-      <img src="/assets/logout.png" className="mr-12 h-45 w-45" />
+      <Image
+        src="/assets/logout.png"
+        className="mr-12"
+        alt="로그아웃"
+        width={45}
+        height={45}
+      />
       <div
         className={`font-title-16 ${
           isActive ? "text-purple-500" : "text-gray-400"

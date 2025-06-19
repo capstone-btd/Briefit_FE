@@ -11,5 +11,6 @@ export const newsData: NewsData = {
       url: "주소6",
     },
   ],
+  imgUrls: [],
   createdAt: "2025-06-10T15:00:00",
 };
