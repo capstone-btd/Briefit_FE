@@ -34,7 +34,9 @@ export default function NewsDetail({
   const router = useRouter();
   const [newsData, setNewsData] = useState<NewsData | null>(null);
 
-  const setGlobalBgColor = useNewsCustomStore((state) => state.setGlobalBgColor);
+  const setGlobalBgColor = useNewsCustomStore(
+    (state) => state.setGlobalBgColor,
+  );
   const setGlobalDividerColor = useNewsCustomStore(
     (state) => state.setGlobalDividerColor,
   );
@@ -54,11 +56,11 @@ export default function NewsDetail({
           : await fetchNewsDetail({
               id: id,
               containsAuthHeader: containsAuthHeader,
-          });
-            if (isMounted) {
+            });
+      if (isMounted) {
         setNewsData(data);
       }
-    
+
       // 배경색 적용
       if (data.backgroundColor) {
         const themeColor = data.backgroundColor;
@@ -78,14 +80,13 @@ export default function NewsDetail({
       }
     };
     fetchDetail();
-     return () => {
+    return () => {
       // 컴포넌트 언마운트 시 배경, divider 색 초기화
       setGlobalBgColor(null);
       setGlobalDividerColor(null);
       isMounted = false;
-
     };
-  }, [id, scrapId, containsAuthHeader, customBar]);
+  }, [id, scrapId, containsAuthHeader]);
 
   const pressCompanyNameList =
     newsData?.sources.map((source: NewsSource) => source.pressCompany) ?? [];
@@ -108,7 +109,7 @@ export default function NewsDetail({
   return (
     <div className={`min-h-screen pt-30 ${themeBgColor ?? "bg-white"}`}>
       <div className="flex space-x-20 px-70">
-        {scrapId && <NewsCustomBar customBar={customBar} scrapId={scrapId} />}
+        <NewsCustomBar customBar={customBar} />
         <ArrowLeft
           strokeWidth={1.5}
           size={30}
