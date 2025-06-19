@@ -5,15 +5,15 @@ export default function NewsContent({
   body,
   themeTextColor1,
   activeIcon,
-  pageId,
+  scrapId,
 }: {
   body: string;
   themeTextColor1?: string | null;
   activeIcon?: string | null;
-  pageId: number;
+  scrapId: number;
 }) {
   const { highlights, activeHighlightColor, addHighlight, removeHighlight } =
-    usePageSpecificNewsCustom(pageId);
+    usePageSpecificNewsCustom(scrapId);
 
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState<number | null>(null);

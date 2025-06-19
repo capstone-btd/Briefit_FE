@@ -14,6 +14,7 @@ export default async function postScrap({
       // 예외 처리
     }
     alert("뉴스 스크랩에 실패했습니다.");
+    console.log(error);
     return;
   }
 }
