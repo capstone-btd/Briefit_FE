@@ -92,11 +92,11 @@ export default function NewsCustomBar({
     setActiveThemeColor(color);
 
     if (color === "white-theme") {
-      setThemeBgColor(null);
-      setThemeTextColor1(null);
-      setThemeTextColor2(null);
-      setThemeBorderColor(null);
-      setThemeCardColor(null);
+      setThemeBgColor("");
+      setThemeTextColor1("");
+      setThemeTextColor2("");
+      setThemeBorderColor("");
+      setThemeCardColor("");
     } else {
       setThemeBgColor(`bg-${color}`);
       setThemeTextColor1(`text-${color}-text1`);
