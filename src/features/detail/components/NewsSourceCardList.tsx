@@ -42,7 +42,7 @@ export default function NewsSourceCardList({
       <div className={`pt-50 font-title-24 ${themeTextColor1 ?? ""}`}>
         이런 기사들을 모았어요
       </div>
-      <div className="flex flex-col gap-10">
+      <div className="ㅔㅠ-50 flex pb-80">
         {newsSourceList.map((newsSource, index) => (
           <a key={index} href={newsSource.url} target="_blank">
             <NewsSourceCard

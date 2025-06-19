@@ -3,15 +3,13 @@
 import { useState } from "react";
 import { useAuthStore, isLoggedInUser } from "@/stores/auth/useAuthStore";
 import IconButton from "@/features/common/IconButton";
-import {
-  useNewsCustomStore,
-  usePageSpecificNewsCustom,
-} from "@/stores/detail/useNewsCustomStore";
+import { useCustomBar } from "@/hooks/useCustomBar";
 import postScrap from "../api/newsDetailIScrap";
 
-// 타입 정의로 변경
 interface NewsPageHeaderProps {
-  pageId: number;
+  articleId: number;
+  isScrapped: boolean;
+  customBar: ReturnType<typeof useCustomBar>;
 }
 
 const ActiveButton = {
@@ -22,20 +20,22 @@ const ActiveButton = {
 
 type ActiveButtonType = (typeof ActiveButton)[keyof typeof ActiveButton];
 
-export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
+export default function NewsPageHeader({
+  articleId,
+  isScrapped,
+  customBar,
+}: NewsPageHeaderProps) {
   const [active, setActive] = useState<ActiveButtonType | null>(null);
   const isActive = (key: ActiveButtonType) => active === key;
   const isUser = useAuthStore(isLoggedInUser);
+  const [isScrappedNew, setIsScrappedNew] = useState(false);
 
-  const { toggleCustomBar } = useNewsCustomStore();
-  const { isScrapped, setIsScrapped } = usePageSpecificNewsCustom(pageId);
+  const { setIsCustomBarVisible } = customBar;
 
   const scrapHandler = async () => {
     setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
-    const scrapId = await postScrap({ id: pageId }); // 스크랩 아이디 받도록 수정 -> 커스텀 시 요 아이디로 넘기기!
-    if (scrapId) {
-      setIsScrapped(true);
-    }
+    await postScrap({ id: articleId });
+    setIsScrappedNew(true);
   };
   const shareHandler = async () => {
     setActive(active === ActiveButton.SHARE ? null : ActiveButton.SHARE);
@@ -49,8 +49,8 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
   };
   const customHandler = () => {
     setActive(active === ActiveButton.CUSTOM ? null : ActiveButton.CUSTOM);
-    if (isScrapped) {
-      toggleCustomBar();
+    if (isScrapped || isScrappedNew) {
+      setIsCustomBarVisible((v: boolean) => !v);
     }
   };
 
@@ -60,7 +60,7 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
         <IconButton
           iconName={"scrap"}
           onClick={scrapHandler}
-          isActive={isScrapped || isActive(ActiveButton.SCRAP)}
+          isActive={isScrapped || isScrappedNew || isActive(ActiveButton.SCRAP)}
           alt="스크랩"
         ></IconButton>
       )}
@@ -74,7 +74,9 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
         <IconButton
           iconName={"pencil"}
           onClick={customHandler}
-          isActive={isActive(ActiveButton.CUSTOM) && isScrapped}
+          isActive={
+            isActive(ActiveButton.CUSTOM) && (isScrapped || isScrappedNew)
+          }
           alt="커스텀"
         ></IconButton>
       )}

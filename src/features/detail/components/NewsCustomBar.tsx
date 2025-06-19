@@ -1,38 +1,45 @@
 "use client";
 
 import Image from "next/image";
-import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
+import React from "react";
 import { Check, Eraser, Palette } from "lucide-react";
 import HighlightIcon from "@/features/common/HighlightIcon";
 import Divider from "@/features/common/Divider";
 import postNewsDetailCustom from "@/features/detail/api/newsDetailCustom";
+import { useCustomBar } from "@/hooks/useCustomBar";
 
 interface NewsCustomBarProps {
-  pageId: number;
+  scrapId: number;
+  customBar: ReturnType<typeof useCustomBar>;
 }
 
-export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
+export default function NewsCustomBar({
+  scrapId,
+  customBar,
+}: NewsCustomBarProps) {
+  // 커스텀 관련 상태를 customBar에서 가져옴
   const {
-    setHighlightColor,
-    setThemeColor,
-    setGlobalThemeColor,
-    setThemeTextColor1,
-    setThemeTextColor2,
-    setThemeDividerColor,
-    setThemeBorderColor,
-    setThemeCardColor,
     isCustomBarVisible,
     activeThemeColor,
+    setThemeBgColor,
+    setThemeTextColor1,
+    setThemeTextColor2,
+    setThemeBorderColor,
+    setThemeDividerColor,
+    setThemeCardColor,
+    setActiveThemeColor,
     activeHighlightColor,
+    setActiveHighlightColor,
     showHighlightPalette,
+    setShowHighlightPalette,
     showThemePalette,
+    setShowThemePalette,
     activeIcon,
-    toggleHighlightPalette,
-    toggleThemePalette,
     setActiveIcon,
-    getCustomRequestInfo,
-  } = usePageSpecificNewsCustom(pageId);
+    highlights,
+  } = customBar;
 
+  // 팔레트 색상 목록
   const highlightColors = [
     { variable: "yellow-highlight", bg: "bg-yellow-highlight" },
     { variable: "green-highlight", bg: "bg-green-highlight" },
@@ -51,47 +58,44 @@ export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
     { variable: "green-theme", bg: "bg-green-theme" },
   ];
 
+  // 아이콘 클릭 핸들러
   const handleIconClick = (
     iconType: "highlighter" | "eraser" | "theme" | "undo" | "redo" | "done",
   ) => {
     setActiveIcon(iconType);
     if (iconType === "highlighter") {
-      toggleHighlightPalette();
+      setShowHighlightPalette((v) => !v);
       if (!activeHighlightColor) {
-        setHighlightColor("yellow-highlight");
+        setActiveHighlightColor("yellow-highlight");
       }
       if (showThemePalette) {
-        toggleThemePalette();
+        setShowThemePalette(false);
       }
     } else if (iconType === "theme") {
-      toggleThemePalette();
+      setShowThemePalette((v) => !v);
       if (!activeThemeColor) {
-        setThemeColor("white-theme");
+        setActiveThemeColor("white-theme");
       }
       if (showHighlightPalette) {
-        toggleHighlightPalette();
+        setShowHighlightPalette(false);
       }
     } else {
-      if (showHighlightPalette) {
-        toggleHighlightPalette();
-      }
-      if (showThemePalette) {
-        toggleThemePalette();
-      }
+      if (showHighlightPalette) setShowHighlightPalette(false);
+      if (showThemePalette) setShowThemePalette(false);
     }
   };
 
   const handleThemeColorSelect = (color: string) => {
-    setThemeColor(`${color}`);
+    setActiveThemeColor(color);
 
     if (color === "white-theme") {
-      setGlobalThemeColor(null);
+      setThemeBgColor(null);
       setThemeTextColor1(null);
       setThemeTextColor2(null);
       setThemeBorderColor(null);
       setThemeCardColor(null);
     } else {
-      setGlobalThemeColor(`bg-${color}`);
+      setThemeBgColor(`bg-${color}`);
       setThemeTextColor1(`text-${color}-text1`);
       setThemeTextColor2(`text-${color}-text2`);
       setThemeBorderColor(`border-${color}-dark`);
@@ -100,10 +104,34 @@ export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
     }
   };
 
+  // 저장 시 API로 전송할 데이터 생성
+  const getCustomRequestInfo = () => {
+    return {
+      backgroundColor: activeThemeColor,
+      highlightsInfos: highlights.map(
+        ({
+          startPoint,
+          endPoint,
+          highlightsColor,
+          highlightsFontColor,
+          highlightsFontSize,
+          isBold,
+        }) => ({
+          startPoint,
+          endPoint,
+          highlightsColor,
+          highlightsFontColor,
+          highlightsFontSize,
+          isBold,
+        }),
+      ),
+    };
+  };
+
   const handleSaveCustom = async () => {
     try {
       const customRequestInfo = getCustomRequestInfo();
-      const result = await postNewsDetailCustom(pageId, customRequestInfo);
+      const result = await postNewsDetailCustom(scrapId, customRequestInfo);
       if (result) {
         alert("커스텀 정보가 성공적으로 저장되었습니다.");
       }
@@ -135,7 +163,7 @@ export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
                           ? "ring-2 ring-purple-500"
                           : ""
                       }`}
-                      onClick={() => setHighlightColor(color.variable)}
+                      onClick={() => setActiveHighlightColor(color.variable)}
                     />
                   ))}
                 </div>
