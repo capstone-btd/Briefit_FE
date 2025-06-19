@@ -32,8 +32,8 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
 
   const scrapHandler = async () => {
     setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
-    const result = await postScrap({ id: pageId });
-    if (result) {
+    const scrapId = await postScrap({ id: pageId }); // 스크랩 아이디 받도록 수정
+    if (scrapId) {
       setIsScrapped(true);
     }
   };

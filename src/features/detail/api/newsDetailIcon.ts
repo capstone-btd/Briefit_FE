@@ -8,7 +8,7 @@ export default async function postScrap({
 }) {
   try {
     const response = await apiClient.post(`/users/scrap?article-id=${id}`);
-    return response.data === true;
+    return response.data;
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
