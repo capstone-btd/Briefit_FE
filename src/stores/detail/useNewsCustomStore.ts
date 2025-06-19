@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import React from 'react';
+import { useEffect } from 'react';
 
 export interface Highlight {
   id: string; // 고유 ID
@@ -26,6 +26,7 @@ interface CustomBarState {
   showThemePalette: boolean;     // 테마 팔레트 표시 여부
   activeIcon: "highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | null; // 현재 활성화된 아이콘
   currentPageId: number | null; // 현재 페이지 ID
+  isScrapped: boolean;
 
   // 액션
   toggleCustomBar: () => void;
@@ -47,8 +48,9 @@ interface CustomBarState {
   setThemePaletteVisible: (visible: boolean) => void;
   setActiveIcon: (iconType: "highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | null) => void;
   setCurrentPageId: (pageId: number | null) => void;
-  setPageState: (pageId: number) => void;
+  resetPageState: () => void; // 페이지별 상태 초기화
   getCustomRequestInfo: () => { backgroundColor: string; highlightsInfos: Omit<Highlight, 'id'>[] }; // 백엔드 요청용 데이터 생성
+  setIsScrapped: (scrapped: boolean) => void;
 }
 
 export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
@@ -66,6 +68,7 @@ export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
   showThemePalette: false,
   activeIcon: null,
   currentPageId: null,
+  isScrapped: false,
 
   toggleCustomBar: () => set((state) => ({ isCustomBarVisible: !state.isCustomBarVisible })),
   setCustomBarVisible: (visible) => set({ isCustomBarVisible: visible }),
@@ -81,6 +84,7 @@ export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
   setThemePaletteVisible: (visible) => set({ showThemePalette: visible }),
   setActiveIcon: (iconType) => set({ activeIcon: iconType }),
   setCurrentPageId: (pageId) => set({ currentPageId: pageId }),
+  setIsScrapped: (scrapped) => set({ isScrapped: scrapped }),
 
   // 인덱스 받아서 하이라이트 객체 생성
   addHighlight: (startPoint, endPoint, highlightsColor) => {
@@ -133,8 +137,7 @@ export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
     };
   },
   
-  setPageState: (pageId) => set((state) => {
-    if (state.currentPageId === pageId) return {};
+  resetPageState: () => set(() => {
     return {
       activeHighlightColor: null,
       activeThemeColor: "white-theme",
@@ -149,7 +152,7 @@ export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
       showHighlightPalette: false,
       showThemePalette: false,
       activeIcon: null,
-      currentPageId: pageId,
+      currentPageId: null,
     };
   }),
 }));
@@ -157,13 +160,26 @@ export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
 // 페이지별 상태 관리를 위한 커스텀 훅
 export const usePageSpecificNewsCustom = (pageId: number) => {
   const {
-    setPageState,
+    currentPageId,
+    setCurrentPageId,
+    resetPageState,
     ...state
   } = useNewsCustomStore();
 
-  React.useEffect(() => {
-    setPageState(pageId);
-  }, [pageId, setPageState]);
+  useEffect(() => {
+    // 페이지가 변경되면 상태 초기화
+    if (currentPageId !== pageId) {
+      resetPageState();
+      setCurrentPageId(pageId);
+    }
+
+    // 컴포넌트 언마운트 시 상태 초기화
+    return () => {
+      if (currentPageId === pageId) {
+        resetPageState();
+      }
+    };
+  }, [pageId, currentPageId, setCurrentPageId, resetPageState]);
 
   return state;
 };
