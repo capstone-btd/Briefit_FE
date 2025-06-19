@@ -4,6 +4,12 @@ import { useState } from "react";
 import { useAuthStore, isLoggedInUser } from "@/stores/auth/useAuthStore";
 import IconButton from "@/features/common/IconButton";
 import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
+import postScrap from "../api/newsDetailIcon";
+
+// 타입 정의로 변경
+interface NewsPageHeaderProps {
+  pageId: number;
+}
 
 const ActiveButton = {
   SCRAP: "scrap",
@@ -13,7 +19,7 @@ const ActiveButton = {
 
 type ActiveButtonType = (typeof ActiveButton)[keyof typeof ActiveButton];
 
-export default function NewsPageHeader() {
+export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
   const [active, setActive] = useState<ActiveButtonType | null>(null);
   const isActive = (key: ActiveButtonType) => active === key;
   const isUser = useAuthStore(isLoggedInUser);
@@ -22,6 +28,7 @@ export default function NewsPageHeader() {
 
   const scrapHandler = () => {
     setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
+    postScrap({ id: pageId });
   };
   const shareHandler = async () => {
     setActive(active === ActiveButton.SHARE ? null : ActiveButton.SHARE);
@@ -39,7 +46,7 @@ export default function NewsPageHeader() {
   };
 
   return (
-    <div className="flex items-center gap-10 mt-10">
+    <div className="mt-10 flex items-center gap-10">
       {isUser && (
         <IconButton
           iconName={"scrap"}

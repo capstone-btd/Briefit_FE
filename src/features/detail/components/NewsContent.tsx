@@ -1,22 +1,26 @@
 import React, { useState } from "react";
+import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
 
 export default function NewsContent({
   body,
-  highlightColor,
   themeTextColor1,
   activeIcon,
+  pageId,
 }: {
   body: string;
-  highlightColor?: string | null;
   themeTextColor1?: string | null;
   activeIcon?: string | null;
+  pageId: number;
 }) {
-  const highlights = `bg-${highlightColor}`;
-  const [highlightRanges, setHighlightRanges] = useState<
-    { start: number; end: number }[]
-  >([]);
+  const { highlights, activeHighlightColor, addHighlight, removeHighlight } =
+    usePageSpecificNewsCustom(pageId);
+
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState<number | null>(null);
+  const [dragRange, setDragRange] = useState<{
+    start: number;
+    end: number;
+  } | null>(null);
 
   // activeIcon이 'highlight'인 경우에만 형광펜 기능 활성화
   const isHighlightMode = activeIcon === "highlighter";
@@ -24,63 +28,42 @@ export default function NewsContent({
 
   const handleMouseDown = (index: number) => {
     if (!isHighlightMode && !isEraserMode) return;
-
     setIsDragging(true);
     setDragStart(index);
-    // 클릭만해도 한글자씩 하이라이팅
-    // handleHighlight(index, index);
+    setDragRange(null);
   };
 
   const handleMouseEnter = (index: number) => {
     if (!isHighlightMode && !isEraserMode) return;
-
     if (isDragging && dragStart !== null) {
-      const start = Math.min(dragStart, index);
-      const end = Math.max(dragStart, index);
-      handleHighlight(start, end);
+      setDragRange({
+        start: Math.min(dragStart, index),
+        end: Math.max(dragStart, index),
+      });
     }
   };
 
   const handleMouseUp = () => {
     if (!isHighlightMode && !isEraserMode) return;
-
     setIsDragging(false);
-    setDragStart(null);
-  };
-
-  const handleHighlight = (start: number, end: number) => {
-    if (isEraserMode) {
-      // 지우개 모드: 해당 범위의 하이라이트 제거
-      const newRanges = highlightRanges.filter(
-        (range) =>
-          !(start <= range.end && end >= range.start) &&
-          !(range.start <= end && range.end >= start),
-      );
-      setHighlightRanges(newRanges);
-    } else {
-      // 하이라이트 모드: 기존 로직 유지
-      const newRanges = [...highlightRanges];
-      const overlappingIndex = newRanges.findIndex(
-        (range) =>
-          (start <= range.end && end >= range.start) ||
-          (range.start <= end && range.end >= start),
-      );
-
-      if (overlappingIndex >= 0) {
-        // 겹치는 범위가 있으면 병합
-        const existing = newRanges[overlappingIndex];
-        newRanges[overlappingIndex] = {
-          start: Math.min(existing.start, start),
-          end: Math.max(existing.end, end),
-        };
-      } else {
-        // 새로운 범위 추가
-        newRanges.push({ start, end });
+    if (dragRange) {
+      if (isHighlightMode && activeHighlightColor) {
+        addHighlight(dragRange.start, dragRange.end, activeHighlightColor);
+      } else if (isEraserMode) {
+        removeHighlight(dragRange.start, dragRange.end);
       }
-
-      setHighlightRanges(newRanges);
     }
+    setDragStart(null);
+    setDragRange(null);
   };
+
+  // 하이라이트 범위를 빠르게 확인하기 위한 Set 생성
+  const highlightedRanges = new Set<number>();
+  highlights.forEach(({ startPoint, endPoint }) => {
+    for (let i = startPoint; i <= endPoint; i++) {
+      highlightedRanges.add(i);
+    }
+  });
 
   return (
     <div
@@ -89,13 +72,16 @@ export default function NewsContent({
       onMouseLeave={handleMouseUp}
     >
       {body.split("").map((char, index) => {
-        const isHighlighted = highlightRanges.some(
-          (range) => index >= range.start && index <= range.end,
-        );
+        const isHighlighted = highlightedRanges.has(index);
+        const highlightClass = isHighlighted
+          ? highlights.find((h) => index >= h.startPoint && index <= h.endPoint)
+              ?.highlightsColor
+          : null;
+
         return (
           <span
             key={index}
-            className={`inline-block ${isHighlighted ? highlights : ""} whitespace-pre-line`}
+            className={`inline-block ${highlightClass ? `bg-${highlightClass}` : ""} whitespace-pre-line`}
             onMouseDown={() => handleMouseDown(index)}
             onMouseEnter={() => handleMouseEnter(index)}
           >

@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Divider from "@/features/common/Divider";
 import ResponsiveImage from "@/features/common/ResponsiveImage";
-import fetchNewsDetail from "@/features/detail/components/api/newsDetail";
+import fetchNewsDetail from "@/features/detail/api/newsDetail";
 import NewsContent from "@/features/detail/components/NewsContent";
 import NewsPageHeader from "@/features/detail/components/NewsPageHeader";
 import NewsSourceCardList from "@/features/detail/components/NewsSourceCardList";
@@ -21,14 +21,9 @@ type Props = {
 
 export default function NewsDetail({ id, containsAuthHeader }: Props) {
   const router = useRouter();
-  const params = useParams();
   const [newsData, setNewsData] = useState<NewsData | null>(null);
 
-  // URL에서 페이지 ID 추출
-  const pageId = params.id as string;
-
   const {
-    activeHighlightColor,
     activeThemeColor,
     themeTextColor1,
     themeTextColor2,
@@ -36,7 +31,7 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
     themeBorderColor,
     themeCardColor,
     activeIcon,
-  } = usePageSpecificNewsCustom(pageId);
+  } = usePageSpecificNewsCustom(id);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -55,7 +50,7 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
   return (
     <div className={`min-h-screen ${activeThemeColor ?? "bg-white"}`}>
       <div className="flex space-x-20 px-70">
-        <NewsCustomBar pageId={pageId} />
+        <NewsCustomBar pageId={id} />
         <ArrowLeft
           strokeWidth={1.5}
           size={30}
@@ -64,7 +59,7 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
           className="mr-15 aspect-square cursor-pointer hover:bg-transparent"
         />
         <div className="w-full">
-          <NewsPageHeader />
+          <NewsPageHeader pageId={id} />
           {newsData ? (
             <div className="px-70">
               <NewsTitle
@@ -83,9 +78,9 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
               />
               <NewsContent
                 body={newsData.body}
-                highlightColor={activeHighlightColor}
                 themeTextColor1={themeTextColor1}
                 activeIcon={activeIcon}
+                pageId={id}
                 // themeTextColor2={themeTextColor2}
               />
               <Divider className={themeDividerColor ?? ""} />

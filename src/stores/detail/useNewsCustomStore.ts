@@ -1,11 +1,14 @@
 import { create } from 'zustand';
-import { useEffect } from 'react';
+import React from 'react';
 
 export interface Highlight {
   id: string; // 고유 ID
   startPoint: number; // 하이라이트 시작 전역 인덱스 (0부터 시작)
   endPoint: number;   // 하이라이트 끝 전역 인덱스
   highlightsColor: string; // 형광펜 색상
+  highlightsFontColor: string;
+  highlightsFontSize: number;
+  isBold: boolean;
 }
 
 interface CustomBarState {
@@ -22,7 +25,7 @@ interface CustomBarState {
   showHighlightPalette: boolean; // 형광펜 팔레트 표시 여부
   showThemePalette: boolean;     // 테마 팔레트 표시 여부
   activeIcon: "highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | null; // 현재 활성화된 아이콘
-  currentPageId: string | null; // 현재 페이지 ID
+  currentPageId: number | null; // 현재 페이지 ID
 
   // 액션
   toggleCustomBar: () => void;
@@ -36,17 +39,19 @@ interface CustomBarState {
   setThemeBorderColor: (color: string | null) => void;
   setThemeCardColor: (color: string | null) => void;
   addHighlight: (startPoint: number, endPoint: number, highlightsColor: string) => void;
+  removeHighlight: (startPoint: number, endPoint: number) => void;
   clearHighlights: () => void;
   toggleHighlightPalette: () => void;
   toggleThemePalette: () => void;
   setHighlightPaletteVisible: (visible: boolean) => void;
   setThemePaletteVisible: (visible: boolean) => void;
   setActiveIcon: (iconType: "highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | null) => void;
-  setCurrentPageId: (pageId: string | null) => void;
-  resetPageState: () => void; // 페이지별 상태 초기화
+  setCurrentPageId: (pageId: number | null) => void;
+  setPageState: (pageId: number) => void;
+  getCustomRequestInfo: () => { backgroundColor: string; highlightsInfos: Omit<Highlight, 'id'>[] }; // 백엔드 요청용 데이터 생성
 }
 
-export const useNewsCustomStore = create<CustomBarState>((set) => ({
+export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
   isCustomBarVisible: false,
   activeHighlightColor: null,
   activeThemeColor: "",
@@ -84,58 +89,81 @@ export const useNewsCustomStore = create<CustomBarState>((set) => ({
       startPoint,
       endPoint,
       highlightsColor,
+      highlightsFontColor: 'black', // 디폴트 값
+      highlightsFontSize: 12, // 디폴트 값
+      isBold: false, // 디폴트 값
     };
 
     set((state) => ({
       highlights: [...state.highlights, newHighlight],
     }));
   },
+
+  // 특정 범위의 하이라이트 제거
+  removeHighlight: (startPoint, endPoint) => {
+    set((state) => ({
+      highlights: state.highlights.filter(
+        (highlight) =>
+          !(startPoint <= highlight.endPoint && endPoint >= highlight.startPoint) &&
+          !(highlight.startPoint <= endPoint && highlight.endPoint >= startPoint)
+      ),
+    }));
+  },
+
   clearHighlights: () => set({ highlights: [] }),
   toggleHighlightPalette: () => set((state) => ({ showHighlightPalette: !state.showHighlightPalette })),
   toggleThemePalette: () => set((state) => ({ showThemePalette: !state.showThemePalette })),
   
-  // 페이지별 상태 초기화
-  resetPageState: () => set({
-    activeHighlightColor: null,
-    activeThemeColor: "white-theme",
-    globalThemeColor: null,
-    themeTextColor1: null,
-    themeTextColor2: null,
-    themeDividerColor: null,
-    themeBorderColor: null,
-    themeCardColor: null,
-    highlights: [],
-    isCustomBarVisible: false,
-    showHighlightPalette: false,
-    showThemePalette: false,
-    activeIcon: null,
-    currentPageId: null,
+  // 백엔드 API 요청용 데이터 생성
+  getCustomRequestInfo: () => {
+    const state = get();
+    const backgroundColor = state.globalThemeColor || "white-theme";
+    const highlightsInfos = state.highlights.map(({ startPoint, endPoint, highlightsColor, highlightsFontColor, highlightsFontSize, isBold }) => ({
+      startPoint,
+      endPoint,
+      highlightsColor,
+      highlightsFontColor,
+      highlightsFontSize,
+      isBold,
+    }));
+    
+    return {
+      backgroundColor,
+      highlightsInfos,
+    };
+  },
+  
+  setPageState: (pageId) => set((state) => {
+    if (state.currentPageId === pageId) return {};
+    return {
+      activeHighlightColor: null,
+      activeThemeColor: "white-theme",
+      globalThemeColor: null,
+      themeTextColor1: null,
+      themeTextColor2: null,
+      themeDividerColor: null,
+      themeBorderColor: null,
+      themeCardColor: null,
+      highlights: [],
+      isCustomBarVisible: false,
+      showHighlightPalette: false,
+      showThemePalette: false,
+      activeIcon: null,
+      currentPageId: pageId,
+    };
   }),
 }));
 
 // 페이지별 상태 관리를 위한 커스텀 훅
-export const usePageSpecificNewsCustom = (pageId: string) => {
+export const usePageSpecificNewsCustom = (pageId: number) => {
   const {
-    currentPageId,
-    setCurrentPageId,
-    resetPageState,
+    setPageState,
     ...state
   } = useNewsCustomStore();
 
-  useEffect(() => {
-    // 페이지가 변경되면 상태 초기화
-    if (currentPageId !== pageId) {
-      resetPageState();
-      setCurrentPageId(pageId);
-    }
-
-    // 컴포넌트 언마운트 시 상태 초기화
-    return () => {
-      if (currentPageId === pageId) {
-        resetPageState();
-      }
-    };
-  }, [pageId, currentPageId, setCurrentPageId, resetPageState]);
+  React.useEffect(() => {
+    setPageState(pageId);
+  }, [pageId, setPageState]);
 
   return state;
 };

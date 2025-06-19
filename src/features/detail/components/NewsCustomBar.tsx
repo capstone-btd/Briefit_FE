@@ -5,9 +5,10 @@ import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
 import { Check, Eraser, Palette } from "lucide-react";
 import HighlightIcon from "@/features/common/HighlightIcon";
 import Divider from "@/features/common/Divider";
+import postNewsDetailCustom from "@/features/detail/api/newsDetailCustom";
 
 interface NewsCustomBarProps {
-  pageId: string; // 페이지별 고유 ID
+  pageId: number;
 }
 
 export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
@@ -29,6 +30,7 @@ export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
     toggleHighlightPalette,
     toggleThemePalette,
     setActiveIcon,
+    getCustomRequestInfo,
   } = usePageSpecificNewsCustom(pageId);
 
   const highlightColors = [
@@ -95,6 +97,18 @@ export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
       setThemeBorderColor(`border-${color}-dark`);
       setThemeDividerColor(`bg-${color}-dark`);
       setThemeCardColor(`bg-${color}-light`);
+    }
+  };
+
+  const handleSaveCustom = async () => {
+    try {
+      const customRequestInfo = getCustomRequestInfo();
+      const result = await postNewsDetailCustom(pageId, customRequestInfo);
+      if (result) {
+        alert("커스텀 정보가 성공적으로 저장되었습니다.");
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -187,7 +201,8 @@ export default function NewsCustomBar({ pageId }: NewsCustomBarProps) {
           <Check
             strokeWidth={5}
             size={32}
-            className="mt-2 rounded-md bg-purple-500 p-7 text-white transition hover:bg-purple-800"
+            className="mt-2 cursor-pointer rounded-md bg-purple-500 p-7 text-white transition hover:bg-purple-800"
+            onClick={handleSaveCustom}
           />
         </div>
       )}
