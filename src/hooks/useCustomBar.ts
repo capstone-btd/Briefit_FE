@@ -13,26 +13,26 @@ export interface Highlight {
 export function useCustomBar() {
   const [isCustomBarVisible, setIsCustomBarVisible] = useState(false);
   const [activeThemeColor, setActiveThemeColor] = useState<string>("white-theme");
-  const [themeBgColor, setThemeBgColor] = useState<string>(null);
-  const [themeTextColor1, setThemeTextColor1] = useState<string>(null);
-  const [themeTextColor2, setThemeTextColor2] = useState<string>(null);
-  const [themeBorderColor, setThemeBorderColor] = useState<string>(null);
-  const [themeDividerColor, setThemeDividerColor] = useState<string>(null);
-  const [themeCardColor, setThemeCardColor] = useState<string>(null);
+  const [themeBgColor, setThemeBgColor] = useState<string>("");
+  const [themeTextColor1, setThemeTextColor1] = useState<string>("");
+  const [themeTextColor2, setThemeTextColor2] = useState<string>("");
+  const [themeBorderColor, setThemeBorderColor] = useState<string>("");
+  const [themeDividerColor, setThemeDividerColor] = useState<string>("");
+  const [themeCardColor, setThemeCardColor] = useState<string>("");
 
   const [activeHighlightColor, setActiveHighlightColor] = useState<string>("yellow-highlight");
   const [showHighlightPalette, setShowHighlightPalette] = useState(false);
   const [showThemePalette, setShowThemePalette] = useState(false);
-  const [activeIcon, setActiveIcon] = useState<"highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | null>(null);
+  const [activeIcon, setActiveIcon] = useState<"highlighter" | "eraser" | "theme" | "undo" | "redo" | "done">("");
   const [highlights, setHighlights] = useState<Highlight[]>([]);
 
-  const [newScrapId, setNewScrapId] = useState<number>(null);
+  const [newScrapId, setNewScrapId] = useState<number>(0);
 
   // 커스텀바가 열릴 때 팔레트 상태를 초기화하는 함수
   const resetPalettes = useCallback(() => {
     setShowHighlightPalette(false);
     setShowThemePalette(false);
-    setActiveIcon(null);
+    setActiveIcon("");
   }, []);
 
   // 하이라이트 추가/제거 함수
