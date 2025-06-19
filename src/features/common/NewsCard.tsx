@@ -20,22 +20,30 @@ export function NewsCard({
   categoryLabel,
   newsSummary,
   className,
+  themeColor,
   children,
 }: {
   type: DetailPageType;
   categoryLabel: string | null;
   newsSummary: NewsSummary;
   className?: string;
+  themeColor?: string | null;
   children?: React.ReactNode;
 }) {
-  // hover 상태 관리
   const [isHovered, setIsHovered] = useState(false);
+  const themeBgColor = themeColor ? `bg-${themeColor}` : "";
+  const themeText1Color = themeColor ? `text-${themeColor}-text1` : "";
+  const themeText2Color = themeColor ? `text-${themeColor}-text2` : "";
 
   return (
-    <Link prefetch={true} href={`${type}/detail?articleId=${newsSummary.articleId ?? "null"}&scrapId=${newsSummary.scrapId ?? "null"}&isCustomize=${newsSummary.isCustomize}`}>
+    <Link
+      prefetch={true}
+      href={`${type}/detail?articleId=${newsSummary.articleId ?? "null"}&scrapId=${newsSummary.scrapId ?? "null"}&isCustomize=${newsSummary.isCustomize}`}
+    >
       <Card
         className={cn(
           "relative h-full overflow-hidden rounded-20 p-20",
+          themeBgColor,
           className,
         )}
         onMouseEnter={() => setIsHovered(true)}
@@ -46,17 +54,27 @@ export function NewsCard({
             <NewsCardCategoryTag
               label={categoryLabel ?? newsSummary.categories[0]}
             />
-            <div className="font-light-16 overflow-ellipsis whitespace-nowrap text-gray-400">
+            <div className={cn("font-light-16 overflow-ellipsis whitespace-nowrap",themeText2Color)}>
               {getPressCompanyNameString(newsSummary.pressCompanies)}
             </div>
           </div>
         </CardHeader>
 
         <CardContent>
-          <div className="mb-12 h-48 overflow-hidden font-title-24">
+          <div
+            className={cn(
+              "mb-12 h-48 overflow-hidden font-title-24",
+              themeText1Color,
+            )}
+          >
             {newsSummary.title}
           </div>
-          <div className="h-80 overflow-hidden text-justify font-light-16">
+          <div
+            className={cn(
+              "h-80 overflow-hidden text-justify font-light-16",
+              themeText1Color,
+            )}
+          >
             {newsSummary.body}
           </div>
           <ResponsiveImage
@@ -70,7 +88,6 @@ export function NewsCard({
           />
         </CardContent>
 
-        {/* hover 시에만 children 렌더링 */}
         {children && isHovered && (
           <div className="pointer-events-none absolute inset-0 right-20 bottom-15 z-10 flex items-end justify-end">
             <div className="pointer-events-auto">{children}</div>

@@ -7,6 +7,6 @@ export type NewsSummary = {
   categories: string[];
   pressCompanies: string[];
   imgUrls: string[];
-  backgroudColor: string | null;
+  backgroundColor: string | null;
   createdAt: string;
 };

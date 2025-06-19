@@ -77,24 +77,27 @@ export default function MyNews({
         <NewsCategoryBar basePath={myNewsType} />
       </div>
       <div className="grid grid-cols-1 gap-20 sm:grid-cols-2 lg:grid-cols-3">
-        {newsList.map((news, index) => (
-          <NewsCard
-            key={index}
-            type={DetailPageType.MY}
-            categoryLabel={categoryLabel}
-            newsSummary={news}
-            className={`hover-card-gradient relative overflow-hidden bg-${news.backgroudColor}`}
-          >
-            <NewsCardActions
-              onScrapClick={() => {
-                // 기사 스크랩
-              }}
-              onEditClick={() => {
-                // 커스텀 페이지로 이동
-              }}
-            />
-          </NewsCard>
-        ))}
+        {newsList.map((news, index) => {
+          return (
+            <NewsCard
+              key={index}
+              type={DetailPageType.MY}
+              categoryLabel={categoryLabel}
+              newsSummary={news}
+              themeColor={news.backgroundColor}
+              className={`hover-card-gradient relative overflow-hidden`}
+            >
+              <NewsCardActions
+                onScrapClick={() => {
+                  // 기사 스크랩
+                }}
+                onEditClick={() => {
+                  // 커스텀 페이지로 이동
+                }}
+              />
+            </NewsCard>
+          );
+        })}
       </div>
     </div>
   );
