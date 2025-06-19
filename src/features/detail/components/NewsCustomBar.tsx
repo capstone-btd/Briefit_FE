@@ -7,6 +7,7 @@ import HighlightIcon from "@/features/common/HighlightIcon";
 import Divider from "@/features/common/Divider";
 import postNewsDetailCustom from "@/features/detail/api/newsDetailCustom";
 import { useCustomBar } from "@/hooks/useCustomBar";
+import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
 
 interface NewsCustomBarProps {
   scrapId: number;
@@ -17,6 +18,13 @@ export default function NewsCustomBar({
   scrapId,
   customBar,
 }: NewsCustomBarProps) {
+
+  const setGlobalBgColor = useNewsCustomStore(
+    (state) => state.setGlobalBgColor,
+  );
+  const setGlobalDividerColor = useNewsCustomStore(
+    (state) => state.setGlobalDividerColor,
+  );
   // 커스텀 관련 상태를 customBar에서 가져옴
   const {
     newScrapId,
@@ -92,12 +100,18 @@ export default function NewsCustomBar({
     setActiveThemeColor(color);
 
     if (color === "white-theme") {
+      setGlobalBgColor(null); // 글로벌하게 적용
+      setGlobalDividerColor(null);
+
       setThemeBgColor("");
       setThemeTextColor1("");
       setThemeTextColor2("");
       setThemeBorderColor("");
       setThemeCardColor("");
     } else {
+      setGlobalBgColor(`bg-${color}`); // 글로벌하게 적용
+      setGlobalDividerColor(`bg-${color}-dark`)
+
       setThemeBgColor(`bg-${color}`);
       setThemeTextColor1(`text-${color}-text1`);
       setThemeTextColor2(`text-${color}-text2`);
