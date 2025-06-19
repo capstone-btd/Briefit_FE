@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { useEffect } from 'react';
 
 export interface Highlight {
   id: string; // 고유 ID
@@ -215,28 +214,28 @@ export const useNewsCustomStore = create<CustomBarState>((set, get) => ({
 }));
 
 // 페이지별 상태 관리를 위한 커스텀 훅
-export const usePageSpecificNewsCustom = (pageId: number) => {
-  const {
-    currentPageId,
-    setCurrentPageId,
-    resetPageState,
-    ...state
-  } = useNewsCustomStore();
+// export const usePageSpecificNewsCustom = (pageId: number) => {
+//   const {
+//     currentPageId,
+//     setCurrentPageId,
+//     resetPageState,
+//     ...state
+//   } = useNewsCustomStore();
 
-  useEffect(() => {
-    // 페이지가 변경되면 상태 초기화
-    if (currentPageId !== pageId) {
-      resetPageState();
-      setCurrentPageId(pageId);
-    }
+//   useEffect(() => {
+//     // 페이지가 변경되면 상태 초기화
+//     if (currentPageId !== pageId) {
+//       resetPageState();
+//       setCurrentPageId(pageId);
+//     }
 
-    // 컴포넌트 언마운트 시 상태 초기화
-    return () => {
-      if (currentPageId === pageId) {
-        resetPageState();
-      }
-    };
-  }, [pageId, resetPageState]);
+//     // 컴포넌트 언마운트 시 상태 초기화
+//     return () => {
+//       if (currentPageId === pageId) {
+//         resetPageState();
+//       }
+//     };
+//   }, [pageId, resetPageState]);
 
-  return state;
-};
+//   return state;
+// };
