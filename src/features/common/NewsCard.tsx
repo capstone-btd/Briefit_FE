@@ -32,7 +32,7 @@ export function NewsCard({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link prefetch={true} href={`${type}/detail/${newsSummary.articleId}`}>
+    <Link prefetch={true} href={`${type}/detail?articleId=${newsSummary.articleId ?? "null"}&scrapId=${newsSummary.scrapId ?? "null"}&isCustomize=${newsSummary.isCustomize}`}>
       <Card
         className={cn(
           "relative h-full overflow-hidden rounded-20 p-20",

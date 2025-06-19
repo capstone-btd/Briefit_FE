@@ -1,13 +1,5 @@
+import { HighlightInfo } from "@/types/custom/highlightInfo";
 import apiClient from "@/utils/apiClient"
-
-interface HighlightInfo {
-    startPoint: number;
-    endPoint: number;
-    highlightsColor: string;
-    highlightsFontColor?: string;
-    highlightsFontSize?: number;
-    isBold?: boolean;
-}
 
 interface CustomRequestInfoDTO{
     backgroundColor: string;

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Divider from "@/features/common/Divider";
 import ResponsiveImage from "@/features/common/ResponsiveImage";
-import fetchNewsDetail from "@/features/detail/api/newsDetail";
+import fetchNewsDetail, { fetchScrapedNewsDetail } from "@/features/detail/api/newsDetail";
 import NewsContent from "@/features/detail/components/NewsContent";
 import NewsPageHeader from "@/features/detail/components/NewsPageHeader";
 import NewsSourceCardList from "@/features/detail/components/NewsSourceCardList";
@@ -15,14 +15,18 @@ import NewsCustomBar from "./NewsCustomBar";
 import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
 import { pressCompanyNameMap } from "@/constants/pressCompanyNameMap";
 
-type Props = {
-  id: number;
+type NewsDetailProps = {
+  articleId: number | null; // 마이페이지 -> 커스텀/스크랩 뉴스 목록 조회에서 넘어올 경우 null
+  scrapId: number | null;
+  isCustomize: boolean;
   containsAuthHeader: boolean; // 데이터 페칭 시 인증 토큰 필요 여부
 };
 
-export default function NewsDetail({ id, containsAuthHeader }: Props) {
+export default function NewsDetail({ articleId, scrapId, isCustomize, containsAuthHeader }: NewsDetailProps) {
   const router = useRouter();
   const [newsData, setNewsData] = useState<NewsData | null>(null);
+  const id = scrapId ?? articleId ?? -1;
+  console.log(articleId, scrapId, isCustomize)
 
   const {
     activeThemeColor,
@@ -36,8 +40,8 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const data = await fetchNewsDetail({
-        id,
+      const data = scrapId && scrapId === id ? await fetchScrapedNewsDetail({id: id}) : await fetchNewsDetail({
+        id: id,
         containsAuthHeader: containsAuthHeader,
       });
       setNewsData(data);
@@ -108,3 +112,4 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
     </div>
   );
 }
+

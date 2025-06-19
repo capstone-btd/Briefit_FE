@@ -81,9 +81,9 @@ export default function MyNews({
           <NewsCard
             key={index}
             type={DetailPageType.MY}
-            categoryLabel={categoryLabel ?? ""}
+            categoryLabel={categoryLabel}
             newsSummary={news}
-            className="hover-card-gradient relative overflow-hidden"
+            className={`hover-card-gradient relative overflow-hidden bg-${news.backgroudColor}`}
           >
             <NewsCardActions
               onScrapClick={() => {

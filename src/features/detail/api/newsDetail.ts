@@ -24,3 +24,19 @@ export default async function fetchNewsDetail({
     return;
   }
 }
+
+export async function fetchScrapedNewsDetail({ id }: { id: number }) {
+  const params = { "scrap-id": id };
+  try {
+    const response = await apiClient.get("/users/scrap", {
+      params,
+    });
+    return response.data;
+  } catch (error) {
+    if (error instanceof ApiException) {
+      // 예외 처리
+    }
+    alert("뉴스 정보 조회에 실패했습니다.");
+    return;
+  }
+}

@@ -7,7 +7,7 @@ import {
   useNewsCustomStore,
   usePageSpecificNewsCustom,
 } from "@/stores/detail/useNewsCustomStore";
-import postScrap from "../api/newsDetailIcon";
+import postScrap from "../api/newsDetailIScrap";
 
 // 타입 정의로 변경
 interface NewsPageHeaderProps {
@@ -32,7 +32,7 @@ export default function NewsPageHeader({ pageId }: NewsPageHeaderProps) {
 
   const scrapHandler = async () => {
     setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
-    const scrapId = await postScrap({ id: pageId }); // 스크랩 아이디 받도록 수정
+    const scrapId = await postScrap({ id: pageId }); // 스크랩 아이디 받도록 수정 -> 커스텀 시 요 아이디로 넘기기!
     if (scrapId) {
       setIsScrapped(true);
     }
