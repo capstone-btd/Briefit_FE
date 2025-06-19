@@ -68,7 +68,7 @@ export default function NewsDetail({
       }
     };
     fetchDetail();
-  }, [id, containsAuthHeader]);
+  }, [id, scrapId, containsAuthHeader, customBar]);
 
   const pressCompanyNameList =
     newsData?.sources.map((source: NewsSource) => source.pressCompany) ?? [];
