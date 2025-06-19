@@ -1,4 +1,5 @@
 import { formatKoreanDateTime } from "@/utils/dateTimeStringFormatter";
+import { getPressCompanyNameString } from "@/utils/news/getPressCompanyNameString";
 
 export default function NewsTitle({
   categoryLabel,
@@ -22,7 +23,7 @@ export default function NewsTitle({
           {categoryLabel}
         </div>
         <div className={`font-basic-20 ${themeTextColor2 ?? "text-gray-400"}`}>
-          {pressCompanies.join(", ")}
+          {getPressCompanyNameString(pressCompanies)}
         </div>
       </div>
       <div className={`mb-50 font-title-40 ${themeTextColor1 ?? ""}`}>

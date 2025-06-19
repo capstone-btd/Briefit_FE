@@ -17,4 +17,6 @@ export const dummyNews: NewsSummary[] = Array.from({ length: 200 }, (_, i) => ({
   imageUrl:
     "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80",
   pressCompanies: ["한국일보", "중앙일보", "국민일보"],
+  scrapId: -1,
+  isCustomized: false
 }));

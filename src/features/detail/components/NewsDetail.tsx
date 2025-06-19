@@ -13,6 +13,7 @@ import NewsTitle from "@/features/detail/components/NewsTitle";
 import { NewsData, NewsSource } from "@/types/news/newsData";
 import NewsCustomBar from "./NewsCustomBar";
 import { usePageSpecificNewsCustom } from "@/stores/detail/useNewsCustomStore";
+import { pressCompanyNameMap } from "@/constants/pressCompanyNameMap";
 
 type Props = {
   id: number;
@@ -85,7 +86,12 @@ export default function NewsDetail({ id, containsAuthHeader }: Props) {
               />
               <Divider className={themeDividerColor ?? ""} />
               <NewsSourceCardList
-                newsSourceList={newsData.sources}
+                 newsSourceList={newsData.sources.map((source) => ({
+                ...source,
+                pressCompany:
+                  pressCompanyNameMap[source.pressCompany] ||
+                  source.pressCompany,
+              }))}
                 themeCardColor={themeCardColor}
                 themeTextColor1={themeTextColor1}
                 themeBorderColor={themeBorderColor}
