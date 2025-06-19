@@ -19,6 +19,7 @@ export default function NewsCustomBar({
 }: NewsCustomBarProps) {
   // 커스텀 관련 상태를 customBar에서 가져옴
   const {
+    newScrapId,
     isCustomBarVisible,
     activeThemeColor,
     setThemeBgColor,
@@ -38,6 +39,8 @@ export default function NewsCustomBar({
     setActiveIcon,
     highlights,
   } = customBar;
+
+  const customId = scrapId || newScrapId || -1;
 
   // 팔레트 색상 목록
   const highlightColors = [
@@ -131,7 +134,7 @@ export default function NewsCustomBar({
   const handleSaveCustom = async () => {
     try {
       const customRequestInfo = getCustomRequestInfo();
-      const result = await postNewsDetailCustom(scrapId, customRequestInfo);
+      const result = await postNewsDetailCustom(customId, customRequestInfo);
       if (result) {
         alert("커스텀 정보가 성공적으로 저장되었습니다.");
       }
