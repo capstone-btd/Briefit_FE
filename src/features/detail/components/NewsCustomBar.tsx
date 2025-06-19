@@ -1,22 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Check, Eraser, Palette } from "lucide-react";
 import HighlightIcon from "@/features/common/HighlightIcon";
 import Divider from "@/features/common/Divider";
 import postNewsDetailCustom from "@/features/detail/api/newsDetailCustom";
 import { useCustomBar } from "@/hooks/useCustomBar";
+import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
 
 interface NewsCustomBarProps {
-  scrapId: number;
   customBar: ReturnType<typeof useCustomBar>;
 }
 
-export default function NewsCustomBar({
-  scrapId,
-  customBar,
-}: NewsCustomBarProps) {
+export default function NewsCustomBar({ customBar }: NewsCustomBarProps) {
+  const setGlobalBgColor = useNewsCustomStore(
+    (state) => state.setGlobalBgColor,
+  );
+  const setGlobalDividerColor = useNewsCustomStore(
+    (state) => state.setGlobalDividerColor,
+  );
   // 커스텀 관련 상태를 customBar에서 가져옴
   const {
     newScrapId,
@@ -40,7 +43,13 @@ export default function NewsCustomBar({
     highlights,
   } = customBar;
 
-  const customId = scrapId || newScrapId || -1;
+  const [customId, setCustomId] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (newScrapId) {
+      setCustomId(newScrapId);
+    }
+  }, [newScrapId]);
 
   // 팔레트 색상 목록
   const highlightColors = [
@@ -92,12 +101,18 @@ export default function NewsCustomBar({
     setActiveThemeColor(color);
 
     if (color === "white-theme") {
+      setGlobalBgColor(null); // 글로벌하게 적용
+      setGlobalDividerColor(null);
+
       setThemeBgColor("");
       setThemeTextColor1("");
       setThemeTextColor2("");
       setThemeBorderColor("");
       setThemeCardColor("");
     } else {
+      setGlobalBgColor(`bg-${color}`); // 글로벌하게 적용
+      setGlobalDividerColor(`bg-${color}-dark`);
+
       setThemeBgColor(`bg-${color}`);
       setThemeTextColor1(`text-${color}-text1`);
       setThemeTextColor2(`text-${color}-text2`);
@@ -132,6 +147,11 @@ export default function NewsCustomBar({
   };
 
   const handleSaveCustom = async () => {
+    if (!customId) {
+      alert("스크랩이 완료된 후에 저장할 수 있습니다.");
+      return;
+    }
+
     try {
       const customRequestInfo = getCustomRequestInfo();
       const result = await postNewsDetailCustom(customId, customRequestInfo);

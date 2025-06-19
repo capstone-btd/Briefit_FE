@@ -1,13 +1,13 @@
 "use client";
 
-import { useCustomBar } from "@/hooks/useCustomBar";
+import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
 
 export default function ThemeProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { themeBgColor } = useCustomBar();
+  const gobalBgColor  = useNewsCustomStore((state) => state.globalBgColor);
 
-  return <div className={`min-h-screen ${themeBgColor || ""}`}>{children}</div>;
+  return <div className={`min-h-screen ${gobalBgColor || ""}`}>{children}</div>;
 }

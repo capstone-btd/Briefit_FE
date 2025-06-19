@@ -16,6 +16,7 @@ import { NewsData, NewsSource } from "@/types/news/newsData";
 import NewsCustomBar from "./NewsCustomBar";
 import { pressCompanyNameMap } from "@/constants/pressCompanyNameMap";
 import { useCustomBar } from "@/hooks/useCustomBar";
+import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
 
 type NewsDetailProps = {
   articleId: number | null; // 마이페이지 -> 커스텀/스크랩 뉴스 목록 조회에서 넘어올 경우 null
@@ -32,6 +33,13 @@ export default function NewsDetail({
 }: NewsDetailProps) {
   const router = useRouter();
   const [newsData, setNewsData] = useState<NewsData | null>(null);
+
+  const setGlobalBgColor = useNewsCustomStore(
+    (state) => state.setGlobalBgColor,
+  );
+  const setGlobalDividerColor = useNewsCustomStore(
+    (state) => state.setGlobalDividerColor,
+  );
   const id = scrapId ?? articleId ?? -1;
   console.log(articleId, scrapId, isCustomize);
 
@@ -39,6 +47,8 @@ export default function NewsDetail({
   const customBar = useCustomBar();
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchDetail = async () => {
       const data =
         scrapId && scrapId === id
@@ -47,7 +57,9 @@ export default function NewsDetail({
               id: id,
               containsAuthHeader: containsAuthHeader,
             });
-      setNewsData(data);
+      if (isMounted) {
+        setNewsData(data);
+      }
 
       // 배경색 적용
       if (data.backgroundColor) {
@@ -68,7 +80,13 @@ export default function NewsDetail({
       }
     };
     fetchDetail();
-  }, [id, scrapId, containsAuthHeader, customBar]);
+    return () => {
+      // 컴포넌트 언마운트 시 배경, divider 색 초기화
+      setGlobalBgColor(null);
+      setGlobalDividerColor(null);
+      isMounted = false;
+    };
+  }, [id, scrapId, containsAuthHeader]);
 
   const pressCompanyNameList =
     newsData?.sources.map((source: NewsSource) => source.pressCompany) ?? [];
@@ -91,7 +109,7 @@ export default function NewsDetail({
   return (
     <div className={`min-h-screen pt-30 ${themeBgColor ?? "bg-white"}`}>
       <div className="flex space-x-20 px-70">
-        {scrapId && <NewsCustomBar customBar={customBar} scrapId={scrapId} />}
+        <NewsCustomBar customBar={customBar} />
         <ArrowLeft
           strokeWidth={1.5}
           size={30}
