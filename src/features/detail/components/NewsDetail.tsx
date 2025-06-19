@@ -18,8 +18,8 @@ import { pressCompanyNameMap } from "@/constants/pressCompanyNameMap";
 import { useCustomBar } from "@/hooks/useCustomBar";
 
 type NewsDetailProps = {
-  articleId: number | null; // 마이페이지 -> 커스텀/스크랩 뉴스 목록 조회에서 넘어올 경우 null
-  scrapId: number | null;
+  articleId: number; // 마이페이지 -> 커스텀/스크랩 뉴스 목록 조회에서 넘어올 경우 null
+  scrapId: number;
   isCustomize: boolean;
   containsAuthHeader: boolean; // 데이터 페칭 시 인증 토큰 필요 여부
 };

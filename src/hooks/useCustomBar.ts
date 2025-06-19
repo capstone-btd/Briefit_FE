@@ -23,7 +23,7 @@ export function useCustomBar() {
   const [activeHighlightColor, setActiveHighlightColor] = useState<string>("yellow-highlight");
   const [showHighlightPalette, setShowHighlightPalette] = useState(false);
   const [showThemePalette, setShowThemePalette] = useState(false);
-  const [activeIcon, setActiveIcon] = useState<"highlighter" | "eraser" | "theme" | "undo" | "redo" | "done">("");
+  const [activeIcon, setActiveIcon] = useState<"highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | "">("");
   const [highlights, setHighlights] = useState<Highlight[]>([]);
 
   const [newScrapId, setNewScrapId] = useState<number>(0);
