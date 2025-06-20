@@ -11,14 +11,14 @@ import {
 import { useState } from "react";
 
 type NewsPaginationProps = {
-    totalCount: number; // 전체 뉴스 개수
-    itemsPerPage: number;
+  totalCount: number; // 전체 뉴스 개수
+  itemsPerPage: number;
   onPageChange: (page: number) => void;
 };
 
 export default function NewsPagination({
-    totalCount,
-    itemsPerPage,
+  totalCount,
+  itemsPerPage,
   onPageChange,
 }: NewsPaginationProps) {
   const ITEMS_PER_PAGE = itemsPerPage;
@@ -30,11 +30,8 @@ export default function NewsPagination({
 
   // 보여줄 페이지 범위 계산
   const getPageNumbers = () => {
-    const start = Math.max(currentStep * (PAGES_PER_STEP + 1), 1);
-    const end = Math.min(
-      currentStep * (PAGES_PER_STEP + 1) + PAGES_PER_STEP,
-      totalPages,
-    );
+    const start = currentStep * PAGES_PER_STEP + 1;
+    const end = Math.min(start + PAGES_PER_STEP - 1, totalPages);
     const pages = [];
     for (let i = start; i <= end; i++) {
       pages.push(i);
@@ -55,7 +52,7 @@ export default function NewsPagination({
             <PaginationPrevious
               href="#" // 페이지 상단으로 이동
               onClick={() =>
-                handlePageChange((currentStep - 1) * (PAGES_PER_STEP + 1) + 1)
+                handlePageChange((currentStep - 1) * PAGES_PER_STEP + 1)
               }
             />
           </PaginationItem>
@@ -83,7 +80,7 @@ export default function NewsPagination({
             <PaginationNext
               href="#"
               onClick={() =>
-                handlePageChange((currentStep + 1) * (PAGES_PER_STEP + 1))
+                handlePageChange((currentStep + 1) * PAGES_PER_STEP + 1)
               }
             />
           </PaginationItem>
