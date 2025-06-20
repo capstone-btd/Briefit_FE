@@ -27,18 +27,24 @@ export default function MyNews({
       return;
     }
 
-    const fetchNews = async () => {
-      const result =
-        myNewsType === MyNewsType.SCRAP
-          ? await fetchScrapedNewsList({
-              selectedCategory: categoryLabel ?? "전체",
-            })
-          : await fetchCustomNewsList({
-              selectedCategory: categoryLabel ?? "전체",
-            });
+   const fetchNews = async () => {
+     let result;
 
-      setNewsList(result);
-    };
+     if (myNewsType === MyNewsType.SCRAP) {
+       const response = await fetchScrapedNewsList({
+         selectedCategory: categoryLabel ?? "전체",
+       });
+
+       // isCustomized === false인 항목만 보이게끔
+       result = response.filter((item: NewsSummary) => item.isCustomize === false);
+     } else {
+       result = await fetchCustomNewsList({
+         selectedCategory: categoryLabel ?? "전체",
+       });
+     }
+
+     setNewsList(result);
+   };
 
     fetchNews();
   }, [isLoggedIn, myNewsType, categoryLabel]);
