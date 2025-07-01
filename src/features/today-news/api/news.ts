@@ -1,6 +1,6 @@
 import ApiException from "@/exception/apiException";
 import { WordCloudData } from "@/types/wordcloud/wordCloudData";
-import apiServer from "@/utils/apiServer";
+import apiServer from "@/utils/api/apiServer";
 
 export default async function fetchNewsCardList({
   selectedCategory,
@@ -35,7 +35,7 @@ export async function fetchWordList() {
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
-    } 
-    throw error
+    }
+    throw error;
   }
 }

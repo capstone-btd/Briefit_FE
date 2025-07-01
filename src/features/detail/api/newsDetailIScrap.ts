@@ -1,11 +1,7 @@
 import ApiException from "@/exception/apiException";
-import apiClient from "@/utils/apiClient";
+import apiClient from "@/utils/api/apiClient";
 
-export default async function postScrap({
-  id,
-}: {
-  id: number;
-}) {
+export default async function postScrap({ id }: { id: number }) {
   try {
     const response = await apiClient.post(`/users/scrap?article-id=${id}`);
     return response.data;

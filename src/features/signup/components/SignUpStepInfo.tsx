@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSignUpStore } from "@/stores/signUp/useSignUpStore";
+import { useSignUpStore } from "@/stores/signup/useSignUpStore";
 import convertAssetToFile from "@/utils/convertAssetToFile";
 import { Check } from "lucide-react";
 import Image from "next/image";

@@ -5,7 +5,7 @@ import SignUpStepCategory from "./SignUpStepCategory";
 import SignUpStepComplete from "./SignUpStepComplete";
 import SignUpStepsIcons from "./SignUpStepsIcons";
 import { X } from "lucide-react";
-import { useSignUpStore } from "@/stores/signUp/useSignUpStore";
+import { useSignUpStore } from "@/stores/signup/useSignUpStore";
 import registerUser from "../api/signup";
 import convertAssetToFile from "@/utils/convertAssetToFile";
 import { setUserInfoToStore } from "@/utils/user/setUserInfoToStore";

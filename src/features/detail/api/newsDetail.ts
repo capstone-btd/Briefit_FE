@@ -1,5 +1,5 @@
 import ApiException from "@/exception/apiException";
-import apiClient from "@/utils/apiClient";
+import apiClient from "@/utils/api/apiClient";
 
 export default async function fetchNewsDetail({
   id,

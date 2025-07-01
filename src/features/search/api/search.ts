@@ -1,5 +1,5 @@
 import ApiException from "@/exception/apiException";
-import apiServer from "@/utils/apiServer";
+import apiServer from "@/utils/api/apiServer";
 
 export default async function fetchNewsCardListByKeyword({
   keyword,

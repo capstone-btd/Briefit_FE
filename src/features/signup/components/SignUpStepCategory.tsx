@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useSignUpStore } from "@/stores/signUp/useSignUpStore";
+import { useSignUpStore } from "@/stores/signup/useSignUpStore";
 
 export default function SignUpStepCategory({
   onPrev,
@@ -45,7 +45,7 @@ export default function SignUpStepCategory({
               <div
                 key={category}
                 onClick={() => handleSelect(category)}
-                className={`rounded-7 flex cursor-pointer items-center justify-center border py-13 transition-colors duration-200 ${
+                className={`flex cursor-pointer items-center justify-center rounded-7 border py-13 transition-colors duration-200 ${
                   isSelected
                     ? "border-purple-500 bg-purple-50 text-purple-500"
                     : "border-gray-100 text-gray-900 hover:border-purple-300 hover:text-purple-500"
@@ -60,13 +60,13 @@ export default function SignUpStepCategory({
       <div className="flex">
         <Button
           onClick={onPrev}
-          className="absolute bottom-30 left-30 hover:bg-inherited cursor-pointer rounded-md bg-purple-500 px-10 py-14 text-white"
+          className="hover:bg-inherited absolute bottom-30 left-30 cursor-pointer rounded-md bg-purple-500 px-10 py-14 text-white"
         >
           이전
         </Button>
         <Button
           onClick={onNext}
-          className={`absolute right-30 bottom-30 hover:bg-inherited cursor-pointer rounded-md px-10 py-14 hover: ${categories.length === 0 ? "cursor-not-allowed bg-gray-100 text-gray-800" : "bg-purple-500 text-white"}`}
+          className={`hover:bg-inherited hover: absolute right-30 bottom-30 cursor-pointer rounded-md px-10 py-14 ${categories.length === 0 ? "cursor-not-allowed bg-gray-100 text-gray-800" : "bg-purple-500 text-white"}`}
           disabled={categories.length === 0}
         >
           다음
