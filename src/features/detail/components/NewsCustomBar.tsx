@@ -41,6 +41,8 @@ export default function NewsCustomBar({ customBar }: NewsCustomBarProps) {
     activeIcon,
     setActiveIcon,
     highlights,
+    undo,
+    redo,
   } = customBar;
 
   const [customId, setCustomId] = useState<number | null>(null);
@@ -94,6 +96,9 @@ export default function NewsCustomBar({ customBar }: NewsCustomBarProps) {
     } else {
       if (showHighlightPalette) setShowHighlightPalette(false);
       if (showThemePalette) setShowThemePalette(false);
+
+      if (iconType === "undo") undo();
+      if (iconType === "redo") redo();
     }
   };
 

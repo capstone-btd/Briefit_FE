@@ -26,6 +26,9 @@ export function useCustomBar() {
   const [activeIcon, setActiveIcon] = useState<"highlighter" | "eraser" | "theme" | "undo" | "redo" | "done" | "">("");
   const [highlights, setHighlights] = useState<Highlight[]>([]);
 
+  const [undoStack, setUndoStack] = useState<{highlights: Highlight[]}[]>([]);
+  const [redoStack, setRedoStack] = useState<{highlights: Highlight[]}[]>([]);
+
   const [newScrapId, setNewScrapId] = useState<number>(0);
 
   // 커스텀바가 열릴 때 팔레트 상태를 초기화하는 함수
@@ -35,8 +38,15 @@ export function useCustomBar() {
     setActiveIcon("");
   }, []);
 
+    // 상태 스냅샷 저장
+    const saveState = useCallback(() => {
+      setUndoStack((prev) => [...prev, { highlights: [...highlights] }]);
+      setRedoStack([]); // 새 작업 시 redo 스택 초기화
+    }, [highlights]);
+
   // 하이라이트 추가/제거 함수
   const addHighlight = useCallback((start: number, end: number, color: string) => {
+    saveState();
     const newHighlight: Highlight = {
       id: Date.now().toString(),
       startPoint: start,
@@ -47,9 +57,11 @@ export function useCustomBar() {
       isBold: false,
     };
     setHighlights((prev) => [...prev, newHighlight]);
-  }, []);
+  }, [saveState]);
 
+  // 하이라이트 삭제
   const removeHighlight = useCallback((start: number, end: number) => {
+    saveState();
     setHighlights((prev) =>
       prev.filter(
         (highlight) =>
@@ -57,7 +69,24 @@ export function useCustomBar() {
           !(highlight.startPoint <= end && highlight.endPoint >= start)
       )
     );
-  }, []);
+  }, [saveState]);
+
+    // undo/redo
+    const undo = useCallback(() => {
+      if (undoStack.length === 0) return;
+      setRedoStack((r) => [...r, { highlights: [...highlights] }]);
+      const prev = undoStack[undoStack.length - 1];
+      setHighlights(prev.highlights);
+      setUndoStack((u) => u.slice(0, -1));
+    }, [undoStack, highlights]);
+  
+    const redo = useCallback(() => {
+      if (redoStack.length === 0) return;
+      setUndoStack((u) => [...u, { highlights: [...highlights] }]);
+      const next = redoStack[redoStack.length - 1];
+      setHighlights(next.highlights);
+      setRedoStack((r) => r.slice(0, -1));
+    }, [redoStack, highlights]);
 
   return {
     newScrapId,
@@ -91,5 +120,8 @@ export function useCustomBar() {
     addHighlight,
     removeHighlight,
     resetPalettes, // 커스텀바 열릴 때 호출 필요
+    saveState,
+    undo,
+    redo,
   };
 }
