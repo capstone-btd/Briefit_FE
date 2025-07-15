@@ -3,6 +3,7 @@ import PaginatedNewsCardGrid from "@/features/common/PaginatedNewsCardGrid";
 import fetchNewsCardList from "../api/news";
 import NoContent from "@/features/common/NoContent";
 import SignUpModalWrapper from "@/features/signup/components/SignUpModalWrapper";
+import { isLoggedIn } from "@/utils/auth/cookie";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -16,6 +17,7 @@ export default async function TodayNewsCardGrid({
 
   const newsList = await fetchNewsCardList({
     selectedCategory: categoryLabel ?? "전체",
+    containsAuthHeader: isLoggedIn()
   });
 
   return (

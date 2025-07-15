@@ -4,14 +4,16 @@ import apiServer from "@/utils/api/apiServer";
 
 export default async function fetchNewsCardList({
   selectedCategory,
+  containsAuthHeader
 }: {
-  selectedCategory: string;
+    selectedCategory: string;
+  containsAuthHeader: boolean
 }) {
   const params = { category: selectedCategory };
   try {
     const response = await apiServer.get("/articles", {
       params,
-      headers: {
+      headers: containsAuthHeader ? {} : { 
         "x-auth-not-required": "true", // 인증 헤더 제외
       },
     });

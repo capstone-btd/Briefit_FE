@@ -1,5 +1,6 @@
 import ApiException from "@/exception/apiException";
 import axios from "axios";
+import { getAccessTokenFromCookies } from "../auth/cookie";
 
 // '서버 컴포넌트용' 요청/응답 인터셉트 및 로깅
 
@@ -17,11 +18,9 @@ axios.defaults.withCredentials = true;
 // 요청 인터셉터
 apiServer.interceptors.request.use(
   async (config) => {
-    const { cookies } = await import("next/headers");
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await getAccessTokenFromCookies();
 
-    const skipAuth = config.headers?.["x-auth-not-required"]; // 인증 헤더가 필요 없는 경우 포함
+    const skipAuth = config.headers?.["x-auth-not-required"]; // 인증 헤더가 필요 없는 경우
 
     console.log(`🚀 [Request] ${config.method?.toUpperCase()} ${config.url}`, { // 요청 로그
       config,
