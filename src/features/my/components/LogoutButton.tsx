@@ -2,6 +2,7 @@
 
 import { useAuthStore } from "@/stores/auth/useAuthStore";
 import { useUserStore } from "@/stores/auth/useUserStore";
+import { deleteCookie } from "cookies-next";
 import Image from "next/image";
 
 export default function LogoutButton({
@@ -17,6 +18,7 @@ export default function LogoutButton({
   const handleLogout = () => {
     logout(); // 인증 정보 날림
     reset(); // 회원 정보 날림
+    deleteCookie("accessToken") // 쿠키 날림
     onClick();
   };
 
