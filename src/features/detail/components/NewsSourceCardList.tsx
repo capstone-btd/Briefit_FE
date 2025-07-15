@@ -36,12 +36,14 @@ export default function NewsSourceCardList({
   themeCardColor: string | null;
   themeTextColor1: string | null;
   themeBorderColor: string | null;
-}) {
+  }) {
+
   return (
     <div className="space-y-30">
       <div className={`pt-50 font-title-24 ${themeTextColor1 ?? ""}`}>
         이런 기사들을 모았어요
       </div>
+        <div className="overflow-x-auto">
       <div className="flex gap-10 pb-80">
         {newsSourceList.map((newsSource, index) => (
           <a key={index} href={newsSource.url} target="_blank">
@@ -54,7 +56,8 @@ export default function NewsSourceCardList({
             />
           </a>
         ))}
-      </div>
+        </div>
+        </div>
     </div>
   );
 }

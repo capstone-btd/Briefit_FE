@@ -169,7 +169,7 @@ export default function NewsDetail({
               />
             </div>
           ) : (
-            <div>Loading...</div>
+            <div></div>
           )}
         </div>
       </div>
