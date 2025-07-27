@@ -8,7 +8,7 @@ export default async function fetchNewsCardList({
 }: {
     selectedCategory: string;
   containsAuthHeader: boolean
-}) {
+  }) {
   const params = { category: selectedCategory };
   try {
     const response = await apiServer.get("/articles", {
