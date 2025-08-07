@@ -53,14 +53,13 @@ export default function NewsContent({
   };
 
   const handleMouseDown = (index: number) => {
-    if (!isHighlightMode && !isEraserMode) return;
+    // 하이라이트/지우개 모드이거나 단어 검색을 위해 드래그 허용
     setIsDragging(true);
     setDragStart(index);
     setDragRange(null);
   };
 
   const handleMouseEnter = (index: number) => {
-    if (!isHighlightMode && !isEraserMode) return;
     if (isDragging && dragStart !== null) {
       setDragRange({
         start: Math.min(dragStart, index),
@@ -70,9 +69,11 @@ export default function NewsContent({
   };
 
   const handleMouseUp = async () => {
+    // 드래그 상태 초기화
+    setIsDragging(false);
+
     if (isCustomMode) {
       // 커스텀 모드일 때는 하이라이트/지우개 기능만 동작
-      setIsDragging(false);
       if (dragRange) {
         if (isHighlightMode && activeHighlightColor) {
           addHighlight(dragRange.start, dragRange.end, activeHighlightColor);
@@ -151,11 +152,20 @@ export default function NewsContent({
         );
       }
     }
+
+    // 커스텀 모드가 아닐 때는 드래그 상태를 유지 (팝업이 열려있는 동안 선택 범위 표시)
+    if (isCustomMode) {
+      setDragStart(null);
+      setDragRange(null);
+    }
   };
 
   // 팝업 닫기
   const closeWordPopup = () => {
     setWordPopup(null);
+    // 팝업이 닫힐 때 드래그 상태도 초기화
+    setDragStart(null);
+    setDragRange(null);
   };
 
   // 하이라이트 범위를 빠르게 확인하기 위한 Set 생성
@@ -187,10 +197,15 @@ export default function NewsContent({
               ?.highlightsColor
           : null;
 
+        // 드래그 중인 텍스트에 배경색 적용
+        const isDragging =
+          dragRange && index >= dragRange.start && index <= dragRange.end;
+        const dragClass = isDragging ? "bg-purple-200" : "";
+
         return (
           <span
             key={index}
-            className={`inline-block ${highlightClass ? `bg-${highlightClass}` : ""} whitespace-pre-line`}
+            className={`inline-block ${highlightClass ? `bg-${highlightClass}` : ""} ${dragClass} whitespace-pre-line`}
             onMouseDown={() => handleMouseDown(index)}
             onMouseEnter={() => handleMouseEnter(index)}
           >
@@ -225,18 +240,22 @@ export default function NewsContent({
 
           {wordPopup.isLoading ? (
             <div className="text-sm text-gray-500">검색 중...</div>
-          ) : wordPopup.definition ? (
+          ) : (
             <div>
               <div className="text-sm font-light text-gray-700">
-                {wordPopup.definition.definition.map((def, index) => (
-                  <div key={index} className="mb-1">
-                    {index + 1}. {def}
-                  </div>
-                ))}
+                {wordPopup.definition?.definition?.map((def, index) =>
+                  def ? (
+                    <div key={index} className="mb-1">
+                      {def}
+                    </div>
+                  ) : (
+                    <div key={index} className="text-sm text-gray-500">
+                      사전에 없는 단어입니다.
+                    </div>
+                  ),
+                )}
               </div>
             </div>
-          ) : (
-            <div className="text-sm text-gray-500">뜻을 찾을 수 없습니다.</div>
           )}
         </div>
       )}
