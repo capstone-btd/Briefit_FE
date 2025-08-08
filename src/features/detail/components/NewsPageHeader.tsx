@@ -14,7 +14,6 @@ type NewsPageHeaderProps = {
   articleId: number;
   scrapId: number | null; // 스크랩 ID 추가
   customId: number | null;
-  isScrapped: boolean;
   customBar: ReturnType<typeof useCustomBar>;
   isCustomized: boolean;
   deleteButtonThemeColor: string;
@@ -53,17 +52,17 @@ export default function NewsPageHeader({
   articleId,
   scrapId,
   customId,
-  isScrapped,
   customBar,
   isCustomized,
   deleteButtonThemeColor,
-  onRefresh
+  onRefresh,
 }: NewsPageHeaderProps) {
   const [active, setActive] = useState<ActiveButtonType | null>(null);
   const isActive = (key: ActiveButtonType) => active === key;
+
   const isUser = useAuthStore(isLoggedInUser);
-  const [isScrappedNew, setIsScrappedNew] = useState(false);
-  const [newScrapId, setNewScrapId] = useState<number | null>(null);
+
+  const [newScrapId, setNewScrapId] = useState<number | null>(scrapId);
 
   const { setIsCustomBarVisible } = customBar;
 
@@ -73,26 +72,32 @@ export default function NewsPageHeader({
   );
   const [showDialog, setShowDialog] = useState(false);
 
-  const scrapHandler = async () => {
-    setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
+const scrapHandler = async () => {
+  setActive(active === ActiveButton.SCRAP ? null : ActiveButton.SCRAP);
 
-    if (isScrapped || isScrappedNew) {
-      // 스크랩 해제 - scrapId 사용
-      const currentScrapId = scrapId || newScrapId;
-      if (currentScrapId) {
-        await deleteScrap({ id: currentScrapId });
-        setIsScrappedNew(false);
-        setNewScrapId(null);
-      }
-    } else {
-      // 스크랩 추가
+  if (newScrapId && scrapId) {
+    setNewScrapId(null);
+
+    try {
+      await deleteScrap({ id: scrapId });
+    } catch {
+      // 실패하면 롤백
+      setNewScrapId(scrapId);
+    }
+  } else {
+    const tempId = -1; // 임시 ID
+    setNewScrapId(tempId);
+
+    try {
       const result = await postScrap({ id: articleId });
       if (result) {
         setNewScrapId(result);
-        setIsScrappedNew(true);
       }
+    } catch {
+      setNewScrapId(null);
     }
-  };
+  }
+};
 
   const shareHandler = async () => {
     setActive(active === ActiveButton.SHARE ? null : ActiveButton.SHARE);
@@ -130,7 +135,7 @@ export default function NewsPageHeader({
             iconName={"scrap"}
             onClick={scrapHandler}
             isActive={
-              isScrapped || isScrappedNew || isActive(ActiveButton.SCRAP)
+              Boolean(newScrapId)
             }
             alt="스크랩"
           ></IconButton>
