@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
-import ThemeProvider from "@/components/ThemeProvider";
-import DividerProvider from "@/components/DividerProvider";
+import ThemeProvider from "./providers/ThemeProvider";
+import DividerProvider from "./providers/DividerProvider";
 
 export const metadata: Metadata = {
   title: "Briefit",
