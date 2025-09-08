@@ -1,6 +1,6 @@
 import React from "react";
-import DividerProvider from "./providers/DividerProvider";
-import ThemeProvider from "./providers/ThemeProvider";
+import DividerProvider from "../providers/DividerProvider";
+import ThemeProvider from "../providers/ThemeProvider";
 
 function MobileLayout({
   children,
@@ -9,7 +9,6 @@ function MobileLayout({
 }>) {
   return (
     <ThemeProvider>
-     
       <DividerProvider />
       {children}
     </ThemeProvider>

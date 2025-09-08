@@ -2,8 +2,8 @@
 
 import { useDeviceStore } from "@/stores/device/useDeviceStore";
 import { useEffect, useState } from "react";
-import MobileLayout from "../MobileLayout";
-import DesktopLayout from "../DesktopLayout";
+import MobileLayout from "../layouts/MobileLayout";
+import DesktopLayout from "../layouts/DesktopLayout";
 
 export function DeviceProvider({ children }: { children: React.ReactNode }) {
   const setIsMobile = useDeviceStore((s) => s.setIsMobile);
