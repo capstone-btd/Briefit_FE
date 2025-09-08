@@ -43,7 +43,7 @@ export default function Navigationbar() {
     <nav className="relative">
       <div className="flex items-baseline justify-between gap-24 xl:gap-50 2xl:gap-100">
         <Link prefetch href={navItems[0].path} onClick={() => handleClick(0, navItems[0].path)}>
-          <Logo />
+          <Logo width={84} height={36}/>
         </Link>
         <div
           ref={containerRef}
