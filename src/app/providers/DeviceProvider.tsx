@@ -2,9 +2,12 @@
 
 import { useDeviceStore } from "@/stores/device/useDeviceStore";
 import { useEffect } from "react";
+import MobileLayout from "../MobileLayout";
+import DesktopLayout from "../DesktopLayout";
 
 export function DeviceProvider({ children }: { children: React.ReactNode }) {
   const setIsMobile = useDeviceStore((s) => s.setIsMobile);
+  const isMobile = useDeviceStore((s) => s.isMobile);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 849px)");
@@ -15,5 +18,5 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
     return () => media.removeEventListener("change", handler);
   }, [setIsMobile]);
 
-  return <>{children}</>;
+  return <>{isMobile ? <MobileLayout>{children}</MobileLayout> : <DesktopLayout>{children}</DesktopLayout> }</>;
 }
