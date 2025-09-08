@@ -1,7 +1,7 @@
-import Header from "@/components/Header";
 import React from "react";
 import DividerProvider from "../providers/DividerProvider";
 import ThemeProvider from "../providers/ThemeProvider";
+import Header from "@/components/headers/desktop/Header";
 
 function DesktopLayout({
   children,

@@ -2,7 +2,7 @@
 
 import Navigationbar from "./Navigatonbar";
 import Searchbar from "./Searchbar";
-import LoginButton from "../features/login/components/LoginButton";
+import LoginButton from "../../../features/login/components/LoginButton";
 import { useAuthStore, isLoggedInUser } from "@/stores/auth/useAuthStore";
 import UserProfileImage from "@/features/common/UserProfileImage";
 
