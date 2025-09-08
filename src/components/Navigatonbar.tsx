@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Logo from "../../Logo";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
 import { navItems } from "@/constants/navItems";
 import { useNavigation } from "@/hooks/useNavigation";
@@ -16,14 +15,6 @@ export default function Navigationbar() {
   return (
     <nav className="relative">
       <div className="flex items-baseline justify-between gap-24 xl:gap-50 2xl:gap-100">
-        <Link
-          prefetch
-          href={navItems[0].path}
-          onClick={() => handleClick(0, navItems[0].path)}
-        >
-          <Logo width={84} height={36} />
-        </Link>
-
         <div
           ref={containerRef}
           className="relative flex items-center gap-24 pb-3 xl:gap-32 2xl:gap-48"
