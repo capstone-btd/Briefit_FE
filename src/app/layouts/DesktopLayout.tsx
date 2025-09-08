@@ -1,7 +1,8 @@
 import React from "react";
 import DividerProvider from "../providers/DividerProvider";
 import ThemeProvider from "../providers/ThemeProvider";
-import Header from "@/components/headers/desktop/Header";
+import DesktopHeader from "@/components/headers/DesktopHeader";
+
 
 function DesktopLayout({
   children,
@@ -10,7 +11,7 @@ function DesktopLayout({
 }>) {
   return (
     <ThemeProvider>
-      <Header />
+      <DesktopHeader />
       <DividerProvider />
       <div className="px-16 py-20 xl:px-160 xl:py-50 2xl:px-240 2xl:py-70">
         {children}

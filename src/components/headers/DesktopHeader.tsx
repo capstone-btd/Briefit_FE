@@ -1,13 +1,13 @@
 "use client";
 
-import Navigationbar from "../../Navigatonbar";
-import Searchbar from "./Searchbar";
-import LoginButton from "../../../features/login/components/LoginButton";
+import Navigationbar from "../Navigatonbar";
+import Searchbar from "../Searchbar";
+import LoginButton from "../../features/login/components/LoginButton";
 import { useAuthStore, isLoggedInUser } from "@/stores/auth/useAuthStore";
 import UserProfileImage from "@/features/common/UserProfileImage";
 import LogoButton from "@/components/LogoButton";
 
-export default function Header() {
+export default function DesktopHeader() {
   return (
     <header className="bg-theme-background text-theme-primary relative mx-16 flex justify-between pt-28 xl:mx-100 2xl:mx-150">
       {/* 임시 */}
