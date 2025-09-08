@@ -1,43 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Logo from "../../Logo";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
 import { navItems } from "@/constants/navItems";
+import { useNavigation } from "@/hooks/useNavigation";
 
 export default function Navigationbar() {
-  const { selectedPath, setSelectedPath } = useNavStore();
-  const [underlineStyle, setUnderlineStyle] = useState({ width: 0, left: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
-  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-
-  const updateUnderline = (index: number) => {
-    const container = containerRef.current;
-    const link = linkRefs.current[index];
-    if (container && link) {
-      const containerRect = container.getBoundingClientRect();
-      const linkRect = link.getBoundingClientRect();
-      setUnderlineStyle({
-        width: linkRect.width,
-        left: linkRect.left - containerRect.left,
-      });
-    }
-  };
-
-  const handleClick = (index: number, path: string) => {
-    setSelectedPath(path);
-    updateUnderline(index);
-  };
-
-  useEffect(() => {
-    if (selectedPath) {
-      const index = navItems.findIndex((item) => item.path === selectedPath);
-      if (index !== -1) {
-        setTimeout(() => updateUnderline(index), 0);
-      }
-    }
-  }, [selectedPath]);
+  const { selectedPath, setSelectedPath } = useNavStore(); 
+  const { containerRef, linkRefs, underlineStyle, handleClick } = useNavigation(
+    selectedPath,
+    setSelectedPath,
+  );
 
   return (
     <nav className="relative">
@@ -49,6 +23,7 @@ export default function Navigationbar() {
         >
           <Logo width={84} height={36} />
         </Link>
+
         <div
           ref={containerRef}
           className="relative flex items-center gap-24 pb-3 xl:gap-32 2xl:gap-48"
