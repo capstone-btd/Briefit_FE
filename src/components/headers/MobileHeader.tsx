@@ -13,9 +13,9 @@ export default function MobileHeader() {
         <div className="absolute left-1/2 -translate-x-1/2">
           <LogoButton width={84} height={36} />
         </div>
-        <div className="flex gap-10 ml-auto">
+        <div className="ml-auto flex gap-10">
           {useAuthStore(isLoggedInUser) ? (
-            <UserProfileImage />
+            <UserProfileImage scale={24} />
           ) : (
             <LoginButton />
           )}
