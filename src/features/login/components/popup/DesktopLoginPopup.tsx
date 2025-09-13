@@ -1,7 +1,7 @@
 // components/LoginPopup.tsx
 import { useRef, useEffect } from "react";
-import Image from "next/image";
 import NaverLoginButton from "../NaverLoginButton";
+import { X } from "lucide-react";
 
 type Props = {
   onClose: () => void;
@@ -23,13 +23,11 @@ export default function DesktopLoginPopup({ onClose }: Props) {
 
   return (
     <div ref={popupRef} className="absolute top-[150%] left-[-220%] z-10">
-      <Image
-        src={"/assets/close.png"}
-        alt="close"
+      <X
         onClick={onClose}
-        className="relative left-260 cursor-pointer"
-        width={28}
-        height={28}
+        strokeWidth={1.5}
+        color="gray"
+        className="relative left-260 cursor-pointer size-28"
       />
       <div className="absolute rounded-20 bg-white p-20 whitespace-nowrap shadow-[0_0_3px_#D9D9D9]">
         <div className="mb-9 font-title-20">간편 로그인</div>

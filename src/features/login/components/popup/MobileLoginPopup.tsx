@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { useEffect } from "react";
 import NaverLoginButton from "../NaverLoginButton";
 import LogoButton from "@/components/LogoButton";
+import { X } from "lucide-react";
 
 type Props = {
   onClose: () => void;
@@ -20,15 +20,12 @@ export default function MobileLoginPopup({ onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center overflow-hidden bg-white opacity-100 transition-opacity duration-200 ease-out">
-      <Image
-        src="/assets/close.png"
-        alt="close"
+      <X
         onClick={onClose}
-        className="absolute top-40 right-20 cursor-pointer"
-        width={28}
-        height={28}
+        strokeWidth={1.5}
+        color="gray"
+        className="absolute top-20 right-20 size-28"
       />
-
       <div className="flex transform flex-col items-center opacity-100 transition-transform duration-200 ease-out">
         <div className="mt-140 mb-100">
           <LogoButton width={130} height={45} />
