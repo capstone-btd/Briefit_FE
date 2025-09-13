@@ -1,6 +1,7 @@
 import RefreshOnBackWrapper from "@/components/RefreshOnBackWrapper";
 import { newsCategories } from "@/constants/newsCategries";
 import NewsCategorybar from "@/features/common/NewsCategorybar";
+import PressCompanyFilterPopup from "@/features/common/PressCompanyFilterPopup";
 import TodayIssue from "@/features/today-news/components/TodayIssue";
 import TodayNewsCardGrid from "@/features/today-news/components/TodayNewsCardGrid";
 import { use } from "react";
@@ -22,9 +23,12 @@ export default function TodayNewsPage(props: Props) {
 
   return (
     <div>
-      <div className="flex items-center space-x-50">
-        <div className="font-title-24">오늘의 AI 뉴스</div>
-        <NewsCategorybar basePath="today-news" />
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-50">
+          <div className="font-title-24">오늘의 AI 뉴스</div>
+          <NewsCategorybar basePath="today-news" />
+        </div>
+        <PressCompanyFilterPopup />
       </div>
       <div>
         <RefreshOnBackWrapper>
