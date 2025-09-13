@@ -1,7 +1,7 @@
 "use client";
 
 import { mockPressCompnyTitleList } from "@/mock/pressCompanyList";
-import { CheckSquare, ChevronDown, Square } from "lucide-react";
+import { CheckSquare2, ChevronDown, Square } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
 export default function PressCompanyFilterPopup() {
@@ -81,7 +81,7 @@ export default function PressCompanyFilterPopup() {
                 onClick={() => toggleSelect(title)}
               >
                 {isSelected ? (
-                  <CheckSquare className="text-blue-500" strokeWidth={1} />
+                  <CheckSquare2 fill="#7B47FF" color="white" strokeWidth={1} />
                 ) : (
                   <Square className="text-gray-400" strokeWidth={1} />
                 )}
