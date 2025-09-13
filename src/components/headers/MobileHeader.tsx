@@ -14,12 +14,12 @@ export default function MobileHeader() {
           <LogoButton width={84} height={36} />
         </div>
         <div className="ml-auto flex gap-10">
+          <Search scale={24} />
           {useAuthStore(isLoggedInUser) ? (
             <UserProfileImage scale={24} />
           ) : (
             <LoginButton />
           )}
-          <Search scale={24} />
         </div>
       </div>
       <Navigationbar />
