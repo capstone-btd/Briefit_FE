@@ -16,6 +16,7 @@ export default function RecommendedNews() {
       try {
         const data = await fetchRecommendedNewsCardList({
           selectedCategory: "전체",
+          selectedPressCompanyName: "전체"
         });
         setNewsList(Array.isArray(data) ? data : []);
       } catch (error) {
