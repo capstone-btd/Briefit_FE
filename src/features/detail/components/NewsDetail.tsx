@@ -138,13 +138,12 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
 
   return (
     <div className={`min-h-screen pt-30 ${themeBgColor ?? "bg-white"}`}>
-      <div className="px-64">
-        <div className="flex items-baseline space-x-20">
-          <NewsCustomBar customBar={customBar} articleId={articleId} />
-          <IconButton
-            iconName="back-arrow"
-            onClick={() => onBackClick()}
-          ></IconButton>
+      <div className="xl:px-64 sm:px-6 md:px-64">
+        <div className="flex flex-row items-baseline space-y-12 sm:space-y-0 sm:space-x-20">
+          <div className="flex items-center space-x-12 sm:space-x-20">
+            <NewsCustomBar customBar={customBar} articleId={articleId} />
+            <IconButton iconName="back-arrow" onClick={() => onBackClick()} />
+          </div>
           <NewsPageHeader
             articleId={articleId}
             scrapId={scrapId}
@@ -155,9 +154,9 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
             onRefresh={refresh}
           />
         </div>
-        <div className="px-70">
+        <div className="w-full px-0 xl:px-70 md:px-70">
           {newsData ? (
-            <div>
+            <div className="w-full">
               <NewsTitle
                 categoryLabel={newsData.categories[0]}
                 pressCompanies={pressCompanyNameList}
@@ -174,9 +173,12 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
                     "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
                   }
                   alt="뉴스 기사 이미지"
-                  className="mx-auto my-60 h-470 w-710"
+                  ratio={4 / 3}
+                  className="mx-auto my-40 h-auto w-[90vw] xl:w-[60vw] xl:max-w-800 sm:my-60 sm:w-[70vw] sm:max-w-510 md:w-[70vw] md:max-w-710"
                 />
-              ) : <div className="my-60"></div>}
+              ) : (
+                <div className="my-40 sm:my-60"></div>
+              )}
               <NewsContent
                 body={newsData.body}
                 themeTextColor1={themeTextColor1}

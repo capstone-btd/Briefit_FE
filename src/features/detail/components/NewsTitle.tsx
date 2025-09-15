@@ -15,18 +15,30 @@ export default function NewsTitle({
   createdAt: string;
   themeTextColor1?: string | null;
   themeTextColor2?: string | null;
-  }) {
+}) {
   return (
     <div className="mt-50 gap-20">
       <div className="mb-16 flex items-center gap-30">
-        <div className={`font-title-24-m ${themeTextColor1 ?? ""}`}>
+        <div className={`font-title-24-m sm:hidden ${themeTextColor1 ?? ""}`}>
           {categoryLabel}
         </div>
-        <div className={`font-basic-20 ${!!themeTextColor2 ? themeTextColor2 : "text-gray-400"}`}>
+        <div
+          className={`hidden rounded-full bg-purple-100 px-8 py-2 text-13 font-normal sm:block ${themeTextColor1 ?? ""}`}
+        >
+          {categoryLabel}
+        </div>
+        <div
+          className={`font-light-14 hidden sm:block ${!!themeTextColor2 ? themeTextColor2 : "text-gray-400"}`}
+        >
+          {getPressCompanyNameString(pressCompanies)}
+        </div>
+        <div className="block font-basic-20 sm:hidden">
           {getPressCompanyNameString(pressCompanies)}
         </div>
       </div>
-      <div className={`mb-50 font-title-40 ${themeTextColor1 ?? ""}`}>
+      <div
+        className={`mb-50 xl:text-40 xl:font-semibold sm:text-20 sm:font-medium md:text-40 md:font-semibold ${themeTextColor1 ?? ""}`}
+      >
         {title}
       </div>
       <div
