@@ -31,13 +31,19 @@ export default function IconButton({
       variant="ghost"
       className={`${className} hover:bg-transparent`}
       onClick={(e: React.MouseEvent) => {
-         e.stopPropagation();
-         e.preventDefault();
+        e.stopPropagation();
+        e.preventDefault();
         onClick(e);
       }}
       style={style}
     >
-      <Image src={imgSrc} alt={alt} width={46} height={46} />
+      <Image
+        src={imgSrc}
+        alt={alt}
+        width={40}
+        height={40}
+        className="size-27"
+      />
     </Button>
   );
 }

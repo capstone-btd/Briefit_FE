@@ -137,11 +137,16 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
   };
 
   return (
-    <div className={`min-h-screen pt-30 ${themeBgColor ?? "bg-white"}`}>
+    <div className={`min-h-screen pt-30 sm:pt-0 ${themeBgColor ?? "bg-white"}`}>
       <div className="xl:px-64 sm:px-6 md:px-64">
-        <div className="flex flex-row items-baseline space-y-12 sm:space-y-0 sm:space-x-20">
-          <div className="flex items-center space-x-12 sm:space-x-20">
-            <NewsCustomBar customBar={customBar} articleId={articleId} />
+        <div className="flex flex-row items-baseline space-y-12 sm:hidden">
+          <div className="flex items-center space-x-12">
+            <NewsCustomBar
+              customBar={customBar}
+              articleId={articleId}
+              position="relative"
+              className=""
+            />
             <IconButton iconName="back-arrow" onClick={() => onBackClick()} />
           </div>
           <NewsPageHeader
@@ -165,7 +170,24 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
                 themeTextColor1={themeTextColor1}
                 themeTextColor2={themeTextColor2}
               />
-              <Divider className={themeDividerColor ?? ""} />
+              <div className="relative hidden sm:block">
+                <NewsCustomBar
+                  customBar={customBar}
+                  articleId={articleId}
+                  position="absolute"
+                  // className="top-45 left-[-4px]"
+                />
+                <NewsPageHeader
+                  articleId={articleId}
+                  scrapId={scrapId}
+                  customId={newsData?.customId ?? null}
+                  customBar={customBar}
+                  isCustomized={!!newsData?.customId}
+                  deleteButtonThemeColor={themeTextColor2}
+                  onRefresh={refresh}
+                />
+              </div>
+              <Divider className={`${themeDividerColor ?? ""} sm:hidden`} />
               {newsData.imgUrls.length != 0 ? (
                 <ResponsiveImage
                   src={
@@ -174,7 +196,7 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
                   }
                   alt="뉴스 기사 이미지"
                   ratio={4 / 3}
-                  className="mx-auto my-40 h-auto w-[90vw] xl:w-[60vw] xl:max-w-800 sm:my-60 sm:w-[70vw] sm:max-w-510 md:w-[70vw] md:max-w-710"
+                  className="mx-auto my-40 h-auto w-[90vw] xl:w-[60vw] xl:max-w-800 sm:my-60 sm:w-[65vw] sm:max-w-510 md:w-[70vw] md:max-w-710"
                 />
               ) : (
                 <div className="my-40 sm:my-60"></div>
