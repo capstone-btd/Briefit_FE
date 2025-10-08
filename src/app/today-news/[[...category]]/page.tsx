@@ -1,6 +1,6 @@
 import RefreshOnBackWrapper from "@/components/RefreshOnBackWrapper";
 import { newsCategories } from "@/constants/newsCategries";
-import NewsCategorybar from "@/features/common/NewsCategorybar";
+import NewsCategorybar from "@/features/common/categorybar/NewsCategorybar";
 import PressCompanyFilterWrapper from "@/features/common/PressCompanyFilterWrapper";
 import TodayIssue from "@/features/today-news/components/TodayIssue";
 import TodayNewsCardGrid from "@/features/today-news/components/TodayNewsCardGrid";

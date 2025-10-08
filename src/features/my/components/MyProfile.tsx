@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { newsCategories } from "@/constants/newsCategries";
-import { NewsCategoryItem } from "@/features/common/NewsCategorybar";
 import EditableField from "./EditableField";
 import NoContent from "@/features/common/NoContent";
 import { useUserStore } from "@/stores/auth/useUserStore";
@@ -18,6 +17,7 @@ import Dialog from "@/features/common/Dialog";
 import { useResetUserInfo } from "@/hooks/useResetUserInfo";
 import { useRouter } from "next/navigation";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
+import { NewsCategoryItem } from "@/features/common/categorybar/NewsCategorybar";
 
 export default function MyProfile() {
   const router = useRouter();
