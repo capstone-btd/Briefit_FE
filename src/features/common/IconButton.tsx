@@ -21,7 +21,7 @@ export default function IconButton({
   alt = iconName,
   className = "cursor-pointer", // Tailwind 기본
   style = {},
-  size = 46, // 기본값 46
+  size = 40, // 기본값 40
 }: IconButtonProps) {
   const imgSrc =
     isActive === undefined
