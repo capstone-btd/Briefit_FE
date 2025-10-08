@@ -8,6 +8,7 @@ import LoginButton from "@/features/login/components/LoginButton";
 import { navItems } from "@/constants/navItems";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
 import { useNavigation } from "@/hooks/useNavigation";
+import NewsCategoryBar from "@/features/common/categorybar/NewsCategorybar";
 
 export default function MobileHeader() {
   const { selectedPath, setSelectedPath } = useNavStore();
@@ -33,6 +34,7 @@ export default function MobileHeader() {
         </div>
       </div>
       <Navigationbar />
+      <NewsCategoryBar basePath={selectedPath.substring(1)} />
     </header>
   );
 }

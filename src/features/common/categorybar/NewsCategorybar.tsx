@@ -37,9 +37,11 @@ export default function NewsCategoryBar({ basePath }: { basePath: string }) {
      onCategorySelect: handleCategorySelect,
    };
 
-   return isMobile ? (
+  return <div className="overflow-x-auto scrollbar-hide">
+     {isMobile ? (
      <MobileNewsCategoryBar {...sharedProps} />
    ) : (
      <DesktopNewsCategoryBar {...sharedProps} />
-   );
+   )}
+   </div>
 }
