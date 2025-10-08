@@ -157,6 +157,7 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
             isCustomized={!!newsData?.customId}
             deleteButtonThemeColor={themeTextColor2}
             onRefresh={refresh}
+            iconSize={45}
           />
         </div>
         <div className="w-full px-0 xl:px-70 md:px-70">
@@ -185,6 +186,7 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
                   isCustomized={!!newsData?.customId}
                   deleteButtonThemeColor={themeTextColor2}
                   onRefresh={refresh}
+                  iconSize={27}
                 />
               </div>
               <Divider className={`${themeDividerColor ?? ""} sm:hidden`} />
