@@ -18,20 +18,19 @@ export default function TodayNewsPage(props: Props) {
   const searchParams = use(props.searchParams);
 
   const selectedPressCompanyName = (searchParams.company as string) || "전체";
-  const categoryLabel =
-  category
-    ? newsCategories.find((e) => e.name === category[0])?.label ?? null
+  const categoryLabel = category
+    ? (newsCategories.find((e) => e.name === category[0])?.label ?? null)
     : null;
-
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-50">
-          <div className="font-title-24">오늘의 AI 뉴스</div>
+      <div className="flex items-center justify-between">
+        <div className="scrollbar-hide flex items-center space-x-50 overflow-x-auto">
+          <div className="font-title-24 sm:hidden">오늘의 AI 뉴스</div>
           <NewsCategorybar basePath="today-news" />
         </div>
-        <PressCompanyFilterWrapper />
+        {/* TODO: - 수정 필요 */}
+        <div className="sm:hidden"><PressCompanyFilterWrapper /></div> 
       </div>
       <div>
         <RefreshOnBackWrapper>
@@ -42,7 +41,7 @@ export default function TodayNewsPage(props: Props) {
           />
         </RefreshOnBackWrapper>
       </div>
-      <div className="sm:hidden mt-70">
+      <div className="mt-70 sm:hidden">
         <TodayIssue />
       </div>
     </div>

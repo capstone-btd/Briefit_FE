@@ -1,6 +1,7 @@
 "use client";
 
 import { NewsCategory } from "@/types/news/newsCategory";
+import Divider from "../Divider";
 
 export function MobileNewsCategoryItem({
   category,
@@ -12,14 +13,17 @@ export function MobileNewsCategoryItem({
   onClick: (name: string) => void;
 }) {
   return (
-    <button
-      onClick={() => onClick(category.name)}
-      className={`rounded-full px-16 py-6 font-basic-16 transition-colors duration-200 ${
-        isSelected ? "bg-purple-500 text-white" : "bg-gray-50 hover:bg-gray-100"
+    <span
+      className={`relative inline-block py-8 font-basic-16 whitespace-nowrap transition-colors ${
+        isSelected ? "text-purple-500" : "text-gray-400"
       }`}
+      onClick={() => onClick(category.name)}
     >
       {category.label}
-    </button>
+      {isSelected && (
+        <span className="absolute -bottom-1 left-0 h-[1.5px] w-full bg-purple-500 transition-all duration-200 ease-out" />
+      )}
+    </span>
   );
 }
 
@@ -36,8 +40,8 @@ export default function MobileNewsCategoryBar({
   onCategorySelect,
 }: Props) {
   return (
-    <div className="-mx-4 overflow-x-auto px-4">
-      <div className="flex w-max min-w-full gap-10">
+    <div>
+      <div className="flex gap-20 px-20">
         {categories.map((cat) => (
           <MobileNewsCategoryItem
             key={cat.id}
@@ -47,6 +51,7 @@ export default function MobileNewsCategoryBar({
           />
         ))}
       </div>
+      <Divider />
     </div>
   );
 }
