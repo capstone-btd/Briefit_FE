@@ -4,6 +4,7 @@ import NewsCategorybar from "@/features/common/categorybar/NewsCategorybar";
 import PressCompanyFilterWrapper from "@/features/common/PressCompanyFilterWrapper";
 import TodayIssue from "@/features/today-news/components/TodayIssue";
 import TodayNewsCardGrid from "@/features/today-news/components/TodayNewsCardGrid";
+import { ChevronRight } from "lucide-react";
 import { use } from "react";
 
 type Props = {
@@ -34,17 +35,22 @@ export default function TodayNewsPage(props: Props) {
           <PressCompanyFilterWrapper />
         </div>
       </div>
-      <div>
-        <RefreshOnBackWrapper>
-          <TodayNewsCardGrid
-            categoryLabel={categoryLabel}
-            selectedPressCompanyName={selectedPressCompanyName}
-            className="mt-30"
-          />
-        </RefreshOnBackWrapper>
-      </div>
-      <div className="mt-70 sm:hidden">
-        <TodayIssue />
+      <div className="sm:p-20">
+        <div className="flex items-center font-title-20 pc:hidden">
+          오늘의 AI 뉴스 <ChevronRight className="text-gray-400" />
+        </div>
+        <div className="sm:hidden">
+          <RefreshOnBackWrapper>
+            <TodayNewsCardGrid
+              categoryLabel={categoryLabel}
+              selectedPressCompanyName={selectedPressCompanyName}
+              className="mt-30"
+            />
+          </RefreshOnBackWrapper>
+        </div>
+        <div className="mt-70 sm:hidden">
+          <TodayIssue />
+        </div>
       </div>
     </div>
   );
