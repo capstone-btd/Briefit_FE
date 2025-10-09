@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { newsCategories } from "@/constants/newsCategries";
-import { NewsCategoryItem } from "@/features/common/NewsCategorybar";
 import EditableField from "./EditableField";
 import NoContent from "@/features/common/NoContent";
 import { useUserStore } from "@/stores/auth/useUserStore";
@@ -18,6 +17,7 @@ import Dialog from "@/features/common/Dialog";
 import { useResetUserInfo } from "@/hooks/useResetUserInfo";
 import { useRouter } from "next/navigation";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
+import { DesktopNewsCategoryItem } from "@/features/common/categorybar/DesktopNewsCategorybar";
 
 export default function MyProfile() {
   const router = useRouter();
@@ -113,7 +113,7 @@ export default function MyProfile() {
           >
             <div className="grid grid-cols-4 gap-8">
               {newsCategories.slice(1).map((cat) => (
-                <NewsCategoryItem
+                <DesktopNewsCategoryItem // TODO: - 반응형 수정 필요
                   key={cat.id}
                   category={cat}
                   isSelected={selectedCategories.includes(cat.label)}

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { DetailPageType } from "@/constants/detailPageType";
 import { NewsCard } from "@/features/common/NewsCard";
-import NewsCategoryBar from "@/features/common/NewsCategorybar";
 import { fetchCustomNewsList, fetchScrapedNewsList } from "../api/myNews";
 import { MyNewsType } from "@/constants/myNewsType";
 import { NewsSummary } from "@/types/news/newsSummary";
@@ -11,6 +10,7 @@ import NoContent from "@/features/common/NoContent";
 import { NewsCardActions } from "./NewsCardActions";
 import { getCookie } from "cookies-next";
 import postScrap, { deleteScrap } from "@/features/detail/api/newsDetailIScrap";
+import NewsCategoryBar from "@/features/common/categorybar/NewsCategorybar";
 
 export default function MyNews({
   myNewsType,

@@ -137,7 +137,7 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
   };
 
   return (
-    <div className={`min-h-screen pt-30 sm:pt-0 ${themeBgColor ?? "bg-white"}`}>
+    <div className={`min-h-screen pt-30 px-20 sm:pt-0 ${themeBgColor ?? "bg-white"}`}>
       <div className="xl:px-64 sm:px-6 md:px-64">
         <div className="flex flex-row items-baseline space-y-12 sm:hidden">
           <div className="flex items-center space-x-12">
@@ -185,6 +185,7 @@ export default function NewsDetail({ articleId, scrapId }: NewsDetailProps) {
                   isCustomized={!!newsData?.customId}
                   deleteButtonThemeColor={themeTextColor2}
                   onRefresh={refresh}
+                  iconSize={27}
                 />
               </div>
               <Divider className={`${themeDividerColor ?? ""} sm:hidden`} />

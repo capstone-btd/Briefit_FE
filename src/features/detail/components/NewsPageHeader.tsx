@@ -17,6 +17,7 @@ type NewsPageHeaderProps = {
   customBar: ReturnType<typeof useCustomBar>;
   isCustomized: boolean;
   deleteButtonThemeColor: string;
+  iconSize?: number;
   onRefresh: () => void;
 };
 
@@ -55,6 +56,7 @@ export default function NewsPageHeader({
   customBar,
   isCustomized,
   deleteButtonThemeColor,
+  iconSize,
   onRefresh,
 }: NewsPageHeaderProps) {
   const [active, setActive] = useState<ActiveButtonType | null>(null);
@@ -138,6 +140,7 @@ export default function NewsPageHeader({
             onClick={scrapHandler}
             isActive={Boolean(newScrapId)}
             alt="스크랩"
+            size={iconSize}
           ></IconButton>
         )}
         <IconButton
@@ -145,6 +148,7 @@ export default function NewsPageHeader({
           onClick={shareHandler}
           isActive={isActive(ActiveButton.SHARE)}
           alt="공유"
+          size={iconSize}
         ></IconButton>
         {isUser && (
           <IconButton
@@ -152,6 +156,7 @@ export default function NewsPageHeader({
             onClick={customHandler}
             isActive={isActive(ActiveButton.CUSTOM)}
             alt="커스텀"
+            size={iconSize}
           ></IconButton>
         )}
       </div>
