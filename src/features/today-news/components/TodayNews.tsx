@@ -5,10 +5,11 @@ import NoContent from "@/features/common/NoContent";
 import SignUpModalWrapper from "@/features/signup/components/SignUpModalWrapper";
 import { isLoggedIn } from "@/utils/auth/cookie";
 import { NewsSummary } from "@/types/news/newsSummary";
+import { NewsCarousel } from "@/features/common/NewsCarousel";
 
 const ITEMS_PER_PAGE = 9;
 
-export default async function TodayNewsCardGrid({
+export default async function TodayNews({
   categoryLabel,
   selectedPressCompanyName,
   className,
@@ -30,13 +31,25 @@ export default async function TodayNewsCardGrid({
       {!Array.isArray(newsList) || newsList.length === 0 ? (
         <NoContent message="불러올 뉴스가 없어요." />
       ) : (
-        <PaginatedNewsCardGrid
-          newsList={newsList}
-          itemsPerPage={ITEMS_PER_PAGE}
-          categoryLabel={categoryLabel}
-          type={DetailPageType.TODAY}
-          className={className}
-        />
+        <>
+          <div className="sm:hidden">
+            <PaginatedNewsCardGrid
+              newsList={newsList}
+              itemsPerPage={ITEMS_PER_PAGE}
+              categoryLabel={categoryLabel}
+              type={DetailPageType.TODAY}
+              className={className}
+            />
+          </div>
+          <div className="pc:hidden">
+            <NewsCarousel
+              newsList={newsList}
+              categoryLabel={categoryLabel}
+              type={DetailPageType.TODAY}
+              className={className}
+            />
+          </div>
+        </>
       )}
       <SignUpModalWrapper />
     </div>

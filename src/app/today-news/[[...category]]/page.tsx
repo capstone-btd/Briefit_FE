@@ -3,7 +3,7 @@ import { newsCategories } from "@/constants/newsCategries";
 import NewsCategorybar from "@/features/common/categorybar/NewsCategorybar";
 import PressCompanyFilterWrapper from "@/features/common/PressCompanyFilterWrapper";
 import TodayIssue from "@/features/today-news/components/TodayIssue";
-import TodayNewsCardGrid from "@/features/today-news/components/TodayNewsCardGrid";
+import TodayNews from "@/features/today-news/components/TodayNews";
 import { ChevronRight } from "lucide-react";
 import { use } from "react";
 
@@ -39,9 +39,9 @@ export default function TodayNewsPage(props: Props) {
         <div className="flex items-center font-title-20 pc:hidden">
           오늘의 AI 뉴스 <ChevronRight className="text-gray-400" />
         </div>
-        <div className="sm:hidden">
+        <div className="">
           <RefreshOnBackWrapper>
-            <TodayNewsCardGrid
+            <TodayNews
               categoryLabel={categoryLabel}
               selectedPressCompanyName={selectedPressCompanyName}
               className="mt-30"
