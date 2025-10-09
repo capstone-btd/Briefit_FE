@@ -39,15 +39,12 @@ export default function TodayNewsPage(props: Props) {
         <div className="flex items-center font-title-20 pc:hidden">
           오늘의 AI 뉴스 <ChevronRight className="text-gray-400" />
         </div>
-        <div className="">
           <RefreshOnBackWrapper>
             <TodayNews
               categoryLabel={categoryLabel}
               selectedPressCompanyName={selectedPressCompanyName}
-              className="mt-30"
             />
           </RefreshOnBackWrapper>
-        </div>
         <div className="mt-70 sm:hidden">
           <TodayIssue />
         </div>

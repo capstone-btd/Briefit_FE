@@ -12,11 +12,9 @@ const ITEMS_PER_PAGE = 9;
 export default async function TodayNews({
   categoryLabel,
   selectedPressCompanyName,
-  className,
 }: {
   categoryLabel: string | null;
   selectedPressCompanyName: string;
-  className?: string;
 }) {
   const isUserLoggedIn = await isLoggedIn();
 
@@ -27,18 +25,17 @@ export default async function TodayNews({
   })) as NewsSummary[];
 
   return (
-    <div className="mt-45">
+    <div className="pc:mt-45 sm:mt-15">
       {!Array.isArray(newsList) || newsList.length === 0 ? (
         <NoContent message="불러올 뉴스가 없어요." />
       ) : (
         <>
-          <div className="sm:hidden">
+          <div className="mt-30 sm:hidden">
             <PaginatedNewsCardGrid
               newsList={newsList}
               itemsPerPage={ITEMS_PER_PAGE}
               categoryLabel={categoryLabel}
               type={DetailPageType.TODAY}
-              className={className}
             />
           </div>
           <div className="pc:hidden">
@@ -46,7 +43,6 @@ export default async function TodayNews({
               newsList={newsList}
               categoryLabel={categoryLabel}
               type={DetailPageType.TODAY}
-              className={className}
             />
           </div>
         </>

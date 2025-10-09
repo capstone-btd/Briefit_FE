@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, memo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -17,18 +17,16 @@ import { getPressCompanyNameString } from "@/utils/news/getPressCompanyNameStrin
 import Image from "next/image";
 import { NewsCardCategoryTag } from "./NewsCard";
 
-export function NewsCarouselItem({
+export const MobileNewsCard = memo(function MobileNewsCard({
   type,
   categoryLabel,
   newsSummary,
-  className,
   themeColor,
   children,
 }: {
   type: DetailPageType;
   categoryLabel: string | null;
   newsSummary: NewsSummary;
-  className?: string;
   themeColor?: string | null;
   children?: React.ReactNode;
 }) {
@@ -47,23 +45,20 @@ export function NewsCarouselItem({
     >
       <Card
         className={cn(
-          "relative flex flex-row gap-20 overflow-hidden rounded-20 p-20",
+          "relative flex flex-row gap-20 rounded-20 p-20",
           themeBgColor,
-          className,
         )}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* 왼쪽 이미지 영역 */}
-        {hasImage ? (
+        {hasImage && (
           <ResponsiveImage
             src={newsSummary.imgUrls[0]}
             alt="뉴스 기사 이미지"
             className="size-90 rounded-12"
             rounded="12"
           />
-        ) : (
-          <div className="aspect-square rounded-12 bg-gray-200" />
         )}
 
         {/* 오른쪽 콘텐츠 영역 */}
@@ -77,10 +72,7 @@ export function NewsCarouselItem({
           </div>
           {/* 제목 */}
           <div
-            className={cn(
-              "mb-6 line-clamp-2 font-title-16",
-              themeText1Color,
-            )}
+            className={cn("mb-6 line-clamp-2 font-title-16", themeText1Color)}
           >
             {newsSummary.title}
           </div>
@@ -123,40 +115,45 @@ export function NewsCarouselItem({
       </Card>
     </Link>
   );
-}
+});
+
 
 export function NewsCarousel({
   type,
   categoryLabel,
   newsList,
-  className,
   themeColor,
   children,
 }: {
   type: DetailPageType;
   categoryLabel: string | null;
   newsList: NewsSummary[];
-  className?: string;
   themeColor?: string | null;
   children?: React.ReactNode;
 }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  // const totalSlides = Math.ceil(newsList.length / 2);
+  const totalSlides = 10;
 
-  useState(() => {
+  useEffect(() => {
     if (!api) {
       return;
     }
-
     setCurrent(api.selectedScrollSnap());
-
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap());
     });
-  });
+  }, [api]);
+
+  // 2개씩 보여줌
+  const groupedNews = [];
+  for (let i = 0; i < newsList.length; i += 2) {
+    groupedNews.push(newsList.slice(i, i + 2));
+  }
 
   return (
-    <div className={cn("w-full", className)}>
+    <>
       <Carousel
         opts={{
           align: "start",
@@ -165,39 +162,39 @@ export function NewsCarousel({
         setApi={setApi}
         className="w-full"
       >
-        <CarouselContent className="-ml-16">
-          {newsList.map((newsSummary, index) => (
-            <CarouselItem
-              key={index}
-              className="basis-[280px] pl-16 sm:basis-[320px]"
-            >
-              <NewsCarouselItem
-                type={type}
-                categoryLabel={categoryLabel}
-                newsSummary={newsSummary}
-                themeColor={themeColor}
-              >
-                {children}
-              </NewsCarouselItem>
+        <CarouselContent>
+          {groupedNews.map((group, index) => (
+            <CarouselItem key={index}>
+              <div className="flex flex-col gap-15">
+                {group.map((newsSummary, subIndex) => (
+                  <MobileNewsCard
+                    key={subIndex}
+                    type={type}
+                    categoryLabel={categoryLabel}
+                    newsSummary={newsSummary}
+                    themeColor={themeColor}
+                  >
+                    {children}
+                  </MobileNewsCard>
+                ))}
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-
-        {/* 하단 인디케이터 */}
-        <div className="mt-20 flex justify-center gap-8">
-          {newsList.map((_, index) => (
-            <button
-              key={index}
-              className={cn(
-                "h-8 w-8 rounded-full transition-colors",
-                current === index ? "bg-gray-400" : "bg-gray-200",
-              )}
-              onClick={() => api?.scrollTo(index)}
-              aria-label={`${index + 1}번째 슬라이드로 이동`}
-            />
-          ))}
-        </div>
       </Carousel>
-    </div>
+      {/* 하단 인디케이터 */}
+      <div className="mt-10 flex justify-center gap-6">
+        {Array.from({ length: totalSlides }).map((_, index) => (
+          <button
+            key={index}
+            className={cn(
+              "size-6 rounded-full transition-colors",
+              current === index ? "bg-gray-400" : "bg-gray-100",
+            )}
+            onClick={() => api?.scrollTo(index)}
+          />
+        ))}
+      </div>
+    </>
   );
 }
