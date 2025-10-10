@@ -61,18 +61,18 @@ export default function RecommendedNews() {
 
   return (
     <div>
-      {sortedCategories.map((category) =>
+      {sortedCategories.map((categoryLabel) =>
         isMobile ? (
           <RecommendedNewsCarouselList
-            key={category}
-            category={category}
-            newsList={newsByCategory[category] ?? []}
+            key={categoryLabel}
+            categoryLabel={categoryLabel}
+            newsList={newsByCategory[categoryLabel] ?? []}
           />
         ) : (
           <RecommendedNewsCardList
-            key={category}
-            category={category}
-            newsList={newsByCategory[category] ?? []}
+            key={categoryLabel}
+            categoryLabel={categoryLabel}
+            newsList={newsByCategory[categoryLabel] ?? []}
           />
         ),
       )}
