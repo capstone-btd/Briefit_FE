@@ -51,7 +51,7 @@ export default function TodayNewsPage({
             selectedPressCompanyName={selectedPressCompanyName}
           />
         </RefreshOnBackWrapper>
-        <div className="mt-70 sm:hidden">
+        <div className="sm:mt-30 pc:mt-70">
           <TodayIssue />
         </div>
       </div>
