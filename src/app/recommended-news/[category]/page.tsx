@@ -1,26 +1,16 @@
-import { newsCategories } from "@/constants/newsCategries";
 import Link from "next/link";
-import { use } from "react";
 import Image from "next/image";
 import RefreshOnBackWrapper from "@/components/RefreshOnBackWrapper";
 import RecommendedNewsCardGridByCategory from "@/features/recommended-news/components/RecommendedNewsCardGrid";
 import PressCompanyFilterWrapper from "@/features/common/PressCompanyFilterWrapper";
+import { NewsPathParams } from "@/types/news/newsPathParams";
+import { parseNewsPathParams } from "@/utils/news/parseNewsPathParams";
 
-type Props = {
-  params: Promise<{
-    category: string;
-  }>;
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-};
-
-export default function RecommendedNewsByCategory(props: Props) {
-  const { category } = use(props.params);
-  const searchParams = use(props.searchParams);
-
-  const selectedPressCompanyName = (searchParams.company as string) || "전체";
-  const categoryLabel = category
-    ? (newsCategories.find((e) => e.name === category)?.label ?? null)
-    : null;
+export default function RecommendedNewsByCategory({ params, searchParams }: NewsPathParams) {
+  const { categoryLabel, selectedPressCompanyName } = parseNewsPathParams({
+    params,
+    searchParams,
+  });
 
   return (
     <div className="space-y-45">
