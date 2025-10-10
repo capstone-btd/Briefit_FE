@@ -27,7 +27,8 @@ export function NewsCarousel({
 }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const totalSlides = Math.ceil(newsList.length / 2);
+  // 추후 수정
+  const totalSlides = Math.min(10, Math.ceil(newsList.length / 2));
 
   useEffect(() => {
     if (!api) {
@@ -55,16 +56,17 @@ export function NewsCarousel({
         setApi={setApi}
         className="w-full"
       >
-        <CarouselContent>
+        <CarouselContent className="p-1">
           {groupedNews.map((group, index) => (
             <CarouselItem key={index}>
-              <div className="flex flex-col gap-15">
+              <div className="flex flex-col gap-14">
                 {group.map((newsSummary, subIndex) => (
                   <MobileNewsCard
                     key={subIndex}
                     type={type}
                     categoryLabel={categoryLabel}
                     newsSummary={newsSummary}
+                    className="hover-card-purple"
                     themeColor={themeColor}
                   >
                     {children}

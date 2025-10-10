@@ -14,7 +14,7 @@ export default function RecommendedNewsCarouselList({
   newsList: NewsSummary[];
 }) {
     const router = useRouter();
-    const categoryName = newsCategories.findLast((category) => category.label == categoryLabel);
+    const categoryName = newsCategories.findLast((category) => category.label == categoryLabel)?.name;
   return (
     <div className="mb-30">
       <div className="mb-10 font-title-16 text-gray-500" onClick={() => router.push(`/recommended-news/${categoryName}`)}>

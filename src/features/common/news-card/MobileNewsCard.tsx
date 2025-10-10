@@ -13,12 +13,14 @@ export const MobileNewsCard = memo(function MobileNewsCard({
   type,
   categoryLabel,
   newsSummary,
+  className,
   themeColor,
   children,
 }: {
   type: DetailPageType;
   categoryLabel: string | null;
   newsSummary: NewsSummary;
+  className?: string;
   themeColor?: string | null;
   children?: React.ReactNode;
 }) {
@@ -37,7 +39,8 @@ export const MobileNewsCard = memo(function MobileNewsCard({
     >
       <Card
         className={cn(
-          "relative flex flex-row gap-20 rounded-20 p-20",
+          "relative flex flex-row gap-20 overflow-visible rounded-20 p-20",
+          className,
           themeBgColor,
         )}
         onMouseEnter={() => setIsHovered(true)}
@@ -54,7 +57,7 @@ export const MobileNewsCard = memo(function MobileNewsCard({
         )}
 
         {/* 오른쪽 콘텐츠 영역 */}
-        <CardContent className="flex flex-grow flex-col px-0 py-4">
+        <CardContent className="flex flex-col px-0 py-4">
           {/* 카테고리 태그 */}
           <div className="mb-5 w-min">
             <NewsCardCategoryTag

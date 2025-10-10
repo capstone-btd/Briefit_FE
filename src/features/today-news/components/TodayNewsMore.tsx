@@ -4,8 +4,8 @@ import NoContent from "@/features/common/NoContent";
 import SignUpModalWrapper from "@/features/signup/components/SignUpModalWrapper";
 import { isLoggedIn } from "@/utils/auth/cookie";
 import { NewsSummary } from "@/types/news/newsSummary";
-import { NewsCarousel } from "@/features/common/NewsCarousel";
 import { MoreNewsHeader } from "@/features/common/MoreNewsHeader";
+import PaginatedNewsCarousel from "@/features/common/PaginatedNewsCarousel";
 
 export default async function TodayNewsMore({
   categoryLabel,
@@ -26,9 +26,13 @@ export default async function TodayNewsMore({
         <NoContent message="불러올 뉴스가 없어요." />
       ) : (
         <div className="space-y-14">
-          <MoreNewsHeader title="오늘의 AI 뉴스" categoryLabel={categoryLabel}/>
-          <NewsCarousel
+          <MoreNewsHeader
+            title="오늘의 AI 뉴스"
+            categoryLabel={categoryLabel}
+          />
+          <PaginatedNewsCarousel
             newsList={newsList}
+            itemsPerPage={10} // 추후 변경 가능
             categoryLabel={categoryLabel}
             type={DetailPageType.TODAY}
           />
