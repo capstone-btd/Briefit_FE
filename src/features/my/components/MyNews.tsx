@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DetailPageType } from "@/constants/detailPageType";
-import { NewsCard } from "@/features/common/NewsCard";
+import { NewsCard } from "@/features/common/news-card/NewsCard";
 import { fetchCustomNewsList, fetchScrapedNewsList } from "../api/myNews";
 import { MyNewsType } from "@/constants/myNewsType";
 import { NewsSummary } from "@/types/news/newsSummary";

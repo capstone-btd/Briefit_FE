@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { NewsCard } from "@/features/common/NewsCard";
+import { NewsCard } from "@/features/common/news-card/NewsCard";
 import { DetailPageType } from "@/constants/detailPageType";
 import { NewsSummary } from "@/types/news/newsSummary";
 import NewsPagination from "@/features/common/NewsPagination";

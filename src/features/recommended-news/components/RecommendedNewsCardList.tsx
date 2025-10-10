@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { DetailPageType } from "@/constants/detailPageType";
-import { NewsCard } from "@/features/common/NewsCard";
+import { NewsCard } from "@/features/common/news-card/NewsCard";
 import { MoreCardButton } from "@/features/common/MoreCardButton";
 import { NewsSummary } from "@/types/news/newsSummary";
 import { Button } from "@/components/ui/button";

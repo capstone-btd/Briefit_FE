@@ -13,7 +13,6 @@ const ITEMS_PER_PAGE = 6;
 export default function RecommendedNewsCardGridByCategory({
   categoryLabel,
   selectedPressCompanyName,
-  className,
 }: {
   categoryLabel: string | null;
     selectedPressCompanyName: string | null;
@@ -59,7 +58,6 @@ export default function RecommendedNewsCardGridByCategory({
           itemsPerPage={ITEMS_PER_PAGE}
           categoryLabel={categoryLabel}
           type={DetailPageType.TODAY}
-          className={className}
         />
       )}
     </div>

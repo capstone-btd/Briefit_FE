@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { DetailPageType } from "@/constants/detailPageType";
 import Link from "next/link";
-import ResponsiveImage from "./ResponsiveImage";
+import ResponsiveImage from "../ResponsiveImage";
 import { NewsSummary } from "@/types/news/newsSummary";
 import { cn } from "@/lib/utils";
 import { getPressCompanyNameString } from "@/utils/news/getPressCompanyNameString";
