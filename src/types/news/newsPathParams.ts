@@ -2,11 +2,6 @@
 // 뉴스 카테고리 및 적절한 searchParameters를 파싱합니다.
 
 export type NewsPathParams = {
-  params: {
-    category: string;
-  };
-  searchParams?: {
-    [key: string]: string | undefined;
-  };
+  params: Promise<{ category: string; }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 };
-

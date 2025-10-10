@@ -1,4 +1,5 @@
 import RefreshOnBackWrapper from "@/components/RefreshOnBackWrapper";
+import { newsCategories } from "@/constants/newsCategries";
 import NewsCategorybar from "@/features/common/categorybar/NewsCategorybar";
 import PressCompanyFilterWrapper from "@/features/common/PressCompanyFilterWrapper";
 import TodayIssue from "@/features/today-news/components/TodayIssue";
@@ -9,15 +10,16 @@ import { parseNewsPathParams } from "@/utils/news/parseNewsPathParams";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-export default function TodayNewsPage({
+export default async function TodayNewsPage({
   params,
   searchParams,
 }: NewsPathParams) {
   const { categoryLabel, extended, selectedPressCompanyName } =
-    parseNewsPathParams({
+    await parseNewsPathParams({
       params,
       searchParams,
     });
+  const categoryName = newsCategories.findLast((category) => category.label == categoryLabel)?.name ?? "";
 
   return extended === true ? (
     <div className="p-20">
@@ -39,7 +41,7 @@ export default function TodayNewsPage({
       </div>
       <div className="sm:p-20">
         <Link
-          href={`/today-news/${params.category ?? ""}?extended=true&company=${selectedPressCompanyName}`}
+          href={`/today-news/${categoryName}?extended=true&company=${selectedPressCompanyName}`}
         >
           <div className="flex w-fit cursor-pointer items-center font-title-20 pc:hidden">
             오늘의 AI 뉴스 <ChevronRight className="text-gray-400" />

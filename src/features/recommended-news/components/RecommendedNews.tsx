@@ -36,11 +36,14 @@ export default function RecommendedNews() {
 
     fetchData();
   }, []);
-  
+
+  if (!isUser) {
+    return <NoContent message="로그인 후 이용할 수 있어요." />;
+  }
   if (loading) {
     return <LoadingSpinner />;
   }
-  if (!isUser || !newsList || newsList.length === 0) {
+  if (!newsList || newsList.length === 0) {
     return <NoContent message="불러올 추천 뉴스가 없어요." />;
   }
 

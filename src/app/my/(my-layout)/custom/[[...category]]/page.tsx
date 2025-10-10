@@ -3,13 +3,13 @@ import { newsCategories } from "@/constants/newsCategries";
 import MyNews from "@/features/my/components/MyNews";
 
 type Props = {
-  params: {
+  params: Promise<{
     category: string;
-  };
+  }>;
 };
 
-export default function MyCustomPage(props: Props) {
-  const { category } = props.params;
+export default async function MyCustomPage(props: Props) {
+  const { category } = await props.params;
   const categoryLabel = category
     ? (newsCategories.find((e) => e.name === category[0])?.label ?? null)
     : null;

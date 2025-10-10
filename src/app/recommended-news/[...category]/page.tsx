@@ -58,11 +58,11 @@ function MobileHeader({
   );
 }
 
-export default function RecommendedNewsByCategory({
+export default async function RecommendedNewsByCategory({
   params,
   searchParams,
 }: NewsPathParams) {
-  const { categoryLabel, selectedPressCompanyName } = parseNewsPathParams({
+  const { categoryLabel, selectedPressCompanyName } = await parseNewsPathParams({
     params,
     searchParams,
   });
