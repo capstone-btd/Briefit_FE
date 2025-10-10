@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { NewsCard } from "@/features/common/news-card/NewsCard";
 import { DetailPageType } from "@/constants/detailPageType";
 import { NewsSummary } from "@/types/news/newsSummary";
 import NewsPagination from "@/features/common/NewsPagination";
+import { MobileNewsCard } from "./news-card/MobileNewsCard";
 
 interface NewsCardGridProps {
   newsList: NewsSummary[];
@@ -13,7 +13,7 @@ interface NewsCardGridProps {
   type: DetailPageType;
 }
 
-export default function PaginatedNewsCardGrid({
+export default function PaginatedNewsCarousel({
   newsList,
   categoryLabel,
   itemsPerPage = 9,
@@ -27,12 +27,12 @@ export default function PaginatedNewsCardGrid({
   const paginatedNews = newsList.slice(startIndex, endIndex);
 
   return (
-    <div className="space-y-40">
+    <div className="space-y-10">
       <div
-        className="grid grid-cols-1 gap-20 pc:grid-cols-3"
+        className="grid grid-cols-1 gap-14"
       >
         {paginatedNews.map((news, index) => (
-          <NewsCard
+          <MobileNewsCard
             key={index}
             type={type}
             categoryLabel={categoryLabel}
