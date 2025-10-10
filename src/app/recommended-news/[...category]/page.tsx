@@ -11,7 +11,7 @@ export default function RecommendedNewsByCategory({ params, searchParams }: News
     params,
     searchParams,
   });
-
+ 
   return (
     <div className="space-y-45">
       <div className="flex items-center justify-between">
