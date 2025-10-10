@@ -7,8 +7,12 @@ import RecommendedNewsCardList from "./RecommendedNewsCardList";
 import NoContent from "@/features/common/NoContent";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { isLoggedInUser, useAuthStore } from "@/stores/auth/useAuthStore";
+import { useDeviceStore } from "@/stores/device/useDeviceStore";
+import RecommendedNewsCarouselList from "./RecommendedNewsCarouselList";
 
 export default function RecommendedNews() {
+  const isMobile = useDeviceStore((state) => state.isMobile);
+
   const isUser = useAuthStore(isLoggedInUser);
   const [newsList, setNewsList] = useState<NewsSummary[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,13 +61,21 @@ export default function RecommendedNews() {
 
   return (
     <div>
-      {sortedCategories.map((category) => (
-        <RecommendedNewsCardList
-          key={category}
-          category={category}
-          newsList={newsByCategory[category] ?? []}
-        />
-      ))}
+      {sortedCategories.map((category) =>
+        isMobile ? (
+          <RecommendedNewsCarouselList
+            key={category}
+            category={category}
+            newsList={newsByCategory[category] ?? []}
+          />
+        ) : (
+          <RecommendedNewsCardList
+            key={category}
+            category={category}
+            newsList={newsByCategory[category] ?? []}
+          />
+        ),
+      )}
     </div>
   );
 }

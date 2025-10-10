@@ -133,8 +133,7 @@ export function NewsCarousel({
 }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  // const totalSlides = Math.ceil(newsList.length / 2);
-  const totalSlides = 10;
+  const totalSlides = Math.ceil(newsList.length / 2);
 
   useEffect(() => {
     if (!api) {
