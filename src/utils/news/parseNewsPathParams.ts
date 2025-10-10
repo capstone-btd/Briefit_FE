@@ -7,11 +7,14 @@ export function parseNewsPathParams({ params, searchParams }: NewsPathParams) {
     ? (newsCategories.find((e) => e.name === params.category[0])?.label ?? null)
     : null;
 
-  // 검색 파라미터에서 언론사 이름 추출
+  // 더보기 여부 
+  const extended = searchParams?.extended === "true";
+  // 언론사 이름 추출
   const selectedPressCompanyName = searchParams?.company ?? "전체";
 
   return {
     categoryLabel,
+    extended,
     selectedPressCompanyName,
   };
 }

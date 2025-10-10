@@ -3,18 +3,30 @@ import NewsCategorybar from "@/features/common/categorybar/NewsCategorybar";
 import PressCompanyFilterWrapper from "@/features/common/PressCompanyFilterWrapper";
 import TodayIssue from "@/features/today-news/components/TodayIssue";
 import TodayNews from "@/features/today-news/components/TodayNews";
+import TodayNewsMore from "@/features/today-news/components/TodayNewsMore";
 import { NewsPathParams } from "@/types/news/newsPathParams";
 import { parseNewsPathParams } from "@/utils/news/parseNewsPathParams";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-export default function TodayNewsPage({ params, searchParams }: NewsPathParams) {
-   const { categoryLabel, selectedPressCompanyName } = parseNewsPathParams({
-     params,
-     searchParams,
-   });
+export default function TodayNewsPage({
+  params,
+  searchParams,
+}: NewsPathParams) {
+  const { categoryLabel, extended, selectedPressCompanyName } =
+    parseNewsPathParams({
+      params,
+      searchParams,
+    });
 
-  return (
+  return extended === true ? (
+    <div className="p-20">
+      <TodayNewsMore
+        categoryLabel={categoryLabel}
+        selectedPressCompanyName={selectedPressCompanyName}
+      />
+    </div>
+  ) : (
     <div>
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-50 sm:hidden">
@@ -26,7 +38,9 @@ export default function TodayNewsPage({ params, searchParams }: NewsPathParams) 
         </div>
       </div>
       <div className="sm:p-20">
-        <Link href={"/today-news/more"}>
+        <Link
+          href={`/today-news/${params.category ?? ""}?extended=true&company=${selectedPressCompanyName}`}
+        >
           <div className="flex w-fit cursor-pointer items-center font-title-20 pc:hidden">
             오늘의 AI 뉴스 <ChevronRight className="text-gray-400" />
           </div>

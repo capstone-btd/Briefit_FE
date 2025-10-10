@@ -14,7 +14,7 @@ export function MobileNewsCategoryItem({
 }) {
   return (
     <span
-      className={`relative inline-block py-10 font-title-16 whitespace-nowrap transition-colors ${
+      className={`relative inline-block py-10 font-title-16 whitespace-nowrap cursor-pointer transition-colors ${
         isSelected ? "text-purple-500" : "text-gray-400"
       }`}
       onClick={() => onClick(category.name)}
@@ -28,7 +28,6 @@ export function MobileNewsCategoryItem({
 }
 
 interface Props {
-  basePath: string;
   categories: NewsCategory[];
   currentCategory: string;
   onCategorySelect: (name: string) => void;
