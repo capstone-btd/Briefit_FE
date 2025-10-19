@@ -11,11 +11,12 @@ export default function Layout({ children }: { children: ReactNode }) {
   const isMobile = useDeviceStore((state) => state.isMobile);
   const pathname = usePathname();
 
-  // /my/profile 관련 경로일 때는 children만 표시 (헤더 없음)
+  // 모바일에서 /my/profile 관련 경로일 때는 children만 표시 (헤더 없음)
   if (
-    pathname === "/my/profile" ||
-    pathname === "/my/profile/edit-name" ||
-    pathname === "/my/profile/edit-interests"
+    isMobile &&
+    (pathname === "/my/profile" ||
+      pathname === "/my/profile/edit-name" ||
+      pathname === "/my/profile/edit-interests")
   ) {
     return <div>{children}</div>;
   }
