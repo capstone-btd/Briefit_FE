@@ -25,8 +25,8 @@ export default function NewsCategoryBar({ basePath }: { basePath: string }) {
        : "";
 
    // 공통 로직: 카테고리 선택 핸들러 정의 
-   const handleCategorySelect = (name: string) => {
-     router.push(`/${basePath}/${name}`);
+  const handleCategorySelect = (name: string) => {
+     router.push(`/${basePath}/${name}${isMobile && name !== "" ? "?extended=true" : ""}`);
      setSelectedPath(`/${pathSegments[0]}`);
    };
 
