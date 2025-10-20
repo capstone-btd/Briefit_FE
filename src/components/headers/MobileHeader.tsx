@@ -9,6 +9,7 @@ import { navItems } from "@/constants/navItems";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
 import { useNavigation } from "@/hooks/useNavigation";
 import NewsCategoryBar from "@/features/common/categorybar/NewsCategorybar";
+import Link from "next/link";
 
 export default function MobileHeader() {
   const { selectedPath, setSelectedPath } = useNavStore();
@@ -25,7 +26,9 @@ export default function MobileHeader() {
           />
         </div>
         <div className="ml-auto flex gap-10">
-          <Search scale={24} />
+          <Link href="/search/mobile" className="cursor-pointer">
+            <Search scale={24} />
+          </Link>
           {useAuthStore(isLoggedInUser) ? (
             <UserProfileImage scale={24} />
           ) : (

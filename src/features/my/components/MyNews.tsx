@@ -11,6 +11,8 @@ import { NewsCardActions } from "./NewsCardActions";
 import { getCookie } from "cookies-next";
 import postScrap, { deleteScrap } from "@/features/detail/api/newsDetailIScrap";
 import NewsCategoryBar from "@/features/common/categorybar/NewsCategorybar";
+import PaginatedNewsCarousel from "@/features/common/PaginatedNewsCarousel";
+import { useDeviceStore } from "@/stores/device/useDeviceStore";
 
 export default function MyNews({
   myNewsType,
@@ -20,6 +22,7 @@ export default function MyNews({
   categoryLabel: string | null;
 }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isMobile = useDeviceStore((state) => state.isMobile);
   useEffect(() => {
     const token = getCookie("accessToken");
     setIsLoggedIn(!!token);
@@ -61,7 +64,7 @@ export default function MyNews({
       await postScrap({ id: id });
       await fetchNews();
     } else {
-      return
+      return;
     }
   };
 
@@ -99,43 +102,64 @@ export default function MyNews({
   }
 
   return (
-    <div className="space-y-30">
-      <div className="flex gap-50">
-        <div className="font-title-24">{title}</div>
-        <NewsCategoryBar basePath={myNewsType} />
-      </div>
-      <div className="grid grid-cols-1 gap-20 sm:grid-cols-2 lg:grid-cols-3">
-        {newsList.map((news, index) => {
-          const isScrapped = news.scrapId !== null 
-          return (
-            <NewsCard
-              key={index}
-              type={DetailPageType.MY}
-              categoryLabel={categoryLabel}
-              newsSummary={news}
-              themeColor={
-                myNewsType === MyNewsType.SCRAP ? null : news.backgroundColor
-              }
-              className={`hover-card-gradient relative overflow-hidden`}
-            >
-              <NewsCardActions
-                actions={[
-                  {
-                    iconName: isScrapped ? "scrap-active" : "scrap-inactive",
-                    alt: "스크랩",
-                    onClick: () => scrapHandler(isScrapped, isScrapped ? news.scrapId : news.articleId),
-                  },
-                  {
-                    iconName: "share-active",
-                    alt: "공유하기",
-                    onClick: shareHandler,
-                  },
-                ]}
-              />
-            </NewsCard>
-          );
-        })}
-      </div>
+    <div>
+      {isMobile ? (
+        <div>
+          <PaginatedNewsCarousel
+            newsList={newsList}
+            categoryLabel={categoryLabel}
+            itemsPerPage={10}
+            type={DetailPageType.MY}
+          />
+        </div>
+      ) : (
+        <div className="space-y-30">
+          <div className="flex gap-50">
+            <div className="font-title-24">{title}</div>
+            <NewsCategoryBar basePath={myNewsType} />
+          </div>
+          <div className="grid grid-cols-1 gap-20 sm:grid-cols-2 lg:grid-cols-3">
+            {newsList.map((news, index) => {
+              const isScrapped = news.scrapId !== null;
+              return (
+                <NewsCard
+                  key={index}
+                  type={DetailPageType.MY}
+                  categoryLabel={categoryLabel}
+                  newsSummary={news}
+                  themeColor={
+                    myNewsType === MyNewsType.SCRAP
+                      ? null
+                      : news.backgroundColor
+                  }
+                  className={`hover-card-gradient relative overflow-hidden`}
+                >
+                  <NewsCardActions
+                    actions={[
+                      {
+                        iconName: isScrapped
+                          ? "scrap-active"
+                          : "scrap-inactive",
+                        alt: "스크랩",
+                        onClick: () =>
+                          scrapHandler(
+                            isScrapped,
+                            isScrapped ? news.scrapId : news.articleId,
+                          ),
+                      },
+                      {
+                        iconName: "share-active",
+                        alt: "공유하기",
+                        onClick: shareHandler,
+                      },
+                    ]}
+                  />
+                </NewsCard>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
