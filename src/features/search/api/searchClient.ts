@@ -1,8 +1,8 @@
 import ApiException from "@/exception/apiException";
-import apiServer from "@/utils/api/apiServer";
+import apiClient from "@/utils/api/apiClient";
 import { NewsSummary } from "@/types/news/newsSummary";
 
-export default async function fetchNewsCardListByKeyword({
+export default async function fetchNewsCardListByKeywordClient({
   keyword,
   selectedPressCompanyName,
 }: {
@@ -11,7 +11,7 @@ export default async function fetchNewsCardListByKeyword({
 }): Promise<NewsSummary[]> {
   const params = { string: keyword, company: selectedPressCompanyName };
   try {
-    const response = await apiServer.get("/articles/search", {
+    const response = await apiClient.get("/articles/search", {
       params,
       headers: {
         "x-auth-not-required": "true", // 인증 헤더 제외
