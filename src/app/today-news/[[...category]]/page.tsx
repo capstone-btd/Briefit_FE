@@ -1,3 +1,4 @@
+import KakaoAdFit from "@/components/kakao-ad/KaKaoAdFit";
 import RefreshOnBackWrapper from "@/components/RefreshOnBackWrapper";
 import { newsCategories } from "@/constants/newsCategries";
 import NewsCategorybar from "@/features/common/categorybar/NewsCategorybar";
@@ -53,7 +54,10 @@ export default async function TodayNewsPage({
             selectedPressCompanyName={selectedPressCompanyName}
           />
         </RefreshOnBackWrapper>
-        <div className="sm:mt-30 pc:mt-70">
+        <div className="my-30">
+          <KakaoAdFit unitId="DAN-yIPmDE5tGZQC8Iqd" width={320} height={50} />
+        </div>
+        <div className="pc:mt-70 sm:mt-30">
           <TodayIssue />
         </div>
       </div>
