@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef } from "react";
+
+import { useRef, useEffect } from "react";
 
 interface AdFitProps {
   unitId: string;
@@ -7,37 +8,46 @@ interface AdFitProps {
   height: number;
 }
 
-export default function KaKaoAdFit({
+interface Adfit {
+  display: (unit: string) => void;
+  destroy: (unit: string) => void;
+  refresh: (unit: string) => void;
+}
+
+declare global {
+  interface Window {
+    adfit?: Adfit;
+  }
+}
+
+export default function KakaoAdFit({
   unitId,
   width,
   height,
 }: AdFitProps) {
-  const adLoaded = useRef(false);
+  const scriptElementWrapper = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (adLoaded.current) return; // 중복 방지
-    adLoaded.current = true;
+      const script = document.createElement("script");
+      script.setAttribute("src", "https://t1.daumcdn.net/kas/static/ba.min.js");
+      script.setAttribute("async", "true");
+      scriptElementWrapper.current?.appendChild(script);
 
-    // 광고 컨테이너 생성
-    const adContainer = document.createElement("ins");
-    adContainer.className = "kakao_ad_area";
-    adContainer.style.display = "none";
-    adContainer.setAttribute("data-ad-unit", unitId);
-    adContainer.setAttribute("data-ad-width", width.toString());
-    adContainer.setAttribute("data-ad-height", height.toString());
+      return () => {
+        const globalAdfit = "adfit" in window ? window.adfit : null;
+        if (globalAdfit) globalAdfit.destroy(unitId);
+      };
+  }, []);
 
-    // 스크립트 생성
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = "//t1.daumcdn.net/kas/static/ba.min.js";
-
-    // DOM에 추가
-    const wrapper = document.querySelector(".adfit-wrapper");
-    if (wrapper) {
-      wrapper.appendChild(adContainer);
-      wrapper.appendChild(script);
-    }
-  }, [unitId, width, height]);
-
-  return <div className="adfit-wrapper" style={{ textAlign: "center" }} />;
+  return (
+    <div ref={scriptElementWrapper} style={{ width: "100%", height: "100%" }}>
+      <ins
+        className="kakao_ad_area"
+        style={{ display: "none" }}
+        data-ad-unit={unitId}
+        data-ad-width={width}
+        data-ad-height={height}
+      />
+    </div>
+  );
 }

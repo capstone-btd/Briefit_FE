@@ -17,8 +17,7 @@ import { useNewsCustomStore } from "@/stores/detail/useNewsCustomStore";
 import { getCookie } from "cookies-next";
 import IconButton from "@/features/common/IconButton";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import KakaoAdFit from "@/components/kakao-ad/KaKaoAdFit";
-
+import KakaoAdFit from "@/components/kakao-ad/KakaoAdFit";
 
 type NewsDetailProps = {
   articleId: number; // 마이페이지 -> 커스텀/스크랩 뉴스 목록 조회에서 넘어올 경우 null
