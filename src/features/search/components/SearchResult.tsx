@@ -13,6 +13,7 @@ import PressCompanyFilterWrapperClient from "@/features/common/PressCompanyFilte
 import { useDeviceStore } from "@/stores/device/useDeviceStore";
 import { useEffect, useState } from "react";
 import { NewsSummary } from "@/types/news/newsSummary";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type SearchProps = {
   keyword: string;
@@ -50,7 +51,7 @@ export default function SearchResult({
   const safeNewsList = Array.isArray(newsList) ? newsList : [];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (isMobile) {
