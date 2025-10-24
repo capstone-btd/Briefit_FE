@@ -50,7 +50,7 @@ export default function MobileNewsCategoryBar({
           />
         ))}
       </div>
-      <Divider />
+      <Divider className="w-max"/>
     </div>
   );
 }
