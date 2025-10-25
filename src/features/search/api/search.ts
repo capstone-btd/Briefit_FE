@@ -1,15 +1,17 @@
 import ApiException from "@/exception/apiException";
 import apiServer from "@/utils/api/apiServer";
-import { NewsSummary } from "@/types/news/newsSummary";
+import { NewsCardListResponse, NewsSummary } from "@/types/news/newsSummary";
 
 export default async function fetchNewsCardListByKeyword({
   keyword,
   selectedPressCompanyName,
+  page,
 }: {
     keyword: string;
     selectedPressCompanyName: string;
+    page: number;
 }): Promise<NewsSummary[]> {
-  const params = { string: keyword, company: selectedPressCompanyName };
+  const params = { string: keyword, company: selectedPressCompanyName, page: page };
   try {
     const response = await apiServer.get("/articles/search", {
       params,
@@ -19,7 +21,7 @@ export default async function fetchNewsCardListByKeyword({
     });
     
     // 응답 데이터가 배열인지 확인
-    const data = response.data;
+    const data = response.data.data as NewsCardListResponse;
     if (!Array.isArray(data)) {
       console.warn("API 응답이 배열이 아닙니다:", data);
       return [];
