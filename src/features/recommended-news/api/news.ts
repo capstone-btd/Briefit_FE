@@ -7,11 +7,15 @@ export default async function fetchRecommendedNewsCardList({
   selectedPressCompanyName,
   page,
 }: {
-    selectedCategory: string;
-    selectedPressCompanyName: string;
-    page: number;
+  selectedCategory: string;
+  selectedPressCompanyName: string;
+  page: number;
 }) {
-  const params = { category: selectedCategory, company: selectedPressCompanyName, page: page};
+  const params = {
+    category: selectedCategory,
+    company: selectedPressCompanyName,
+    page: page,
+  };
   try {
     const response = await apiClient.get("/articles/recommend", {
       params,

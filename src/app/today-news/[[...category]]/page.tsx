@@ -15,7 +15,7 @@ export default async function TodayNewsPage({
   params,
   searchParams,
 }: NewsPathParams) {
-  const { categoryLabel, extended, selectedPressCompanyName } =
+  const { categoryLabel, extended, selectedPressCompanyName, page } =
     await parseNewsPathParams({
       params,
       searchParams,
@@ -29,6 +29,7 @@ export default async function TodayNewsPage({
       <TodayNewsMore
         categoryLabel={categoryLabel}
         selectedPressCompanyName={selectedPressCompanyName}
+        page={page}
       />
     </div>
   ) : (
@@ -49,7 +50,7 @@ export default async function TodayNewsPage({
       </div>
       <div className="sm:p-20">
         <Link
-          href={`/today-news/${categoryName}?extended=true&company=${selectedPressCompanyName}`}
+          href={`/today-news/${categoryName}?extended=true&company=${selectedPressCompanyName}&page=${page}`}
         >
           <div className="flex w-fit cursor-pointer items-center font-title-20 pc:hidden">
             오늘의 AI 뉴스 <ChevronRight className="text-gray-400" />
@@ -59,6 +60,7 @@ export default async function TodayNewsPage({
           <TodayNews
             categoryLabel={categoryLabel}
             selectedPressCompanyName={selectedPressCompanyName}
+            page={page}
           />
         </RefreshOnBackWrapper>
       </div>

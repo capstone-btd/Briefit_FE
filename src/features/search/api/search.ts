@@ -1,6 +1,6 @@
 import ApiException from "@/exception/apiException";
 import apiServer from "@/utils/api/apiServer";
-import { NewsCardListResponse, NewsSummary } from "@/types/news/newsSummary";
+import { NewsCardListResponse } from "@/types/news/newsSummary";
 
 export default async function fetchNewsCardListByKeyword({
   keyword,
@@ -10,7 +10,7 @@ export default async function fetchNewsCardListByKeyword({
     keyword: string;
     selectedPressCompanyName: string;
     page: number;
-}): Promise<NewsSummary[]> {
+}): Promise<NewsCardListResponse> {
   const params = { string: keyword, company: selectedPressCompanyName, page: page };
   try {
     const response = await apiServer.get("/articles/search", {
@@ -20,19 +20,17 @@ export default async function fetchNewsCardListByKeyword({
       },
     });
     
-    // 응답 데이터가 배열인지 확인
-    const data = response.data.data as NewsCardListResponse;
-    if (!Array.isArray(data)) {
-      console.warn("API 응답이 배열이 아닙니다:", data);
-      return [];
-    }
-    
-    return data;
+    return response.data.data as NewsCardListResponse;
   } catch (error) {
     if (error instanceof ApiException) {
       // 예외 처리
     }
-    console.error("검색 API 오류:", error);
-    return []; // 오류 발생 시 빈 배열 반환
+     return {
+       articleInfos: [],
+       totalCount: 0,
+       limit: 0,
+       totalPage: 0,
+       page: 0,
+     };
   }
 }
