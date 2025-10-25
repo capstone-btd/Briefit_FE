@@ -129,8 +129,8 @@ export default function MyNews({
         </div>
       ) : (
         <div className="space-y-30">
-          <div className="flex gap-50">
-            <div className="font-title-24">{title}</div>
+          <div className="flex gap-35">
+            <div className="font-title-24 whitespace-nowrap">{title}</div>
             <NewsCategoryBar basePath={myNewsType} />
           </div>
           <div className="grid grid-cols-1 gap-20 sm:grid-cols-2 lg:grid-cols-3">
