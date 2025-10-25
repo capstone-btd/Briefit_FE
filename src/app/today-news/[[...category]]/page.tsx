@@ -62,10 +62,10 @@ export default async function TodayNewsPage({
           />
         </RefreshOnBackWrapper>
       </div>
-      <div className="my-30">
+      <div className="my-30 sm:px-20">
         <KakaoAdFit unitId="DAN-yIPmDE5tGZQC8Iqd" width={320} height={50} />
       </div>
-      <div className="pc:mt-70 sm:mt-30">
+      <div className="pc:mt-70 sm:mt-30 sm:px-20">
         <TodayIssue />
       </div>
     </div>
