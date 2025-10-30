@@ -55,13 +55,23 @@ export default function NewsContent({
         closeWordPopup();
       }
     };
+    const handleTouchOutside = (event: TouchEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        closeWordPopup();
+      }
+    };
 
     if (wordPopup) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleTouchOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleTouchOutside);
     };
   }, [wordPopup]);
 
@@ -79,7 +89,7 @@ export default function NewsContent({
   };
 
   const handleMouseDown = (index: number) => {
-    // 하이라이트/지우개 모드이거나 단어 검색을 위해 드래그 허용
+    // 하이라이트 또는 단어 검색 드래그 허용
     setIsDragging(true);
     setDragStart(index);
     setDragRange(null);
@@ -94,7 +104,7 @@ export default function NewsContent({
     }
   };
 
-  // 터치 드래그 지원 (모바일)
+  // 터치 드래그 (모바일))
   const handleTouchStart = (
     e: React.TouchEvent<HTMLSpanElement>,
     index: number,
