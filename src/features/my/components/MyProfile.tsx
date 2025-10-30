@@ -46,16 +46,25 @@ export default function MyProfile() {
   }, [nickname]);
 
   useEffect(() => {
-    setSelectedCategories(categories);
+    setSelectedCategories(categories.map((cat) => cat.label));
   }, [categories]);
 
-  const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category],
-    );
-  };
+const toggleCategory = (category: string) => {
+  setSelectedCategories((prev) => {
+    // 이미 선택되어 있으면 제거
+    if (prev.includes(category)) {
+      return prev.filter((c) => c !== category);
+    }
+
+    // 새로 추가할 때, 이미 3개면 추가 불가
+    if (prev.length >= 3) {
+      return prev;
+    }
+    
+    return [...prev, category];
+  });
+};
+
 
   const handleUpdate = async () => {
     await registerUser(

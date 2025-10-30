@@ -31,7 +31,7 @@ export default function Navigationbar() {
             href={path}
             onClick={() => handleClick(index, path)}
             className={`block sm:py-10 transition-colors duration-300 ${isMobile ? "" : "font-title-20"} ${
-              selectedPath === path
+              selectedPath.includes(path)
                 ? "text-purple-500 sm:text-white sm:font-title-16"
                 : "text-gray-400 hover:text-gray-600 sm:text-purple-300 sm:font-basic-16"
             }`}
@@ -41,7 +41,7 @@ export default function Navigationbar() {
         ))}
 
         <div
-          className="absolute bottom-[-28px] h-3 rounded-full bg-purple-500 transition-all duration-200 ease-out sm:hidden"
+          className="absolute bottom-[-31px] h-3 rounded-full bg-purple-500 transition-all duration-200 ease-out sm:hidden"
           style={{
             width: `${underlineStyle.width}px`,
             transform: `translateX(${underlineStyle.left}px)`,
