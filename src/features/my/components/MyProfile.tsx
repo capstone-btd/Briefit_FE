@@ -49,22 +49,27 @@ export default function MyProfile() {
     setSelectedCategories(categories.map((cat) => cat.label));
   }, [categories]);
 
-const toggleCategory = (category: string) => {
-  setSelectedCategories((prev) => {
-    // 이미 선택되어 있으면 제거
-    if (prev.includes(category)) {
-      return prev.filter((c) => c !== category);
-    }
+  const handleLogout = () => {
+    resetUserInfo();
+    router.replace("/");
+    setSelectedPath("/today-news");
+  };
 
-    // 새로 추가할 때, 이미 3개면 추가 불가
-    if (prev.length >= 3) {
-      return prev;
-    }
-    
-    return [...prev, category];
-  });
-};
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((prev) => {
+      // 이미 선택되어 있으면 제거
+      if (prev.includes(category)) {
+        return prev.filter((c) => c !== category);
+      }
 
+      // 새로 추가할 때, 이미 3개면 추가 불가
+      if (prev.length >= 3) {
+        return prev;
+      }
+
+      return [...prev, category];
+    });
+  };
 
   const handleUpdate = async () => {
     await registerUser(
@@ -144,13 +149,23 @@ const toggleCategory = (category: string) => {
                   />
                 </div>
               </button>
-              <Button
-                variant="ghost"
-                className="mt-15 cursor-pointer bg-transparent font-small-14 text-red-100 hover:bg-transparent hover:text-red-100"
-                onClick={() => setShowDialog(true)}
-              >
-                회원 탈퇴하기
-              </Button>
+              <div className="flex flex-row items-center justify-center gap-8">
+                <Button
+                  variant="ghost"
+                  className="font-light-15 mt-15 cursor-pointer bg-transparent text-gray-400 hover:bg-transparent hover:text-gray-600"
+                  onClick={() => setShowDialog(true)}
+                >
+                  회원탈퇴
+                </Button>
+                <div className="font-light-15 mt-15 text-gray-400">|</div>
+                <Button
+                  variant="ghost"
+                  className="font-light-15 mt-15 cursor-pointer bg-transparent text-gray-400 hover:bg-transparent hover:text-gray-600"
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </Button>
+              </div>
             </div>
           ) : (
             <div className="grid place-items-center gap-20">
@@ -191,13 +206,15 @@ const toggleCategory = (category: string) => {
                   ))}
                 </div>
               </EditableField>
-              <Button
-                variant="ghost"
-                className="mt-15 cursor-pointer bg-transparent font-small-14 text-red-100 hover:bg-transparent hover:text-red-100"
-                onClick={() => setShowDialog(true)}
-              >
-                회원 탈퇴하기
-              </Button>
+              <div>
+                <Button
+                  variant="ghost"
+                  className="mt-15 cursor-pointer bg-transparent font-small-14 text-red-100 hover:bg-transparent hover:text-red-100"
+                  onClick={() => setShowDialog(true)}
+                >
+                  회원 탈퇴
+                </Button>
+              </div>
             </div>
           )}
         </>
