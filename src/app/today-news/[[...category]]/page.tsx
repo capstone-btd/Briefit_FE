@@ -42,7 +42,7 @@ export default async function TodayNewsPage({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-50 sm:hidden">
           <div className="font-title-24">오늘의 AI 뉴스</div>
-          <NewsCategorybar basePath="today-news" />
+          <NewsCategorybar basePath="today-news" categories={newsCategories}/>
         </div>
         <div className="sm:hidden">
           <PressCompanyFilterWrapper />

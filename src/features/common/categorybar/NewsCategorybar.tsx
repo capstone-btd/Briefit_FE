@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { newsCategories } from "@/constants/newsCategries";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
 import { useDeviceStore } from "@/stores/device/useDeviceStore";
 import MobileNewsCategoryBar from "./MobileNewsCategorybar";
 import DesktopNewsCategoryBar from "./DesktopNewsCategorybar";
+import { NewsCategory } from "@/types/news/newsCategory";
 
-export default function NewsCategoryBar({ basePath }: { basePath: string }) {
+export default function NewsCategoryBar({ basePath, categories }: { basePath: string, categories: NewsCategory[] }) {
    const router = useRouter();
    const pathname = usePathname();
    const setSelectedPath = useNavStore((state) => state.setSelectedPath);
@@ -32,7 +32,7 @@ export default function NewsCategoryBar({ basePath }: { basePath: string }) {
 
    const sharedProps = {
      basePath,
-     categories: newsCategories,
+     categories: categories,
      currentCategory,
      onCategorySelect: handleCategorySelect,
    };
