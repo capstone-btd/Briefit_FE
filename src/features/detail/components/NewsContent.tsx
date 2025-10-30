@@ -94,6 +94,40 @@ export default function NewsContent({
     }
   };
 
+  // 터치 드래그 지원 (모바일)
+  const handleTouchStart = (
+    e: React.TouchEvent<HTMLSpanElement>,
+    index: number,
+  ) => {
+    // 스크롤 대신 드래그 동작 우선
+    if (isCustomMode) {
+      e.preventDefault();
+    }
+    setIsDragging(true);
+    setDragStart(index);
+    setDragRange(null);
+  };
+
+  const handleTouchMove = (
+    e: React.TouchEvent<HTMLSpanElement>,
+    index: number,
+  ) => {
+    if (isDragging && dragStart !== null) {
+      // 스크롤 방지 (하이라이트/지우개 드래그 중)
+      if (isCustomMode) {
+        e.preventDefault();
+      }
+      setDragRange({
+        start: Math.min(dragStart, index),
+        end: Math.max(dragStart, index),
+      });
+    }
+  };
+
+  const handleTouchEnd = async () => {
+    await handleMouseUp();
+  };
+
   const handleMouseUp = async () => {
     // 드래그 상태 초기화
     setIsDragging(false);
@@ -241,6 +275,9 @@ export default function NewsContent({
             className={`inline-block ${highlightClass ? `bg-${highlightClass}` : ""} ${dragClass} whitespace-pre-line`}
             onMouseDown={() => handleMouseDown(index)}
             onMouseEnter={() => handleMouseEnter(index)}
+            onTouchStart={(e) => handleTouchStart(e, index)}
+            onTouchMove={(e) => handleTouchMove(e, index)}
+            onTouchEnd={handleTouchEnd}
           >
             {char === " " ? "\u00A0" : char}
           </span>
