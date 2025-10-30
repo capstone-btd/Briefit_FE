@@ -20,10 +20,10 @@ export default function MobileHeader() {
   const isLoggedIn = useAuthStore(isLoggedInUser);
   const userCategories = useUserStore((state) => state.categories);
   const categories = isLoggedIn && selectedPath === DetailPageType.RECOMMENDED ? [newsCategories[0], ...userCategories] : newsCategories;
-
+  console.log(selectedPath)
   return (
     <header className="mt-10">
-      <div className="bg-white relative pb-15 flex w-full items-center px-20">
+      <div className="relative flex w-full items-center bg-white px-20 pb-15">
         <div className="absolute left-1/2 -translate-x-1/2">
           <LogoButton
             width={84}
@@ -35,15 +35,14 @@ export default function MobileHeader() {
           <Link href="/search/mobile" className="cursor-pointer">
             <Search scale={24} />
           </Link>
-          {isLoggedIn ? (
-            <UserProfileImage scale={24} />
-          ) : (
-            <LoginButton />
-          )}
+          {isLoggedIn ? <UserProfileImage scale={24} /> : <LoginButton />}
         </div>
       </div>
       <Navigationbar />
-      <NewsCategoryBar basePath={selectedPath.substring(1)} categories={categories}/>
+      <NewsCategoryBar
+        basePath={selectedPath}
+        categories={categories}
+      />
     </header>
   );
 }
