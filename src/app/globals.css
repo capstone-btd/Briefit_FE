@@ -35,6 +35,8 @@ body {
   --font-basic-20: 400 20px/100% var(--font-pretendard);
   --font-basic-18: 400 18px/100% var(--font-pretendard);
   --font-basic-16: 400 16px/100% var(--font-pretendard);
+  --font-basic-16-m: 400 16px/24px var(--font-pretendard);
+  --font-basic-14: 400 14px/100% var(--font-pretendard);
   --font-basic-13: 400 13px/100% var(--font-pretendard);
   --font-basic-10: 400 10px/100% var(--font-pretendard);
 
@@ -184,6 +186,12 @@ body {
   }
   .font-basic-16 {
     font: var(--font-basic-16);
+  }
+  .font-basic-16-m {
+    font: var(--font-basic-16-m);
+  }
+  .font-basic-14 {
+    font: var(--font-basic-14);
   }
   .font-basic-13 {
     font: var(--font-basic-13)

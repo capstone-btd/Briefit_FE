@@ -245,7 +245,7 @@ export default function NewsContent({
 
   return (
     <div
-      className={`relative mb-55 ${isMobile ? "font-basic-18" : "font-basic-20-m"} ${themeTextColor1 ?? ""}`}
+      className={`relative mb-55 ${isMobile ? "font-basic-16-m" : "font-basic-20-m"} ${themeTextColor1 ?? ""}`}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
       style={{
