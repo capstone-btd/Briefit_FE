@@ -9,7 +9,7 @@ import EditableField from "./EditableField";
 import NoContent from "@/features/common/NoContent";
 import { useUserStore } from "@/stores/auth/useUserStore";
 import registerUser from "@/features/signup/api/signup";
-import convertAssetToFile from "@/utils/convertAssetToFile";
+import convertAssetToFile from "@/utils/image/convertAssetToFile";
 import { setUserInfoToStore } from "@/utils/user/setUserInfoToStore";
 import { getCookie } from "cookies-next";
 import { withdraw } from "../api/user";
@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useNavStore } from "@/stores/navigation/useNavStrore";
 import { DesktopNewsCategoryItem } from "@/features/common/categorybar/DesktopNewsCategorybar";
 import { useDeviceStore } from "@/stores/device/useDeviceStore";
+import { EditProfileImagePopup } from "./EditProfileImagePopup";
 
 export default function MyProfile() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function MyProfile() {
   const [showDialog, setShowDialog] = useState(false);
   const [name, setName] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
 
   const nickname = useUserStore((state) => state.nickname);
   const categories = useUserStore((state) => state.categories);
@@ -114,8 +116,11 @@ export default function MyProfile() {
                 height={90}
                 className="aspect-square rounded-full"
               />
-              <p className="mb-40 inline-block border-b border-purple-500 text-purple-500">
-                프로필사진 편집
+              <p
+                className="mb-40 inline-block cursor-pointer border-b border-purple-500 text-purple-500"
+                onClick={() => setShowProfilePopup(true)}
+              >
+                프로필 사진 편집
               </p>
               <button
                 onClick={() => router.push("/my/profile/edit-name")}
@@ -174,8 +179,14 @@ export default function MyProfile() {
                 alt="프로필 사진"
                 width={150}
                 height={150}
-                className="mb-40 aspect-square rounded-full"
+                className="aspect-square rounded-full"
               />
+              <p
+                className="mb-40 inline-block cursor-pointer border-b border-purple-500 text-purple-500"
+                onClick={() => setShowProfilePopup(true)}
+              >
+                프로필 사진 편집
+              </p>
               <EditableField
                 title="이름"
                 displayValue={name}
@@ -245,6 +256,9 @@ export default function MyProfile() {
           rightButton={{ label: "네", onClick: confirmWithdraw }}
           onClose={() => setShowDialog(false)}
         />
+      )}
+      {showProfilePopup && (
+        <EditProfileImagePopup onClose={() => setShowProfilePopup(false)} />
       )}
     </div>
   );
