@@ -43,7 +43,12 @@
 ---
 
 ## 브리핏을 만든 사람들
-작성중
+| 김선재 | 권나래 | 서윤하 | 공세민 | 최석운 | 차현서 |
+|:------:|:------:|:------:|:------:|:------:|:------:|
+| FE | FE | AI | AI | BE | Design |
+| [@sunjae0902](https://github.com/sunjae0902) | [@naraeng](https://github.com/naraeng) | [@bobo9245](https://github.com/bobo9245) | [@SeMinKong](https://github.com/SeMinKong) | [@Choi-seokun](https://github.com/Choi-seokun) | [hyunseo Cha]() |
+
+
 
 
 Instagram: [@btd_briefit](https://www.instagram.com/btd_briefit/)
