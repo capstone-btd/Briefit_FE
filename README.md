@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💫 Briefit 
+## : AI기반 객관적이고 신뢰성 있는 뉴스 큐레이션 서비스
+### [👀 서비스 둘러보기](https://briefit-fe.vercel.app/today-news)
+<img width="15636" height="8796" alt="작품대표사진" src="https://github.com/user-attachments/assets/9ae928b2-5287-458b-ab2f-8cb1e7740ee0" />
 
-## Getting Started
+---
+## 브리핏(Briefit)은 무엇이 다른가요?
 
-First, run the development server:
+✅ **국내 주요 언론사와 5개 대표 해외 언론사**로부터 카테고리별 다양한 기사를 매일 수집합니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+✅ 비슷한 주제를 다루는 **여러 기사를 통합하여, 객관적인 사실만으로 구성된 뉴스 요약본**을 생성합니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+✅ 기사 원문 속 **공격적이거나 편향된 표현은 중립적인 언어로 대체하거나 제거**합니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🤔 어떤 기능이 있나요?
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 매일 카테고리 별 뉴스 기사 / 개인 관심사 맞춤 기사 제공
+- 데일리 이슈 키워드 제공
+- 기사 스크랩, 커스터마이징, 단어 검색 기능
+- 기사 검색, 언론사 필터링 기능
 
-## Learn More
+## 👍🏻 이런 분들께 추천드려요
 
-To learn more about Next.js, take a look at the following resources:
+- 국내 언론 / 외신 등 매일 뉴스나 신문을 꾸준히 읽는 분
+- 시사 상식을 쌓고 싶지만, 정보의 홍수나 편향된 기사 때문에 어려움을 느끼는 분
+- 자료 조사 등 특정 목적으로 뉴스를 활용하고 싶은 분
+- 객관적인 사실만을 다루는 기사를 접하고 싶은 분
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💭 우리들의 이야기
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+최근들어 세대를 가리지 않고 가짜 뉴스와 미디어 편향에 대한 경각심이 높아지고 있습니다. 
 
-## Deploy on Vercel
+이에 따라 정확하고 균형 잡힌 시사 정보에 대한 수요 역시 증가했지만,
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+하루에도 수없이 새로운 소식들을 쏟아내고 깊이보다는 즉각적인 반응과 관심이 우선되는 시대에 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+스스로 다양한 정보를 찾아보고 비교하며 비판적으로 판단하기는 쉽지 않습니다.
+
+브리핏은 사람들이 하나의 시각에 머무르지 않고, 
+
+주체적인 정보 소비를 두려워하지 않도록 돕기 위해 만들어졌습니다.
+
+---
+
+## 브리핏을 만든 사람들
+| 김선재 | 권나래 | 서윤하 | 공세민 | 최석운 | 차현서 |
+|:------:|:------:|:------:|:------:|:------:|:------:|
+| FE | FE | AI | AI | BE | Design |
+| [@sunjae0902](https://github.com/sunjae0902) | [@naraeng](https://github.com/naraeng) | [@bobo9245](https://github.com/bobo9245) | [@SeMinKong](https://github.com/SeMinKong) | [@Choi-seokun](https://github.com/Choi-seokun) | [hyunseo Cha]() |
+
+
+
+
+Instagram: [@btd_briefit](https://www.instagram.com/btd_briefit/)
